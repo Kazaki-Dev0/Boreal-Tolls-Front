@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Cadastrar Produto</title>
+    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* VARIÁVEIS DE COR MANTIDAS */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-sidebar: #06100b;
+            --bg-panel: #131715;
+            --bg-topbar: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa09d;
+            --neon-green: #87ffb9;
+            --neon-green-glow: rgba(135, 255, 185, 0.2);
+            --dark-green: #1a3a29;
+            --btn-green: #2d4a3a; /* Tom mais escuro para o botão como na imagem */
+            --border-color: #242e29;
+            --input-bg: #1e2220;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- REAPROVEITAMENTO DA ESTRUTURA (TOPBAR & SIDEBAR) --- */
+        .topbar {
+            height: 60px;
+            background-color: var(--bg-topbar);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 10;
+        }
+        .topbar-left, .topbar-links, .topbar-right, .nav-icons { display: flex; align-items: center; gap: 1.5rem; }
+        .topbar-links a { color: var(--text-primary); text-decoration: none; font-size: 0.85rem; }
+        .topbar-links a.active { color: var(--neon-green); }
+        
+        .main-wrapper { display: flex; flex: 1; overflow: hidden; }
+        
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--bg-sidebar) 0%, #030805 100%);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-header { padding: 2rem 1rem; text-align: center; }
+        .brand-name { font-size: 1.6rem; font-weight: 300; letter-spacing: 3px; color: var(--neon-green); margin-top: 10px; display: block; }
+        .user-avatar { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--dark-green); margin-bottom: 8px; }
+        
+        .sidebar-nav { padding: 1rem; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 15px; border-radius: 6px; text-decoration: none; color: var(--text-primary); font-size: 0.9rem; }
+        .nav-item i { color: var(--neon-green); font-size: 1.3rem; }
+        .nav-item.active { background: var(--dark-green); }
+
+        /* --- CONTEÚDO CENTRAL (FORMULÁRIO) --- */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+        }
+
+        .form-panel {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--neon-green); /* Borda neon conforme imagem */
+            box-shadow: 0 0 15px var(--neon-green-glow);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group.full-width { grid-column: span 2; }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        input, textarea {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            color: white;
+            outline: none;
+            font-size: 0.9rem;
+            transition: border 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--neon-green);
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .btn-submit {
+            grid-column: span 2;
+            margin-top: 1rem;
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--text-primary);
+            padding: 12px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-green-glow);
+        }
+
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        .breadcrumb span { color: var(--neon-green); }
+
+    </style>
+</head>
+<body>
+
+    <nav class="topbar">
+        <div class="topbar-left">
+            <img src="./images/logo-removebg.png" alt="Boreal" style="height: 24px;">
+            <div class="topbar-links">
+                <a href="#">Cadastros</a>
+                <a href="#" class="active">Operações</a>
+                <a href="#">Relatórios</a>
+                <a href="#">Minha conta</a>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="nav-icons">
+                <i class="ph ph-squares-four"></i>
+                <i class="ph ph-bell"></i>
+                <i class="ph ph-gear"></i>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">
+                <span>dtm</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-container">
+                    <img src="./images/logo-removebg.png" alt="Boreal Logo" style="width: 60px;">
+                    <span class="brand-name">BOREAL TOOLS</span>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Fulano+De+Tal&background=87ffb9&color=000" alt="Perfil" class="user-avatar">
+                    <span style="font-size: 1rem;">Fulano de tal</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item"><i class="ph ph-house"></i> Inicio</a>
+                <a href="produtos.html" class="nav-item active"><i class="ph ph-package"></i> Produtos</a>
+                <a href="#" class="nav-item"><i class="ph ph-archive"></i> Estoque</a>
+                <a href="#" class="nav-item"><i class="ph ph-chart-line-up"></i> Financeiro</a>
+                <a href="#" class="nav-item"><i class="ph ph-user"></i> Funcionarios</a>
+            </nav>
+            <a href="login.html" style="padding: 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;">
+                <i class="ph ph-arrow-left"></i> Deslogar
+            </a>
+        </aside>
+
+        <main class="content">
+            <div class="form-panel">
+                <div class="form-header">
+                    <div>
+                        <h2 style="font-weight: 500; font-size: 1.5rem;">Cadastrar Produtos</h2>
+                        <p class="breadcrumb">Produtos > <span>Cadastrar Produtos</span></p>
+                    </div>
+                    <i class="ph ph-package" style="font-size: 2.5rem; color: var(--neon-green);"></i>
+                </div>
+
+                <form id="productForm" class="form-grid">
+                    <div class="input-group full-width">
+                        <label>Nome do produto:</label>
+                        <input type="text" id="nome" placeholder="Ex: iPhone 17 Pro Max">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Marca:</label>
+                        <input type="text" id="marca" placeholder="Ex: Apple">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Valor (R$):</label>
+                        <input type="number" id="valor" step="0.01" placeholder="0,00">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Categoria:</label>
+                        <input type="text" id="categoria" placeholder="Ex: Eletrônicos">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Fornecedor:</label>
+                        <input type="text" id="fornecedor" placeholder="Nome do fornecedor">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Quantidade mínima estoque:</label>
+                        <input type="number" id="qtd_minima" placeholder="Ex: 10">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Descrição:</label>
+                        <textarea id="descricao" placeholder="Detalhes técnicos do produto..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Cadastrar</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Lógica básica para interceptar o envio (depois você integra com sua API)
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = {
+                nome: document.getElementById('nome').value,
+                marca: document.getElementById('marca').value,
+                valor: document.getElementById('valor').value,
+                categoria: document.getElementById('categoria').value,
+                fornecedor: document.getElementById('fornecedor').value,
+                qtd_minima: document.getElementById('qtd_minima').value,
+                descricao: document.getElementById('descricao').value
+            };
+            
+            console.log("Dados prontos para API:", formData);
+            alert("Produto cadastrado com sucesso (Simulação)!");
+        });
+    </script>
+
+</body>
+</html>
