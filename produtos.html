@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - ERP</title>
+    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* VARIÁVEIS DE COR */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-sidebar: #06100b;
+            --bg-panel: #131715;
+            --bg-topbar: #111111;
+            --bg-modal: #1e2220;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa09d;
+            --neon-green: #87ffb9;
+            --neon-green-glow: rgba(135, 255, 185, 0.2);
+            --dark-green: #1a3a29;
+            --btn-green: #609b7c;
+            --btn-light-green: #a3d9be;
+            --danger-red: #d32f2f;
+            --border-color: #242e29;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- TOPBAR --- */
+        .topbar {
+            height: 60px;
+            background-color: var(--bg-topbar);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 10;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Logo 'fio verde' do topo */
+        .topbar-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mini-logo-hex {
+            height: 24px;
+            width: auto;
+        }
+
+        .mini-logo-line {
+            height: 14px;
+            width: auto;
+        }
+
+        .topbar-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .topbar-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .topbar-links a:hover, .topbar-links a.active {
+            color: var(--neon-green);
+        }
+
+        .topbar-search {
+            background-color: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 350px;
+        }
+
+        .topbar-search input {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            width: 100%;
+            font-size: 0.85rem;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topbar-right .nav-icons {
+            display: flex;
+            gap: 15px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        /* --- SIDEBAR --- */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--bg-sidebar) 0%, #030805 100%);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        /* Logo Principal Boreal */
+        .brand-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .brand-name {
+            font-size: 1.6rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green-glow);
+            margin-top: 10px;
+            display: block;
+        }
+
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            border: 2px solid var(--dark-green);
+        }
+
+        .sidebar-nav {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            color: var(--neon-green);
+        }
+
+        .nav-item:hover { background: rgba(255,255,255,0.03); }
+        .nav-item.active { background: var(--dark-green); }
+
+        .nav-logout {
+            padding: 15px 25px;
+            border-top: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        /* --- CONTEÚDO --- */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
+            overflow-y: auto;
+        }
+
+        .glass-panel {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .panel-icon-bg {
+            font-size: 2.5rem;
+            color: var(--neon-green);
+            background: rgba(135, 255, 185, 0.05);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #000;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            width: 300px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            flex: 1;
+            outline: none;
+        }
+
+        .btn-add {
+            background: var(--btn-green);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #1a1e1c;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .btn-details {
+            background: var(--btn-light-green);
+            border: none;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            place-items: center;
+            z-index: 100;
+        }
+        .modal-overlay.active { display: grid; }
+        .modal-content {
+            background: var(--bg-modal);
+            width: 500px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-logo-container">
+                <img src="./images/logo-removebg.png" alt="Boreal" class="mini-logo-hex">
+            </div>
+            
+            <div class="topbar-links">
+                <a href="#">Cadastros</a>
+                <a href="#" class="active">Operações</a>
+                <a href="#">Relatórios</a>
+                <a href="#">Minha conta</a>
+            </div>
+        </div>
+
+        <div class="topbar-search">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" placeholder="Pesquisar">
+        </div>
+
+        <div class="topbar-right">
+            <div class="nav-icons">
+                <i class="ph ph-squares-four"></i>
+                <i class="ph ph-bell"></i>
+                <i class="ph ph-question"></i>
+                <i class="ph ph-gear"></i>
+            </div>
+            <div class="user-pill">
+                <i class="ph-fill ph-user-circle"></i>
+                <span>dtm</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-container">
+                    <img src="./images/logo-removebg.png" alt="Boreal Logo" style="width: 60px;">
+                    <span class="brand-name">BOREAL TOOLS</span>
+                </div>
+                
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Fulano+De+Tal&background=87ffb9&color=000" alt="Perfil" class="user-avatar">
+                    <span style="font-size: 1rem;">Fulano de tal</span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">fulanoemail@email.com</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="ph ph-house"></i> Inicio</a>
+                <a href="#" class="nav-item active"><i class="ph ph-package"></i> Produtos</a>
+                <a href="#" class="nav-item"><i class="ph ph-archive"></i> Estoque</a>
+                <a href="#" class="nav-item"><i class="ph ph-chart-line-up"></i> Financeiro</a>
+                <a href="#" class="nav-item"><i class="ph ph-shopping-cart"></i> Vendas</a>
+                <a href="#" class="nav-item"><i class="ph ph-user"></i> Funcionarios</a>
+                <a href="#" class="nav-item"><i class="ph ph-clipboard-text"></i> Relatorios</a>
+                <a href="#" class="nav-item"><i class="ph ph-users"></i> Clientes</a>
+            </nav>
+
+            <a href="login.html" class="nav-logout">
+                <i class="ph ph-arrow-left"></i> Deslogar
+            </a>
+        </aside>
+
+        <main class="content">
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2 style="color: var(--neon-green); font-weight: 400;">Painel da Lista de Produtos</h2>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">Produtos > <span style="color: var(--neon-green)">Lista de produtos</span></p>
+                    </div>
+                    <i class="ph ph-package panel-icon-bg"></i>
+                </div>
+
+                <div class="table-toolbar">
+                    <div class="search-box">
+                        <input type="text" placeholder="Pesquisar por Id, Descrição ou Marca">
+                        <i class="ph ph-magnifying-glass" style="color: var(--text-secondary)"></i>
+                    </div>
+                    <button class="btn-add"><a href="./cadastro_produtos.html">+ Cadastrar Produto</a></button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Id</th>
+                            <th>Descrição</th>
+                            <th>Marca</th>
+                            <th>Valor em R$</th>
+                            <th>Qtd. Estoque</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Iphone 17</td>
+                            <td>01</td>
+                            <td>Smartphone bran...</td>
+                            <td>Apple</td>
+                            <td>15.000</td>
+                            <td>102</td>
+                            <td><button class="btn-details" onclick="document.getElementById('modal').classList.add('active')">Ver detalhes</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal" class="modal-overlay" onclick="this.classList.remove('active')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
+                <h3 style="display: flex; align-items: center; gap: 10px;"><i class="ph ph-package" style="color: var(--neon-green)"></i> Detalhes do Produto</h3>
+                <i class="ph ph-trash" style="color: var(--danger-red); cursor: pointer; font-size: 1.2rem;"></i>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 0.85rem; color: var(--text-secondary);">
+                <p>Nome: Iphone 17</p>
+                <p>Id: 01</p>
+                <p>Marca: Apple</p>
+                <p>Valor: R$ 15.000</p>
+                <p style="grid-column: span 2;">Descrição: Smartphone branco com 128Gb de armazenamento</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

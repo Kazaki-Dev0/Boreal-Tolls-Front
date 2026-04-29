@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - ERP Dashboard</title>
+    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* VARIÁVEIS DE COR */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-sidebar: #06100b;
+            --bg-panel: #131715;
+            --bg-topbar: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa09d;
+            --neon-green: #87ffb9;
+            --neon-green-glow: rgba(135, 255, 185, 0.4);
+            --dark-green: #1a3a29;
+            --border-color: #242e29;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- TOPBAR --- */
+        .topbar {
+            height: 60px;
+            background-color: var(--bg-topbar);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 10;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .topbar-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--neon-green);
+            font-size: 1.5rem;
+        }
+
+        .topbar-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .topbar-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .topbar-links a:hover, .topbar-links a.active {
+            color: var(--neon-green);
+        }
+
+        .topbar-search {
+            background-color: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 350px;
+        }
+
+        .topbar-search input {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            width: 100%;
+            font-size: 0.85rem;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topbar-right .nav-icons {
+            display: flex;
+            gap: 15px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .nav-icons i:hover {
+            color: var(--neon-green);
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .user-pill:hover {
+            background: rgba(135, 255, 185, 0.1);
+            color: var(--neon-green);
+        }
+
+        /* --- SIDEBAR --- */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--bg-sidebar) 0%, #030805 100%);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+        }
+
+        .brand-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green-glow);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            border: 2px solid var(--dark-green);
+            background-color: var(--dark-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--neon-green);
+        }
+
+        .sidebar-section-title {
+            padding: 1rem 1.5rem 0.5rem 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 0 1rem 1rem 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            color: var(--neon-green);
+        }
+
+        .nav-item:hover { 
+            background: rgba(135, 255, 185, 0.05); 
+            transform: translateX(5px);
+        }
+        
+        .nav-item.active { 
+            background: var(--dark-green); 
+            border-left: 3px solid var(--neon-green);
+        }
+
+        .nav-logout {
+            margin-top: auto;
+            padding: 15px 25px;
+            border-top: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-logout:hover {
+            color: #ff6b6b;
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
+            overflow-y: auto;
+        }
+
+        /* --- CARROSSEL / BANNERS --- */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            /* Fundo Aurora Boreal Falsa com Máscara Verde Escura */
+            background: linear-gradient(135deg, rgba(3, 10, 6, 0.9) 0%, rgba(6, 59, 36, 0.7) 100%), url('https://images.unsplash.com/photo-1531366936337-775928d00c41?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 3rem;
+            z-index: 1;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .banner-content {
+            max-width: 600px;
+        }
+
+        .banner-content h2 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .banner-content h2 span {
+            color: var(--neon-green);
+            font-weight: 600;
+            text-shadow: 0 0 15px var(--neon-green-glow);
+        }
+
+        .banner-content p {
+            font-size: 1rem;
+            color: #d1ffe3;
+            letter-spacing: 1px;
+        }
+        
+        .banner-icon {
+            font-size: 3rem;
+            color: var(--neon-green);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px var(--neon-green-glow));
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green);
+            width: 25px;
+            border-radius: 5px;
+        }
+
+        /* --- GRID DE MÓDULOS --- */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .module-card {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .module-card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 10px 25px rgba(135, 255, 185, 0.1);
+            transform: translateY(-5px);
+            background: linear-gradient(180deg, var(--bg-panel) 0%, rgba(26, 58, 41, 0.3) 100%);
+        }
+
+        .module-card .icon-box {
+            font-size: 2.5rem;
+            color: var(--neon-green);
+            background: rgba(135, 255, 185, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .module-card:hover .icon-box {
+            background: var(--neon-green);
+            color: var(--bg-main);
+            box-shadow: 0 0 15px var(--neon-green-glow);
+        }
+
+        .module-title {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        .module-card:hover .module-title {
+            color: var(--neon-green);
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-logo-container">
+                <i class="ph-fill ph-leaf"></i>
+            </div>
+            
+            <div class="topbar-links">
+                <a href="#">Cadastros</a>
+                <a href="#" class="active">Operações</a>
+                <a href="#">Relatórios</a>
+                <a href="#">Minha conta</a>
+            </div>
+        </div>
+
+        <div class="topbar-search">
+            <i class="ph ph-magnifying-glass" style="color: var(--text-secondary)"></i>
+            <input type="text" placeholder="Pesquisar no Boreal...">
+        </div>
+
+        <div class="topbar-right">
+            <div class="nav-icons">
+                <i class="ph ph-squares-four"></i>
+                <i class="ph ph-bell"></i>
+                <i class="ph ph-gear"></i>
+            </div>
+            <div class="user-pill">
+                <i class="ph-fill ph-user-circle"></i>
+                <span>dtm</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-container">
+                    <span class="brand-name">BOREAL TOOLS</span>
+                </div>
+                
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <i class="ph ph-user"></i>
+                    </div>
+                    <span style="font-size: 1rem;">Utilizador Boreal</span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">contato@borealtools.erp</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section-title">Atalhos Rápidos</div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item"><i class="ph ph-user-plus"></i> Cadastrar Cliente</a>
+                <a href="#" class="nav-item"><i class="ph ph-shopping-cart"></i> Nova Venda</a>
+                <a href="#" class="nav-item"><i class="ph ph-receipt"></i> Emitir NFe</a>
+                <a href="#" class="nav-item"><i class="ph ph-file-text"></i> Relatório de Vendas</a>
+            </nav>
+
+            <div class="sidebar-section-title">Navegação Principal</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active"><i class="ph ph-house"></i> Dashboard Inicial</a>
+                <a href="produtos.html" class="nav-item"><i class="ph ph-package"></i> Meus Produtos</a>
+                <a href="#" class="nav-item"><i class="ph ph-gear"></i> Configurações</a>
+            </nav>
+
+            <a href="login.html" class="nav-logout">
+                <i class="ph ph-sign-out"></i> Sair do Sistema
+            </a>
+        </aside>
+
+        <main class="content">
+            
+            <div class="carousel-wrapper">
+                
+                <div class="carousel-slide active">
+                    <div class="banner-content">
+                        <h2><span>Boreal Tools:</span> Gestão Simplificada.</h2>
+                        <p>Explore o poder do neon. Controle absoluto de suas operações em uma interface moderna.</p>
+                    </div>
+                </div>
+
+                <div class="carousel-slide">
+                    <div class="banner-content" style="text-align: center; width: 100%; max-width: 100%;">
+                        <i class="ph ph-chart-line-up banner-icon"></i>
+                        <h2>Relatórios <span>Detalhados</span></h2>
+                        <p>Acompanhe o crescimento da sua empresa em tempo real.</p>
+                    </div>
+                </div>
+
+                <div class="carousel-slide">
+                    <div class="banner-content" style="text-align: right; width: 100%; max-width: 100%; padding-right: 2rem;">
+                        <i class="ph ph-headset banner-icon"></i>
+                        <h2>Suporte <span>Premium</span></h2>
+                        <p>Treinamento de Equipe e assistência 24/7 para seu negócio.</p>
+                    </div>
+                </div>
+
+                <div class="carousel-indicators">
+                    <span class="dot active" onclick="currentSlide(0)"></span>
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                </div>
+            </div>
+
+            <section class="modules-grid">
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-users"></i></div>
+                    <span class="module-title">Clientes</span>
+                </a>
+                
+                <a href="./produtos.html" class="module-card">
+                    <div class="icon-box"><i class="ph ph-package"></i></div>
+                    <span class="module-title">Produtos</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-archive"></i></div>
+                    <span class="module-title">Estoque</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-wrench"></i></div>
+                    <span class="module-title">Serviços</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-shopping-cart"></i></div>
+                    <span class="module-title">Vendas</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-receipt"></i></div>
+                    <span class="module-title">Emissão NFe</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-shopping-bag"></i></div>
+                    <span class="module-title">Compras</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-calculator"></i></div>
+                    <span class="module-title">Contas a Receber/Pagar</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-chart-pie"></i></div>
+                    <span class="module-title">Relatórios Financeiros</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-file-text"></i></div>
+                    <span class="module-title">Relatórios de Vendas</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-user-gear"></i></div>
+                    <span class="module-title">Gerenciamento de Usuários</span>
+                </a>
+                
+                <a href="#" class="module-card">
+                    <div class="icon-box"><i class="ph ph-gear"></i></div>
+                    <span class="module-title">Configurações Gerais</span>
+                </a>
+            </section>
+            
+        </main>
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        let slideInterval;
+        const slides = document.querySelectorAll(".carousel-slide");
+        const dots = document.querySelectorAll(".dot");
+
+        function showSlides(n) {
+            if (n >= slides.length) slideIndex = 0;
+            if (n < 0) slideIndex = slides.length - 1;
+            
+            slides.forEach(slide => slide.classList.remove("active"));
+            dots.forEach(dot => dot.classList.remove("active"));
+            
+            slides[slideIndex].classList.add("active");
+            dots[slideIndex].classList.add("active");
+        }
+
+        function nextSlide() {
+            slideIndex++;
+            showSlides(slideIndex);
+        }
+
+        function currentSlide(n) {
+            slideIndex = n;
+            showSlides(slideIndex);
+            resetInterval();
+        }
+
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 5000); // Muda a cada 5 segundos
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+
+        // Inicia o carrossel
+        startInterval();
+    </script>
+</body>
+</html>
