@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funcionários</title>
-    <link rel="stylesheet" href="funcionarios.css">
+    <title>RH - Holerite</title>
+    <link rel="stylesheet" href="folhaPagamento.css">
 </head>
 <body>
     <header>
@@ -50,7 +50,7 @@
                 <a href="">Vendas</a>
             </div>
             <div class="secoes">
-                <img src="./img/funcionarios.png" alt="" class="secao-icon"> <!--DESTAQUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE-->
+                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
                 <a href="">Funcionários</a>
             </div>
             <div class="secoes">
@@ -68,41 +68,34 @@
     <main>
         <div class="main-header">
             <div class="titulo">
-                <h2><img src="./img/mala.png" alt=""> Quadro de Funcionários</h2>
+                <h2><img src="./img/RH-Icon.png" alt=""> Recursos Humanos (Holerite) </h2>
                 <p>Gerencie a equipe, cargos, salários e horas extras.</p>
             </div>
             <div class="atalhos-main">
-                <input type="text" placeholder="🔍︎​ Buscar por nome...">
-                <a href="funcionariosCadastrar.html"><button>+ Cadastrar</button></a>
+                <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
             </div>
         </div>
-        <div class="list">
-            <article>
-                <div class="info-funcionarios">
-                    <img src="" alt="">
-                    <div class="nome-cargo">
-                        <h4>Carlos Souza</h4>
-                        <p>Vendedor</p>
+        <div class="containt">
+            <div class="left">
+                <div class="proventos">
+                    <h5>Proventos (+)</h5>
+                    <div class="input-provento">
+                        <label for="">Salário Base</label>
+                        <input type="number">
                     </div>
-                    <p>ID: 1</p>
+                    <div class="input-provento">
+                        <label for="">Outros (Horas Extras, Bônus)</label>
+                        <input type="number">
+                    </div>
                 </div>
-                <a href="folhaPagamento.html">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Salário Base</td>
-                                <td>R$ 2.500,00</td>
-                            </tr>
-                            <tr>
-                                <td>Horas Extras</td>
-                                <td>15h</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </a>
-            </article>
+                <div class="descontos">
+                    <h5>Descontos (-)</h5>
+                </div>
+            </div>
+            <div class="right">
+
+            </div>
         </div>
     </main>
-    
 </body>
 </html>
