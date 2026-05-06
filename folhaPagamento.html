@@ -8,18 +8,7 @@
 </head>
 <body>
     <header>
-        <div class="header-left">
-            <img class="logo" src="" alt="">
-            <nav-bar class="nav-bar">
-                <a href="">Cadastros</a>
-                <a href="">Operações</a>
-                <a href="">Relatórios<a>
-                <a href="">Minha conta</a>
-            </nav-bar>
-        </div>
-        <div class="header-right">
-            <input type="text" placeholder="🔍︎​ Pesquisar">
-        </div>
+        
     </header>
 
     <section class="side-bar">
@@ -81,19 +70,57 @@
                     <h5>Proventos (+)</h5>
                     <div class="input-provento">
                         <label for="">Salário Base</label>
-                        <input type="number">
+                        <input type="number" placeholder="0.00">
                     </div>
                     <div class="input-provento">
                         <label for="">Outros (Horas Extras, Bônus)</label>
-                        <input type="number">
+                        <input type="number" placeholder="0.00">
                     </div>
                 </div>
                 <div class="descontos">
                     <h5>Descontos (-)</h5>
+                    <div class="descontosInputs">
+                        <div class="input-desconto">
+                            <label for="">INSS</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                        <div class="input-desconto">
+                            <label for="">IRRF</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                        <div class="input-desconto">
+                            <label for="">Benefícios (Vt/Vr)</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                        <div class="input-desconto">
+                            <label for="">Outros (Faltas)</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="right">
-
+                <div class="up">
+                    <div class="select">
+                        <label for="">Selecione o funcionário</label>
+                        <select name="funcionario" id="funcionario">
+                
+                        </select>
+                    </div>
+                    <h5>Resumo da Folha</h5>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Total de Proventos:</td>
+                                <td>R$ 0,00</td>
+                            </tr>
+                            <tr>
+                                <td>Total de Descontos:</td>
+                                <td>- R$ 0,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>

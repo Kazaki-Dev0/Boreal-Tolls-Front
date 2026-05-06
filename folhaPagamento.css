@@ -66,6 +66,7 @@ header {
     flex-direction: column;
     gap: 30px;
     border-right: 1px solid #222;
+    height: 100vh;
 }
 
 .logo {
@@ -119,19 +120,12 @@ header {
     font-size: 0.9rem;
 }
 
-/* Main Content Area */
-main {
-    padding: 40px;
-    overflow-y: auto;
-}
 
 /* O "Quadro" centralizado com borda brilhante */
 main {
     border: 1px solid #2e4a3e;
-    width: 70%;
     border-radius: 20px;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.02);
     box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
     margin: 10%;
 }
@@ -147,7 +141,6 @@ main {
     margin-bottom: 5px;
     display: flex;
     align-items: center;
-    
 }
 
 .titulo p {
@@ -187,13 +180,15 @@ main {
 }
 
 .containt {
-    display: flex;
-    
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    gap: 16px;
 }
 
 .left, .right {
     background-color: #222;
-    padding: 16px;
+    border-radius: 20px;
+    padding: 25px;
 }
 
 .left {
@@ -202,15 +197,32 @@ main {
     gap: 20px;
 }
 
+.left input {
+    border-radius: 20px;
+    height: 30px;
+    padding: 10px;
+}
+
 .proventos, .descontos {
     background-color: #3d3d3d;
     padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    border-radius: 15px;
 }
 
 .input-provento {
     display: flex;
     flex-direction: column;
+}
+
+.descontosInputs {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 8px;
+}
+
+.input-desconto input{
+    width: 100%;
 }
