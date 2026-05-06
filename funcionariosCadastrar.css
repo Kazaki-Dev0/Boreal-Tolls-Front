@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -132,6 +131,12 @@ main {
     margin: 10%;
 }
 
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .titulo h2 {
     font-size: 1.8rem;
     margin-bottom: 5px;
@@ -176,59 +181,8 @@ main {
     background-color: #81c784;
 }
 
-/* Grid de Cards */
-.list {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-article {
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 15px;
-    width: 320px;
-}
-
-.info-funcionarios {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.info-funcionarios img {
-    width: 45px;
-    height: 45px;
-    background-color: #a5d6a7;
-    border-radius: 50%;
-}
-
-.nome-cargo h4 {
-    font-size: 1.1rem;
-}
-
-.nome-cargo p {
-    color: #777;
-    font-size: 0.8rem;
-}
-
-/* Tabela interna do card */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-td {
-    padding: 8px 0;
-    font-size: 0.9rem;
-}
-
-td:first-child {
-    color: #aaa;
-}
-
-td:last-child {
-    text-align: right;
-    font-weight: bold;
+.inputs-cad {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 10px;
 }

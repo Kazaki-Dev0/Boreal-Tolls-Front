@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funcionários</title>
-    <link rel="stylesheet" href="funcionarios.css">
+    <title>Cadastro Novo Funcionáro</title>
+    <link rel="stylesheet" href="funcionariosCadastrar.css">
 </head>
 <body>
     <header>
@@ -50,7 +50,7 @@
                 <a href="">Vendas</a>
             </div>
             <div class="secoes">
-                <img src="./img/funcionarios.png" alt="" class="secao-icon"> <!--DESTAQUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE-->
+                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
                 <a href="">Funcionários</a>
             </div>
             <div class="secoes">
@@ -68,39 +68,64 @@
     <main>
         <div class="main-header">
             <div class="titulo">
-                <h2><img src="./img/mala.png" alt=""> Quadro de Funcionários</h2>
+                <h2><img src="./img/mala.png" alt=""> Novo Funcionário</h2>
                 <p>Gerencie a equipe, cargos, salários e horas extras.</p>
             </div>
             <div class="atalhos-main">
-                <input type="text" placeholder="🔍︎​ Buscar por nome...">
-                <a href="funcionariosCadastrar.html"><button>+ Cadastrar</button></a>
+                <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
             </div>
         </div>
-        <div class="list">
-            <article>
-                <div class="info-funcionarios">
-                    <img src="" alt="">
-                    <div class="nome-cargo">
-                        <h4>Carlos Souza</h4>
-                        <p>Vendedor</p>
-                    </div>
-                    <p>ID: 1</p>
-                </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Salário Base</td>
-                            <td>R$ 2.500,00</td>
-                        </tr>
-                        <tr>
-                            <td>Horas Extras</td>
-                            <td>15h</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
-        </div>
+        <form action="">
+            <div class="inputs-cad">
+
+                
+                <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">Nome Completo</label>
+                <input type="text">
+
+                <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">RG</label>
+                <input type="text">
+
+                <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">CPF</label>
+                <input type="text">
+
+                <label for=""><img src="./img/tel-cad-func.png" alt="">Telefone</label>
+                <input type="text">
+
+                <label for=""><img src="./img/email-cad-func.png" alt="">Email</label>
+                <input type="text">
+
+                <label for=""><img src="./img/data-cad-func.png" alt="">Data de Nascimento</label>
+                <input type="text">
+
+                <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">Departamento</label>
+                <input type="text">
+
+                <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">Cargo/Função</label>
+                <input type="text">
+
+                <label for=""><img src="./img/sifrao-cad-func.png" alt="">Salário Base (R$)</label>
+                <input type="text">
+
+                <label for=""><img src="./img/ender-cad-func.png" alt="">CEP</label>
+                <input type="text">
+
+                <label for=""><img src="./img/ender-cad-func.png" alt="">Rua</label>
+                <input type="text">
+
+                <label for=""><img src="./img/ender-cad-func.png" alt="">Bairro</label>
+                <input type="text">
+
+                <label for=""><img src="./img/ender-cad-func.png" alt="">Cidade</label>
+                <input type="text">
+
+                <label for=""><img src="./img/ender-cad-func.png" alt="">Estado</label>
+                <input type="text">
+
+                <label for=""><img src="./img/ender-cad-func.png" alt="">Complemento</label>
+                <input type="text">
+            </div>
+            <button type="submit">Cadastrar Funcionário</button>
+        </form>
     </main>
-    
 </body>
 </html>
