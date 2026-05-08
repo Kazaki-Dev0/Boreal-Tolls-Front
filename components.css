@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input {
+    background-color: #D9D9D9;
+    border: none;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    color: #F9F9F9;
+    background-color: #383838;
+    gap: 2px;
+}
+
+th, td {
+    border: none;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #383838;
+    margin: 10px;
+}
+
+td {
+    background-color: #1f1f1f;
+}
+
+
