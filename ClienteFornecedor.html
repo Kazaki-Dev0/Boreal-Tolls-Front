@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Dashboard</title>
+    <link rel="stylesheet" href="ClienteFornecedor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <img class="logo" src="" alt="">
+            <nav-bar class="nav-bar">
+                <a href="">Cadastros</a>
+                <a href="">Operações</a>
+                <a href="">Relatórios<a>
+                <a href="">Minha conta</a>
+            </nav-bar>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="🔍︎​ Pesquisar">
+        </div>
+    </header>
+
+    <section class="side-bar">
+        <img src="./img/LogoBorealTools.png" alt="" class="logo">
+        <div class="perfil">
+            <img src="./img/perfil-icon.png" alt="">
+            <p>Fulano de Tal</p>
+        </div>
+        <div class="nav-side-bar">
+            <div class="secoes">
+                <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                <a href="">Início</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/produtos.png" alt="" class="secao-icon">
+                <a href="">Produtos</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/estoque.png" alt="" class="secao-icon">
+                <a href="">Estoques</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/financeiro.png" alt="" class="secao-icon">
+                <a href="">Financeiro</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/vendas.png" alt="" class="secao-icon">
+                <a href="">Vendas</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
+                <a href="">Funcionários</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/relatorios.png" alt="" class="secao-icon">
+                <a href="">Relatórios</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/clientes.png" alt="" class="secao-icon">
+                <a href="">Clientes</a>
+            </div>
+        </div>
+        <a href="">← Deslogar</a>
+    </section>
+
+            
+
+            <section class="clients-section">
+                <div class="clients-card">
+            
+                    <div class="clients-header">
+                        <h2><i class="fa-solid fa-user"></i> Clientes e Fornecedores Registrados</h2>
+            
+                        <div class="actions">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" placeholder="Buscar por ID, Nome ou CPF/CNPJ">
+                            </div>
+                            <button class="btn-add"><a href="cadastrarCliente.html">+ Cadastrar</a></button>
+                        </div>
+                    </div>
+            
+                    <p class="subtitle">
+                        Gerencie sua base de clientes e fornecedores, acompanhando informações detalhadas.
+                    </p>
+            
+                    <!-- CLIENTES -->
+                    <div class="table-block">
+                        <h3>Clientes:</h3>
+            
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Id</th>
+                                    <th>Email</th>
+                                    <th>CPF</th>
+                                    <th>Data de Nascimento</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Kaique Kawasaki</td>
+                                    <td>01</td>
+                                    <td>kaique@email.com</td>
+                                    <td>12345678910</td>
+                                    <td>10/10/2008</td>
+                                    <td><button class="btn-detail">Ver detalhes</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            
+                    <!-- FORNECEDORES -->
+                    <div class="table-block">
+                        <div class="table-header">
+                            <h3>Fornecedores:</h3>
+            
+                            <div class="search-box small">
+                                <input type="text" placeholder="Pesquisar por Id, Nome ou CPF/CNPJ">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                        </div>
+            
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Id</th>
+                                    <th>Email</th>
+                                    <th>CNPJ</th>
+                                    <th>Telefone</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mario Bidoia</td>
+                                    <td>01</td>
+                                    <td>mario@email.com</td>
+                                    <td>12345678912345</td>
+                                    <td>11 99999-9999</td>
+                                    <td><button class="btn-detail">Ver detalhes</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
