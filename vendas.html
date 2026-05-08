@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funcionários</title>
+    <title>Vendas/Pedidos</title>
     <style>
         * {
     margin: 0;
@@ -18,7 +18,6 @@ body {
     color: white;
     display: grid;
     grid-template-columns: 400px 1fr;
-
     height: 100%;
 }
 
@@ -40,17 +39,11 @@ a {
     height: 100vh;
 }
 
-.logo {
-    width: auto;
-}
+.logo {width: auto;}
 
-.perfil {
-    text-align: center;
-}
+.perfil {text-align: center;}
 
-.perfil p {
-    font-size: 24px;
-}
+.perfil p {font-size: 24px;}
 
 .perfil img {
     width: 80px;
@@ -76,14 +69,10 @@ a {
     cursor: pointer;
 }
 
-.secoes:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
+.secoes:hover {background: rgba(255, 255, 255, 0.05);}
 
-/* Destaque para a página atual (Funcionários) */
-.secoes:nth-child(6) {
-    background-color: #2e4a3e; /* Verde escuro */
-}
+/* Destaque para a página atual (Vendas) */
+.secoes:nth-child(5) {background-color: #2e4a3e;}
 
 .secoes a {
     color: white;
@@ -91,15 +80,8 @@ a {
     font-size: 0.9rem;
 }
 
-
-/* Main Content Area */
 main {
-    padding: 40px;
     overflow-y: auto;
-}
-
-/* O "Quadro" centralizado com borda brilhante */
-main {
     border: 1px solid #2e4a3e;
     width: 70%;
     border-radius: 20px;
@@ -149,67 +131,7 @@ main {
     transition: 0.3s;
 }
 
-.atalhos-main button:hover {
-    background-color: #81c784;
-}
-
-/* Grid de Cards */
-.list {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-article {
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 15px;
-    width: 320px;
-    cursor: pointer;
-}
-
-.info-funcionarios {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.info-funcionarios img {
-    width: 45px;
-    height: 45px;
-    background-color: #a5d6a7;
-    border-radius: 50%;
-}
-
-.nome-cargo h4 {
-    font-size: 1.1rem;
-}
-
-.nome-cargo p {
-    color: #777;
-    font-size: 0.8rem;
-}
-
-/* Tabela interna do card */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-td {
-    padding: 8px 0;
-    font-size: 0.9rem;
-}
-
-td:first-child {
-    color: #aaa;
-}
-
-td:last-child {
-    text-align: right;
-    font-weight: bold;
-}
+.atalhos-main button:hover {background-color: #81c784;}
     </style>
 </head>
 <body>
@@ -242,7 +164,7 @@ td:last-child {
                 <a href="vendas.html">Vendas</a>
             </div>
             <div class="secoes">
-                <img src="./img/funcionarios.png" alt="" class="secao-icon"> <!--DESTAQUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE-->
+                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
                 <a href="funcionarios.html">Funcionários</a>
             </div>
             <div class="secoes">
@@ -260,40 +182,48 @@ td:last-child {
     <main>
         <div class="main-header">
             <div class="titulo">
-                <h2><img src="./img/mala.png" alt=""> Quadro de Funcionários</h2>
-                <p>Gerencie a equipe, cargos, salários e horas extras.</p>
+                <h2><img src="./img/vendas-grande.png" alt="">Registro de Vendas</h2>
+                <p>Acompanhe pedidos, itens vendidos e faturamento.</p>
             </div>
             <div class="atalhos-main">
-                <input type="text" placeholder="🔍︎​ Buscar por nome...">
-                <a href="funcionariosCadastrar.html"><button>+ Cadastrar</button></a>
-                <a href="folhaPagamento.html"><button>+ Lançar pagamento</button></a>
+                <input type="text" placeholder="🔍︎​ Buscar por cliente ou ID...">
+                <a href="funcionariosCadastrar.html"><button>+ Registrar Venda</button></a>
             </div>
         </div>
-        <div class="list">
-            <article id="card-funcionario">
-                <div class="info-funcionarios">
-                    <img src="" alt="">
-                    <div class="nome-cargo">
-                        <h4>Carlos Souza</h4>
-                        <p>Vendedor</p>
-                    </div>
-                    <p>ID: 1</p>
-                </div>
+        <div class="lista-vendas" id="lista-vendas">
+            <article>
                 <table>
+                    <thead>
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Data</th>
+                            <th><img src="./img/clientes.png" alt=""> Cliente</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
-                            <td>Salário Base</td>
-                            <td>R$ 2.500,00</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
+                    </tbody>
+                </table>
+                <button id="btn-detalhesVenda" class="btn-detalhesVenda">Ver detalhes</button>
+                <table>
+                    <thead>
                         <tr>
-                            <td>Horas Extras</td>
-                            <td>15h</td>
+                            <th>Total da Venda</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>R$ 1.250,00</td>
                         </tr>
                     </tbody>
                 </table>
             </article>
         </div>
     </main>
-    
+
 </body>
 </html>
