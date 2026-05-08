@@ -187,11 +187,6 @@ main {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.left {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
 
 .left input {
     border-radius: 20px;
@@ -208,15 +203,59 @@ main {
     border-radius: 15px;
 }
 
+.left {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.proventos h5 {
+    color: #a5d6a7; 
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.descontos h5 {
+    color: #ee6559; 
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+/* Labels e Inputs */
+label {
+    display: block;
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+input {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 28px;
+    width: 100%;
+    font-weight: bold;
+    outline: none;
+}
+
 .input-provento {
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
+    width: 80%;
 }
 
 .descontosInputs {
     display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.input-desconto {
+    display: flex;
+    flex-direction: column;
 }
 
 .input-desconto input{
@@ -318,11 +357,11 @@ td:last-child {
         <div class="nav-side-bar">
             <div class="secoes">
                 <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                <a href="">Início</a>
+                <a href="dashboard.html">Início</a>
             </div>
             <div class="secoes">
                 <img src="./img/produtos.png" alt="" class="secao-icon">
-                <a href="">Produtos</a>
+                <a href="produtos.html">Produtos</a>
             </div>
             <div class="secoes">
                 <img src="./img/estoque.png" alt="" class="secao-icon">
