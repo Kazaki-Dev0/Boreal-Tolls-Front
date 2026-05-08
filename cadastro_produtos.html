@@ -9,23 +9,29 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* VARIÁVEIS DE COR MANTIDAS */
+        /* =========================================
+           1. VARIÁVEIS DE COR
+        ========================================= */
         :root {
             --bg-main: #0a0a0a;
             --bg-sidebar: #06100b;
             --bg-panel: #131715;
-            --bg-topbar: #111111;
             --text-primary: #ffffff;
             --text-secondary: #9aa09d;
             --neon-green: #87ffb9;
-            --neon-green-glow: rgba(135, 255, 185, 0.2);
             --dark-green: #1a3a29;
-            --btn-green: #2d4a3a; /* Tom mais escuro para o botão como na imagem */
             --border-color: #242e29;
-            --input-bg: #1e2220;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        /* =========================================
+           2. RESET E CONFIGURAÇÕES GERAIS
+        ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
         body {
             background-color: var(--bg-main);
@@ -34,98 +40,209 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
+        } 
+
+        a {
+            text-decoration: none;
+            color: #ffffff;
         }
 
-        /* --- REAPROVEITAMENTO DA ESTRUTURA (TOPBAR & SIDEBAR) --- */
-        .topbar {
-            height: 60px;
-            background-color: var(--bg-topbar);
-            border-bottom: 1px solid var(--border-color);
+        /* =========================================
+           3. ESTRUTURA PRINCIPAL (LAYOUT)
+        ========================================= */
+        .main-wrapper {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1.5rem;
-            z-index: 10;
+            flex: 1;
+            overflow: hidden;
         }
-        .topbar-left, .topbar-links, .topbar-right, .nav-icons { display: flex; align-items: center; gap: 1.5rem; }
-        .topbar-links a { color: var(--text-primary); text-decoration: none; font-size: 0.85rem; }
-        .topbar-links a.active { color: var(--neon-green); }
-        
-        .main-wrapper { display: flex; flex: 1; overflow: hidden; }
-        
-        .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, var(--bg-sidebar) 0%, #030805 100%);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar-header { padding: 2rem 1rem; text-align: center; }
-        .brand-name { font-size: 1.6rem; font-weight: 300; letter-spacing: 3px; color: var(--neon-green); margin-top: 10px; display: block; }
-        .user-avatar { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--dark-green); margin-bottom: 8px; }
-        
-        .sidebar-nav { padding: 1rem; display: flex; flex-direction: column; gap: 4px; flex: 1; }
-        .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 15px; border-radius: 6px; text-decoration: none; color: var(--text-primary); font-size: 0.9rem; }
-        .nav-item i { color: var(--neon-green); font-size: 1.3rem; }
-        .nav-item.active { background: var(--dark-green); }
 
-        /* --- CONTEÚDO CENTRAL (FORMULÁRIO) --- */
         .content {
             flex: 1;
-            padding: 2rem;
+            padding: 3rem 4rem;
             background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
+            overflow-y: auto;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            overflow-y: auto;
         }
 
+        /* =========================================
+           4. SIDEBAR (Idêntica à Lista de Produtos)
+        ========================================= */
+        .side-bar {
+            background-color: #1a1a1a; 
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            min-width: 460px;
+            width: 460px;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+        }
+
+        .logo {
+            width: auto;
+            max-width: 406px;
+        }
+
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .perfil img {
+            width: 80px;
+            height: 80px;
+            background: #c8e6c9;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+
+        .perfil p {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .perfil span {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .nav-side-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .secoes {
+            background-color: #0a0a0a;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+            gap: 10%;
+            cursor: pointer;
+        }
+
+        .secoes:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .secoes.active {
+            background-color: #3b5745;
+        }
+
+        .logout-link {
+            margin-top: auto;
+            padding: 15px 25px;
+            font-size: 0.85rem;
+        }
+
+        .logout-link a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .logout-link a:hover {
+            color: #ff6b6b;
+        }
+
+        /* =========================================
+           5. PAINEL DE FORMULÁRIO (Padronizado)
+        ========================================= */
         .form-panel {
-            background-color: var(--bg-panel);
-            border: 1px solid var(--neon-green); /* Borda neon conforme imagem */
-            box-shadow: 0 0 15px var(--neon-green-glow);
-            border-radius: 12px;
-            padding: 2rem;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(135, 255, 185, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 0 30px rgba(135, 255, 185, 0.05);
             width: 100%;
-            max-width: 600px;
+            max-width: 800px; /* Um pouco mais estreito que a tabela para o formulário não ficar esticado */
         }
 
         .form-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
         }
 
+        .form-title h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: #6da381;
+        }
+
+        .breadcrumb span {
+            color: #aaa;
+        }
+
+        .form-header-icon {
+            background: rgba(135, 255, 185, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            color: var(--neon-green);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* =========================================
+           6. CAMPOS DO FORMULÁRIO
+        ========================================= */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
+            gap: 1.5rem;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
         }
 
-        .input-group.full-width { grid-column: span 2; }
+        .full-width {
+            grid-column: 1 / -1;
+        }
 
         label {
             font-size: 0.85rem;
-            color: var(--text-primary);
-            font-weight: 500;
+            color: #b0b0b0;
+            font-weight: 400;
         }
 
         input, textarea {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 10px;
-            color: white;
+            background-color: transparent;
+            border: 1px solid #4a5a50;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text-primary);
             outline: none;
             font-size: 0.9rem;
-            transition: border 0.2s;
+            transition: border 0.3s;
+            width: 100%;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #666;
         }
 
         input:focus, textarea:focus {
@@ -133,97 +250,93 @@
         }
 
         textarea {
-            resize: none;
-            height: 80px;
+            resize: vertical;
+            min-height: 100px;
         }
 
         .btn-submit {
-            grid-column: span 2;
-            margin-top: 1rem;
-            background: transparent;
-            border: 1px solid var(--neon-green);
-            color: var(--text-primary);
-            padding: 12px;
-            border-radius: 25px;
-            cursor: pointer;
+            background-color: #8db59d;
+            color: #000;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-weight: 600;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
         }
 
         .btn-submit:hover {
-            background: var(--neon-green);
-            color: #000;
-            box-shadow: 0 0 20px var(--neon-green-glow);
+            background-color: var(--neon-green);
         }
-
-        .breadcrumb {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-        .breadcrumb span { color: var(--neon-green); }
-
     </style>
 </head>
 <body>
 
-    <nav class="topbar">
-        <div class="topbar-left">
-            <img src="./images/logo-removebg.png" alt="Boreal" style="height: 24px;">
-            <div class="topbar-links">
-                <a href="#">Cadastros</a>
-                <a href="#" class="active">Operações</a>
-                <a href="#">Relatórios</a>
-                <a href="#">Minha conta</a>
-            </div>
-        </div>
-        <div class="topbar-right">
-            <div class="nav-icons">
-                <i class="ph ph-squares-four"></i>
-                <i class="ph ph-bell"></i>
-                <i class="ph ph-gear"></i>
-            </div>
-            <div style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">
-                <span>dtm</span>
-            </div>
-        </div>
-    </nav>
-
     <div class="main-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="brand-container">
-                    <img src="./images/logo-removebg.png" alt="Boreal Logo" style="width: 60px;">
-                    <span class="brand-name">BOREAL TOOLS</span>
-                </div>
-                <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Fulano+De+Tal&background=87ffb9&color=000" alt="Perfil" class="user-avatar">
-                    <span style="font-size: 1rem;">Fulano de tal</span>
-                </div>
-            </div>
 
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item"><i class="ph ph-house"></i> Inicio</a>
-                <a href="produtos.html" class="nav-item active"><i class="ph ph-package"></i> Produtos</a>
-                <a href="#" class="nav-item"><i class="ph ph-archive"></i> Estoque</a>
-                <a href="#" class="nav-item"><i class="ph ph-chart-line-up"></i> Financeiro</a>
-                <a href="#" class="nav-item"><i class="ph ph-user"></i> Funcionarios</a>
+        <section class="side-bar">
+            <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+            </div>
+        
+            <div class="perfil">
+                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
+                <p>Fulano de Tal</p>
+                <span>fulanoemail@email.com</span>
+            </div>
+        
+            <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                    <a href="dashboard.html">Início</a>
+                </div>
+                <div class="secoes active" href="./produtos.html" >
+                    <img src="./img/produtos.png" alt="" class="secao-icon">
+                    <a href="./produtos.html">Produtos</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/estoque.png" alt="" class="secao-icon">
+                    <a href="#">Estoques</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/financeiro.png" alt="" class="secao-icon">
+                    <a href="./folhaPagamento.html">Financeiro</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/vendas.png" alt="" class="secao-icon">
+                    <a href="#">Vendas</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                    <a href="./funcionarios.html">Funcionários</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/relatorios.png" alt="" class="secao-icon">
+                    <a href="#">Relatórios</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/clientes.png" alt="" class="secao-icon">
+                    <a href="#">Clientes</a>
+                </div>
             </nav>
-            <a href="login.html" style="padding: 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;">
-                <i class="ph ph-arrow-left"></i> Deslogar
-            </a>
-        </aside>
+
+            <div class="logout-link">
+                <a href="./login.html">← Deslogar</a>
+            </div>
+        </section>
 
         <main class="content">
             <div class="form-panel">
                 <div class="form-header">
-                    <div>
-                        <h2 style="font-weight: 500; font-size: 1.5rem;">Cadastrar Produtos</h2>
-                        <p class="breadcrumb">Produtos > <span>Cadastrar Produtos</span></p>
+                    <div class="form-title">
+                        <h2>Cadastrar Produtos</h2>
+                        <div class="breadcrumb"><a href="./produtos.html" style="color: inherit;">Lista de Produtos</a> > <span>Cadastrar Produtos</span></div>
                     </div>
-                    <i class="ph ph-package" style="font-size: 2.5rem; color: var(--neon-green);"></i>
+                    <div class="form-header-icon">
+                        <i class="ph ph-package"></i>
+                    </div>
                 </div>
 
                 <form id="productForm" class="form-grid">
@@ -262,14 +375,16 @@
                         <textarea id="descricao" placeholder="Detalhes técnicos do produto..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit">Cadastrar</button>
+                    <div class="full-width">
+                        <button type="submit" class="btn-submit">Cadastrar Produto</button>
+                    </div>
                 </form>
             </div>
         </main>
     </div>
 
     <script>
-        // Lógica básica para interceptar o envio (depois você integra com sua API)
+        // Lógica básica para interceptar o envio
         document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = {
