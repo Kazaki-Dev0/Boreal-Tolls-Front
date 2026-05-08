@@ -21,8 +21,6 @@
             --neon-green-glow: rgba(135, 255, 185, 0.4);
             --dark-green: #1a3a29;
             --border-color: #242e29;
-            
-            /* Adição para os cards brancos */
             --white-glow: rgba(255, 255, 255, 0.3);
         }
 
@@ -40,7 +38,7 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
-        }
+        } 
 
         /* --- SIDEBAR --- */
         .main-wrapper {
@@ -49,18 +47,22 @@
             overflow: hidden;
         }
 
-        .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, var(--bg-sidebar) 0%, #030805 100%);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
+        .side-bar {
+            text-decoration: none;
+
+            grid-row: 2 / 3;
+    background-color: #222;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #222;
         }
 
         .sidebar-header {
             padding: 2rem 1rem 1rem 1rem;
             text-align: center;
+            text-decoration: none;
+
         }
 
         .brand-container {
@@ -74,16 +76,20 @@
             color: var(--neon-green);
             text-shadow: 0 0 10px var(--neon-green-glow);
             display: block;
+            text-decoration: none;
+
             margin-top: 5px;
         }
 
-        .user-profile {
+        .perfil {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 5px;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+
         }
 
         .user-avatar {
@@ -117,6 +123,8 @@
             color: var(--text-primary);
             font-size: 0.9rem;
             transition: all 0.2s;
+            text-decoration: none;
+
         }
 
         .nav-item i {
@@ -147,9 +155,59 @@
             transition: color 0.3s;
         }
         
+.logout-link{
+    padding: 10px;
+}
         .nav-logout:hover {
             color: #ff6b6b;
         }
+        .logo {
+    width: auto;
+}
+.perfil {
+    text-align: center;
+    text-decoration: none;
+
+}
+
+.perfil p {
+    font-size: 24px;
+}
+
+.perfil img {
+    width: 80px;
+    background: #c8e6c9;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.nav-side-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+
+}
+
+.secoes {
+    background-color: #0a0a0a;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+    gap: 10%;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.secoes:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
 
         /* --- CONTEÚDO PRINCIPAL --- */
         .content {
@@ -246,17 +304,16 @@
             border-radius: 5px;
         }
 
-        /* --- GRID DE MÓDULOS (VERDES) --- */
+        /* --- GRID DE MÓDULOS (VERDES) - ATUALIZADO PARA 2x4 --- */
         .modules-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* Centraliza os cards */
+            display: grid;
+            grid-template-columns: repeat(4, 220px); /* 4 colunas de 220px */
+            justify-content: center; /* Centraliza a grid inteira */
             gap: 1.5rem;
-            margin-bottom: 4.5rem; /* Aumentado o espaço entre as grids */
+            margin-bottom: 4.5rem;
         }
 
         .module-card {
-            width: 220px; /* Largura fixa para manter o alinhamento */
             background-color: var(--bg-panel);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -358,41 +415,59 @@
 <body>
 
     <div class="main-wrapper">
-        <aside class="sidebar">
+
+        <section class="side-bar">
             <div class="sidebar-header">
-                <div class="brand-container">
-                    <span class="brand-name">BOREAL TOOLS</span>
-                </div>
-                
-                <div class="user-profile">
-                    <div class="user-avatar">
-                        <i class="ph ph-user"></i>
-                    </div>
-                    <span style="font-size: 1rem;">Fulano de tal</span>
-                    <span style="font-size: 0.75rem; color: var(--text-secondary);">admin@boreal.com</span>
-                </div>
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
             </div>
-
-            <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-item active"><i class="ph ph-house"></i> Início</a>
-                <a href="produtos.html" class="nav-item"><i class="ph ph-package"></i> Produtos</a>
-                <a href="estoque.html" class="nav-item"><i class="ph ph-archive"></i> Estoque</a>
-                <a href="financeiro.html" class="nav-item"><i class="ph ph-chart-line-up"></i> Financeiro</a>
-                <a href="vendas.html" class="nav-item"><i class="ph ph-shopping-cart"></i> Vendas</a>
-                <a href="funcionarios.html" class="nav-item"><i class="ph ph-user-circle"></i> Funcionários</a>
-                <a href="relatorios.html" class="nav-item"><i class="ph ph-file-text"></i> Relatórios</a>
-                <a href="clientes.html" class="nav-item"><i class="ph ph-users"></i> Clientes</a>
+        
+            <div class="perfil">
+                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
+                <p>Fulano de Tal</p>
+            </div>
+        
+            <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                    <a href="#">Início</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/produtos.png" alt="" class="secao-icon">
+                    <a href="#">Produtos</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/estoque.png" alt="" class="secao-icon">
+                    <a href="#">Estoques</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/financeiro.png" alt="" class="secao-icon">
+                    <a href="#">Financeiro</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/vendas.png" alt="" class="secao-icon">
+                    <a href="#">Vendas</a>
+                </div>
+                <div class="secoes active">
+                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                    <a href="#">Funcionários</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/relatorios.png" alt="" class="secao-icon">
+                    <a href="#">Relatórios</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/clientes.png" alt="" class="secao-icon">
+                    <a href="#">Clientes</a>
+                </div>
             </nav>
-
-            <a href="login.html" class="nav-logout">
-                <i class="ph ph-arrow-left"></i> Deslogar
-            </a>
-        </aside>
+            <div class="logout-link">
+                <a href="#">← Deslogar</a>
+            </div>
+        </section>
 
         <main class="content">
             
             <div class="carousel-wrapper">
-                
                 <div class="carousel-slide active">
                     <div class="banner-content">
                         <h2><span>Boreal Tools:</span> Gestão Simplificada.</h2>
@@ -523,7 +598,7 @@
         }
 
         function startInterval() {
-            slideInterval = setInterval(nextSlide, 5000); // Muda a cada 5 segundos
+            slideInterval = setInterval(nextSlide, 5000);
         }
 
         function resetInterval() {
@@ -531,7 +606,6 @@
             startInterval();
         }
 
-        // Inicia o carrossel
         startInterval();
     </script>
 </body>
