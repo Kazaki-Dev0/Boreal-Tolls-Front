@@ -49,13 +49,12 @@
 
         .side-bar {
             text-decoration: none;
-
             grid-row: 2 / 3;
-    background-color: #222;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid #222;
+            background-color: #222;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #222;
         }
 
         .sidebar-header {
@@ -156,7 +155,7 @@
         }
         
 .logout-link{
-    padding: 10px;
+    padding: 15px;
 }
         .nav-logout:hover {
             color: #ff6b6b;
@@ -191,6 +190,17 @@ a{
     gap: 10px;
     text-decoration: none;
 
+}
+.secoes-seleciondo{
+    background-color: #3b5745;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+    gap: 10%;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .secoes {
@@ -427,11 +437,11 @@ a{
             </div>
         
             <nav class="nav-side-bar">
-                <div class="secoes">
+                <div class="secoes-seleciondo">
                     <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
                     <a href="#">Início</a>
                 </div>
-                <div class="secoes">
+                <div class="secoes" href="./produtos.html" >
                     <img src="./img/produtos.png" alt="" class="secao-icon">
                     <a href="./produtos.html">Produtos</a>
                 </div>
