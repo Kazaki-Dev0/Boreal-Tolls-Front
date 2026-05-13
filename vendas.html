@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funcionários</title>
+    <title>Vendas/Pedidos</title>
     <style>
         * {
     margin: 0;
@@ -18,7 +18,6 @@ body {
     color: white;
     display: grid;
     grid-template-columns: 400px 1fr;
-
     height: 100%;
 }
 
@@ -40,17 +39,11 @@ a {
     height: 100vh;
 }
 
-.logo {
-    width: auto;
-}
+.logo {width: auto;}
 
-.perfil {
-    text-align: center;
-}
+.perfil {text-align: center;}
 
-.perfil p {
-    font-size: 24px;
-}
+.perfil p {font-size: 24px;}
 
 .perfil img {
     width: 80px;
@@ -64,17 +57,6 @@ a {
     flex-direction: column;
     gap: 10px;
 }
-.secoes-seleciondo{
-    background-color: #3b5745;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 8px;
-    transition: 0.3s;
-    gap: 10%;
-    cursor: pointer;
-    text-decoration: none;
-}
 
 .secoes {
     background-color: #0a0a0a;
@@ -87,14 +69,10 @@ a {
     cursor: pointer;
 }
 
-.secoes:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
+.secoes:hover {background: rgba(255, 255, 255, 0.05);}
 
-/* Destaque para a página atual (Funcionários) */
-.secoes:nth-child(6) {
-    background-color: #2e4a3e; /* Verde escuro */
-}
+/* Destaque para a página atual (Vendas) */
+.secoes:nth-child(5) {background-color: #2e4a3e;}
 
 .secoes a {
     color: white;
@@ -102,15 +80,8 @@ a {
     font-size: 0.9rem;
 }
 
-
-/* Main Content Area */
 main {
-    padding: 40px;
     overflow-y: auto;
-}
-
-/* O "Quadro" centralizado com borda brilhante */
-main {
     border: 1px solid #2e4a3e;
     width: 70%;
     border-radius: 20px;
@@ -160,66 +131,59 @@ main {
     transition: 0.3s;
 }
 
-.atalhos-main button:hover {
+.atalhos-main button:hover {background-color: #81c784;}
+
+.venda-card {
+    background-color: #2c2a29; /* Cor escura do card */
+    border-radius: 20px;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espalha os itens horizontalmente */
+    color: white;
+    margin-bottom: 10px;
+}
+
+.info-grupo {
+    display: flex;
+    flex-direction: column; /* Label em cima, Valor embaixo */
+    gap: 5px;
+}
+
+.info-grupo .label {
+    font-size: 0.85rem;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.info-grupo .valor {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.btn-detalhesVenda {
+    background-color: #80B297; 
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn-detalhesVenda:hover {
     background-color: #81c784;
 }
 
-/* Grid de Cards */
-.list {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-article {
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 15px;
-    width: 320px;
-    cursor: pointer;
-}
-
-.info-funcionarios {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.info-funcionarios img {
-    width: 45px;
-    height: 45px;
-    background-color: #a5d6a7;
-    border-radius: 50%;
-}
-
-.nome-cargo h4 {
-    font-size: 1.1rem;
-}
-
-.nome-cargo p {
-    color: #777;
-    font-size: 0.8rem;
-}
-
-/* Tabela interna do card */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-td {
-    padding: 8px 0;
-    font-size: 0.9rem;
-}
-
-td:first-child {
-    color: #aaa;
-}
-
-td:last-child {
+.info-grupo.total {
     text-align: right;
-    font-weight: bold;
+}
+
+.info-grupo.total .valor {
+    font-size: 1.2rem;
 }
     </style>
 </head>
@@ -234,26 +198,26 @@ td:last-child {
         <div class="nav-side-bar">
             <div class="secoes">
                 <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                <a href="">Início</a>
+                <a href="dashboard.html">Início</a>
             </div>
             <div class="secoes">
                 <img src="./img/produtos.png" alt="" class="secao-icon">
-                <a href="">Produtos</a>
+                <a href="produtos.html">Produtos</a>
             </div>
             <div class="secoes">
                 <img src="./img/estoque.png" alt="" class="secao-icon">
-                <a href="./estoque.html">Estoques</a>
+                <a href="estoque.html">Estoques</a>
             </div>
             <div class="secoes">
                 <img src="./img/financeiro.png" alt="" class="secao-icon">
-                <a href="./folhaPagamento.html">Financeiro</a>
+                <a href="">Financeiro</a>
             </div>
             <div class="secoes">
                 <img src="./img/vendas.png" alt="" class="secao-icon">
                 <a href="vendas.html">Vendas</a>
             </div>
-            <div class="secoes-seleciondo">
-                <img src="./img/funcionarios.png" alt="" class="secao-icon"> <!--DESTAQUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE-->
+            <div class="secoes">
+                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
                 <a href="funcionarios.html">Funcionários</a>
             </div>
             <div class="secoes">
@@ -265,46 +229,46 @@ td:last-child {
                 <a href="ClienteFornecedor.html">Clientes</a>
             </div>
         </div>
-        <a href="">← Deslogar</a>
+        <a href="login.html">← Deslogar</a>
     </section>
 
     <main>
         <div class="main-header">
             <div class="titulo">
-                <h2><img src="./img/mala.png" alt=""> Quadro de Funcionários</h2>
-                <p>Gerencie a equipe, cargos, salários e horas extras.</p>
+                <h2><img src="./img/vendas-grande.png" alt="">Registro de Vendas</h2>
+                <p>Acompanhe pedidos, itens vendidos e faturamento.</p>
             </div>
             <div class="atalhos-main">
-                <input type="text" placeholder="🔍︎​ Buscar por nome...">
-                <a href="funcionariosCadastrar.html"><button>+ Cadastrar</button></a>
-                <a href="folhaPagamento.html"><button>+ Lançar pagamento</button></a>
+                <input type="text" placeholder="🔍︎​ Buscar por cliente ou ID...">
+                <a href=""><button>+ Registrar Venda</button></a>
             </div>
         </div>
-        <div class="list">
-            <article id="card-funcionario">
-                <div class="info-funcionarios">
-                    <img src="" alt="">
-                    <div class="nome-cargo">
-                        <h4>Carlos Souza</h4>
-                        <p>Vendedor</p>
-                    </div>
-                    <p>ID: 1</p>
+        <div class="lista-vendas" id="lista-vendas">
+            <article class="venda-card">
+                <div class="info-grupo">
+                    <span class="label">Pedido</span>
+                    <span class="valor">#1</span>
                 </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Salário Base</td>
-                            <td>R$ 2.500,00</td>
-                        </tr>
-                        <tr>
-                            <td>Horas Extras</td>
-                            <td>15h</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <div class="info-grupo">
+                    <span class="label">Data</span>
+                    <span class="valor">29/02/2024</span>
+                </div>
+
+                <div class="info-grupo">
+                    <span class="label">Cliente</span>
+                    <span class="valor">João Silva</span>
+                </div>
+
+                <button class="btn-detalhesVenda" id="btn-detalhesVenda">Ver detalhes</button>
+
+                <div class="info-grupo total">
+                    <span class="label">Total da Venda</span>
+                    <span class="valor">R$ 1.250,00</span>
+                </div>
             </article>
         </div>
     </main>
-    
+
 </body>
 </html>

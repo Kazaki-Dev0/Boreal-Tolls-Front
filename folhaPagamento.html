@@ -18,7 +18,6 @@ body {
     color: white;
     display: grid;
     grid-template-columns: 400px 1fr;
-    grid-template-rows: 60px 1fr;
     height: 100%;
 }
 
@@ -27,46 +26,9 @@ a {
     text-decoration: none;
 }
 
-/* Header Superior */
-header {
-    grid-column: 1 / 3;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    background-color: #222;
-    border-bottom: 1px solid #333;
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.nav-bar a {
-    color: #ccc;
-    text-decoration: none;
-    margin-right: 20px;
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
-
-.nav-bar a:hover {
-    color: #7ef9ff;
-}
-
-.header-right input {
-    background: #111;
-    border: 1px solid #333;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 5px;
-}
-
 /* Sidebar */
 .side-bar {
-    grid-row: 2 / 3;
+  
     background-color: #222;
     padding: 8px;
     display: flex;
@@ -346,7 +308,6 @@ td:last-child {
 </head>
 <body>
 
-    <header></header> <!-- Não tem nada, mas se mexer estraga tudo -->
 
     <section class="side-bar">
         <img src="./img/LogoBorealTools.png" alt="" class="logo">
@@ -365,7 +326,7 @@ td:last-child {
             </div>
             <div class="secoes">
                 <img src="./img/estoque.png" alt="" class="secao-icon">
-                <a href="">Estoques</a>
+                <a href="estoque.html">Estoques</a>
             </div>
             <div class="secoes">
                 <img src="./img/financeiro.png" alt="" class="secao-icon">
