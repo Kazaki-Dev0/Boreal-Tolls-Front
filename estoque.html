@@ -9,112 +9,65 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* VARIÁVEIS DE COR */
-        :root {
-            --bg-main: #0a0a0a;
-            --bg-sidebar: #06100b;
-            --bg-panel: #131715;
-            --bg-topbar: #111111;
-            --text-primary: #ffffff;
-            --text-secondary: #9aa09d;
-            --neon-green: #87ffb9;
-            --neon-green-glow: rgba(135, 255, 185, 0.4);
-            --dark-green: #1a3a29;
-            --border-color: #242e29;
-            --white-glow: rgba(255, 255, 255, 0.3);
-            --danger-color: #ff6b6b;
-            --danger-glow: rgba(255, 107, 107, 0.2);
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        } 
+    body {
+        background-color: #0a0a0a;
+        background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+        color: white;
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        min-height: 100vh;
+    }
 
-        /* --- SIDEBAR --- */
-        .main-wrapper {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        .secoes-seleciondo{
-    background-color: #3b5745;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 8px;
-    transition: 0.3s;
-    gap: 10%;
-    cursor: pointer;
+
+a {
+    color: inherit;
     text-decoration: none;
 }
 
+/* Sidebar */
 .side-bar {
-            text-decoration: none;
-            grid-row: 2 / 3;
-            background-color: #222;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #222;
-        }
-        .sidebar-header img{
-            width: 406px;
-            height: 121px;
-        }
+    background-color: #222;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border-right: 1px solid #222;
+}
 
-        .sidebar-header {
-            padding: 2rem 1rem 1rem 1rem;
-            text-align: center;
-            text-decoration: none;
-        }
+.logo {
+    width: auto;
+}
 
-        .perfil {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            padding-bottom: 1rem;
-            text-decoration: none;
-            text-align: center;
-        }
+.perfil {
+    text-align: center;
+}
 
-        .perfil p {
+.perfil p {
     font-size: 24px;
 }
 
-        .perfil img {
+.perfil img {
     width: 80px;
     background: #c8e6c9;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
-        a {
-            text-decoration: none;
-            color: #ffffff;
-        }
+.nav-side-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .nav-side-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-            
-        }
-
-        .secoes {
+.secoes {
     background-color: #0a0a0a;
     display: flex;
     align-items: center;
@@ -123,45 +76,28 @@
     transition: 0.3s;
     gap: 10%;
     cursor: pointer;
-    text-decoration: none;
 }
 
+.secoes:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
 
-        .secoes i {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            transition: 0.3s;
-        }
+/* Destaque para a página atual (Funcionários) */
+.secoes:nth-child(3) {
+    background-color: #2e4a3e; /* Verde escuro */
+}
 
-        .secoes:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-        }
+.secoes a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
 
-        .secoes:hover i {
-            color: var(--neon-green);
-        }
-
-        
-
-        .logout-link {
-            margin-top: auto;
-            padding: 15px;
-            
-        }
-
-        .logout-link a {
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-
-        .logout-link a:hover {
-            color: var(--danger-color);
-        }
+/* Main Content Area */
+main {
+    padding: 40px;
+    overflow-y: auto;
+}
 
         /* --- CONTEÚDO PRINCIPAL --- */
         .content {
@@ -392,7 +328,7 @@
                     <img src="./img/produtos.png" alt="" class="secao-icon">
                     <a href="./produtos.html">Produtos</a>
                 </div>
-                <div class="secoes-seleciondo">
+                <div class="secoes">
                     <img src="./img/estoque.png" alt="" class="secao-icon">
                     <a href="#">Estoques</a>
                 </div>
@@ -404,13 +340,9 @@
                     <img src="./img/vendas.png" alt="" class="secao-icon">
                     <a href="./vendas.html">Vendas</a>
                 </div>
-                <div class="secoes active">
+                <div class="secoes">
                     <img src="./img/funcionarios.png" alt="" class="secao-icon">
                     <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/relatorios.png" alt="" class="secao-icon">
-                    <a href="./Relatorios.html">Relatórios</a>
                 </div>
                 <div class="secoes">
                     <img src="./img/clientes.png" alt="" class="secao-icon">
