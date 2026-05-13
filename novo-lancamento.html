@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Nova Transação</title>
+    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* VARIÁVEIS DE COR ORIGINAIS */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-sidebar: #06100b;
+            --bg-panel: #131715;
+            --bg-topbar: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa09d;
+            --neon-green: #87ffb9;
+            --neon-green-glow: rgba(135, 255, 185, 0.4);
+            --dark-green: #1a3a29;
+            --border-color: #242e29;
+            --white-glow: rgba(255, 255, 255, 0.3);
+            --danger-color: #ff6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        } 
+
+        /* =========================================
+           SIDEBAR INTOCÁVEL (MANTIDA INTEGRALMENTE)
+           ========================================= */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        .secoes-seleciondo{
+            background-color: #3b5745;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+            gap: 10%;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .side-bar {
+            text-decoration: none;
+            grid-row: 2 / 3;
+            background-color: #222;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #222;
+            min-width: 260px;
+        }
+        .sidebar-header img{
+            width: 406px;
+            height: 121px;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding-bottom: 1rem;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .perfil p { font-size: 24px; }
+
+        .perfil img {
+            width: 80px;
+            background: #c8e6c9;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        a { text-decoration: none; color: #ffffff; }
+
+        .nav-side-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .secoes {
+            background-color: #0a0a0a;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+            gap: 10%;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .secoes i {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            transition: 0.3s;
+        }
+
+        .secoes:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .secoes:hover i { color: var(--neon-green); }
+
+        .logout-link { margin-top: auto; padding: 15px; }
+
+        .logout-link a {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .logout-link a:hover { color: var(--danger-color); }
+
+        /* =========================================
+           CONTEÚDO PRINCIPAL (NOVA TRANSAÇÃO)
+           ========================================= */
+        .content {
+            flex: 1;
+            padding: 2.5rem;
+            /* Inserido o background da print aqui, com fallback escuro */
+            background: url('./img/background.png') center center / cover no-repeat, radial-gradient(circle at top right, #0d1a13, #0a0a0a);
+            overflow-y: auto;
+            
+            /* Propriedades para centralizar o formulário no meio da tela */
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+        }
+
+        .form-panel {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 900px; /* Reduzido levemente para melhor estética centralizada */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px); /* Efeito de vidro sutil sobre o fundo */
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .title-group { display: flex; flex-direction: column; gap: 5px; }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .panel-title i { color: var(--neon-green); font-size: 2.2rem; }
+        .panel-subtitle { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .btn-history {
+            background-color: #1a1a1a;
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-history:hover { border-color: var(--neon-green); color: var(--neon-green); }
+
+        /* Estilo do Formulário */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Toggle Buttons Recebimento/Pagamento Funcionais */
+        .toggle-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 5px;
+        }
+
+        .toggle-btn {
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Estados do Toggle */
+        .toggle-btn.inactive {
+            background-color: #1a1a1a;
+            color: #666;
+            opacity: 0.6;
+        }
+
+        .toggle-btn.inactive:hover {
+            opacity: 0.9;
+        }
+
+        .toggle-btn.active-rec {
+            background-color: #1a3a29;
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(135, 255, 185, 0.2);
+            opacity: 1;
+        }
+
+        .toggle-btn.active-pag {
+            background-color: #3a1a1a;
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
+            opacity: 1;
+        }
+
+        /* Inputs Brancos Profissionais */
+        input, textarea {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            outline: none;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green-glow); }
+        
+        textarea { resize: none; height: 100px; }
+
+        /* Checkbox customizado */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .checkbox-container input { width: auto; cursor: pointer; transform: scale(1.2); }
+
+        /* Ações Finais */
+        .form-actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-save {
+            background-color: var(--neon-green);
+            color: #000;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-save:hover { box-shadow: 0 0 20px var(--neon-green-glow); transform: scale(1.02); }
+
+        .btn-cancel-form {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-cancel-form:hover { background: rgba(255,255,255,0.05); color: white; }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+
+        <section class="side-bar">
+            <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+            </div>
+        
+            <div class="perfil">
+                <img src="./img/perfil-icon.png" alt="Foto">
+                <p>Fulano de Tal</p>
+            </div>
+        
+            <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                    <a href="./dashboard.html">Início</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/produtos.png" alt="" class="secao-icon">
+                    <a href="./produtos.html">Produtos</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/estoque.png" alt="" class="secao-icon">
+                    <a href="./estoque.html">Estoque</a>
+                </div>
+                <div class="secoes-seleciondo">
+                    <img src="./img/financeiro.png" alt="" class="secao-icon">
+                    <a href="./folhaPagamento.html">Financeiro</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/vendas.png" alt="" class="secao-icon">
+                    <a href="vendas.html">Vendas</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                    <a href="./funcionarios.html">Funcionários</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/relatorios.png" alt="" class="secao-icon">
+                    <a href="./Relatorios.html">Relatórios</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/clientes.png" alt="" class="secao-icon">
+                    <a href="ClienteFornecedor.html">Clientes</a>
+                </div>
+            </nav>
+            <div class="logout-link">
+                <a href="./login.html">← Deslogar</a>
+            </div>
+        </section>
+
+        <main class="content">
+            <div class="form-panel">
+                <header class="panel-header">
+                    <div class="title-group">
+                        <div class="panel-title">
+                            <i class="ph ph-currency-dollar"></i>
+                            Nova Transação
+                        </div>
+                        <p class="panel-subtitle">Registre uma nova movimentação financeira no sistema.</p>
+                    </div>
+                    <button class="btn-history" onclick="window.location.href='./folhaPagamento.html'">
+                        <i class="ph ph-arrow-left"></i> Voltar ao histórico
+                    </button>
+                </header>
+
+                <form class="form-grid">
+                    
+                    <input type="hidden" name="tipo_transacao" id="tipo-transacao" value="recebimento">
+
+                    <div class="input-group full-width">
+                        <label>Tipo de transação</label>
+                        <div class="toggle-group">
+                            <div id="btn-rec" class="toggle-btn active-rec" onclick="setTransactionType('recebimento')">
+                                <i class="ph ph-arrow-down-left"></i> Entrada / Recebimento
+                            </div>
+                            <div id="btn-pag" class="toggle-btn inactive" onclick="setTransactionType('pagamento')">
+                                <i class="ph ph-arrow-up-right"></i> Saída / Pagamento
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Data do efetivo Pagamento/Recebimento</label>
+                        <input type="date" name="data_efetiva">
+                    </div>
+
+                    <div class="input-group" style="justify-content: flex-end;">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="efetivado_agora"> Marcar como pago/recebido agora
+                        </label>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Data Vencimento/Previsão</label>
+                        <input type="date" name="data_vencimento">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Valor (R$)</label>
+                        <input type="number" name="valor" placeholder="0.00" step="0.01">
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Descrição</label>
+                        <textarea name="descricao" placeholder="Ex: Pagamento do fornecedor X / Recebimento Venda #1024"></textarea>
+                    </div>
+
+                    <div class="form-actions full-width">
+                        <button type="submit" class="btn-save">Salvar Lançamento</button>
+                        <button type="button" class="btn-cancel-form" onclick="history.back()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function setTransactionType(type) {
+            const btnRec = document.getElementById('btn-rec');
+            const btnPag = document.getElementById('btn-pag');
+            const hiddenInput = document.getElementById('tipo-transacao');
+
+            if (type === 'recebimento') {
+                // Ativa Recebimento
+                btnRec.className = 'toggle-btn active-rec';
+                btnPag.className = 'toggle-btn inactive';
+                hiddenInput.value = 'recebimento';
+            } else {
+                // Ativa Pagamento
+                btnPag.className = 'toggle-btn active-pag';
+                btnRec.className = 'toggle-btn inactive';
+                hiddenInput.value = 'pagamento';
+            }
+        }
+    </script>
+</body>
+</html>
