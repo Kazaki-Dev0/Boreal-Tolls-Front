@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Dashboard</title>
+    <link rel="stylesheet" href="ClienteFornecedor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+   
+
+    <section class="side-bar">
+        <img src="./img/LogoBorealTools.png" alt="" class="logo">
+        <div class="perfil">
+            <img src="./img/perfil-icon.png" alt="">
+            <p>Fulano de Tal</p>
+        </div>
+        <div class="nav-side-bar">
+            <div class="secoes">
+                <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                <a href="dashboard.html">Início</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/produtos.png" alt="" class="secao-icon">
+                <a href="produtos.html">Produtos</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/estoque.png" alt="" class="secao-icon">
+                <a href="./estoque.html">Estoques</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/financeiro.png" alt="" class="secao-icon">
+                <a href="">Financeiro</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/vendas.png" alt="" class="secao-icon">
+                <a href="vendas.html">Vendas</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
+                <a href="funcionarios.html">Funcionários</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/relatorios.png" alt="" class="secao-icon">
+                <a href="./RelatorioCliente.html">Relatórios</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/clientes.png" alt="" class="secao-icon">
+                <a href="./ClienteFornecedor.html">Clientes</a>
+            </div>
+        </div>
+        <a href="./login.html">← Deslogar</a>
+    </section>
+
+
+
+    <section class="main">
+
+        <div class="main-header">
+    
+            <div class="titulo">
+                <h2>Cadastrar</h2>
+                <p>Clientes e fornecedores > Cadastrar</p>
+            </div>
+    
+            <div class="atalhos-main">
+                <a href="ClienteFornecedor.html"><button>← Voltar à Equipe</button></a>
+            </div>
+        </div>
+    
+    
+        <form>
+    
+            <div class="inputs-cad">
+    
+                <!-- TIPO -->
+                <div class="input-divs">
+                    <label for="tipo"><img src="./img/inf-pessoais-cad-func.png" alt=""> Tipo </label>
+    
+                    <select id="tipo">
+                        <option value="cliente">Cliente</option>
+                        <option value="fornecedor">Fornecedor</option>
+                    </select>
+                </div>
+    
+                <!-- NOME -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Nome Completo </label>
+                    <input type="text" placeholder="Neymar da Silva Santos Junior">
+                </div>
+    
+                <!-- CPF -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> CPF/CNPJ </label>
+                    <input type="text" placeholder="000.000.000-00">
+                </div>
+    
+                <!-- TELEFONE -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/tel-cad-func.png" alt=""> Telefone </label>
+                    <input type="text" placeholder="(00) 00000-0000">
+                </div>
+    
+                <!-- EMAIL -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/email-cad-func.png" alt=""> Email </label>
+                    <input type="email" placeholder="Exemplo@gmail.com">
+                </div>
+    
+                <!-- DATA NASCIMENTO -->
+                <div class="input-divs" id="dataNascimentoGroup">
+                    <label for=""><img src="./img/data-cad-func.png" alt=""> Data de Nascimento </label>
+                    <input type="date">
+                </div>
+    
+                <!-- CEP -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/ender-cad-func.png" alt=""> CEP </label>
+                    <input type="text" placeholder="00000-000">
+                </div>
+    
+                <!-- CIDADE -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Cidade </label>
+                    <input type="text" placeholder="Marília">
+                </div>
+    
+                <!-- RUA -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Rua </label>
+                    <input type="text" placeholder="Av. Sampaio Vidal">
+                </div>
+    
+                <!-- BAIRRO -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Bairro </label>
+                    <input type="text" placeholder="Centro">
+                </div>
+    
+                <!-- NUMERO -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Nº Residência </label>
+                    <input type="text" placeholder="0000">
+                </div>
+    
+                <!-- ESTADO -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Estado </label>
+                    <input type="text" placeholder="São Paulo">
+                </div>
+    
+                <!-- COMPLEMENTO -->
+                <div class="input-divs">
+                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Complemento </label>
+                    <input type="text" placeholder="Do lado do Correio">
+                </div>
+    
+            </div>
+    
+            <button id="cadastrarFuncionario">
+                Cadastrar
+            </button>
+    
+        </form>
+    
+    </section>
+                   
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
