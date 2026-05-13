@@ -132,6 +132,59 @@ main {
 }
 
 .atalhos-main button:hover {background-color: #81c784;}
+
+.venda-card {
+    background-color: #2c2a29; /* Cor escura do card */
+    border-radius: 20px;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espalha os itens horizontalmente */
+    color: white;
+    margin-bottom: 10px;
+}
+
+.info-grupo {
+    display: flex;
+    flex-direction: column; /* Label em cima, Valor embaixo */
+    gap: 5px;
+}
+
+.info-grupo .label {
+    font-size: 0.85rem;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.info-grupo .valor {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.btn-detalhesVenda {
+    background-color: #80B297; 
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.btn-detalhesVenda:hover {
+    background-color: #81c784;
+}
+
+.info-grupo.total {
+    text-align: right;
+}
+
+.info-grupo.total .valor {
+    font-size: 1.2rem;
+}
     </style>
 </head>
 <body>
@@ -187,40 +240,32 @@ main {
             </div>
             <div class="atalhos-main">
                 <input type="text" placeholder="🔍︎​ Buscar por cliente ou ID...">
-                <a href="funcionariosCadastrar.html"><button>+ Registrar Venda</button></a>
+                <a href=""><button>+ Registrar Venda</button></a>
             </div>
         </div>
         <div class="lista-vendas" id="lista-vendas">
-            <article>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Pedido</th>
-                            <th>Data</th>
-                            <th><img src="./img/clientes.png" alt=""> Cliente</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button id="btn-detalhesVenda" class="btn-detalhesVenda">Ver detalhes</button>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Total da Venda</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>R$ 1.250,00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <article class="venda-card">
+                <div class="info-grupo">
+                    <span class="label">Pedido</span>
+                    <span class="valor">#1</span>
+                </div>
+
+                <div class="info-grupo">
+                    <span class="label">Data</span>
+                    <span class="valor">29/02/2024</span>
+                </div>
+
+                <div class="info-grupo">
+                    <span class="label">Cliente</span>
+                    <span class="valor">João Silva</span>
+                </div>
+
+                <button class="btn-detalhesVenda" id="btn-detalhesVenda">Ver detalhes</button>
+
+                <div class="info-grupo total">
+                    <span class="label">Total da Venda</span>
+                    <span class="valor">R$ 1.250,00</span>
+                </div>
             </article>
         </div>
     </main>
