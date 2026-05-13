@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Novo Funcionáro</title>
+    <title>Nova Venda</title>
     <style>
         * {
     margin: 0;
@@ -13,7 +13,7 @@
 }
 
 body {
-    background-color: #0a0a0a; /* Fundo bem escuro */
+    background-color: #0a0a0a; 
     background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
     color: white;
     display: grid;
@@ -26,11 +26,8 @@ a {
     text-decoration: none;
 }
 
-
-
 /* Sidebar */
 .side-bar {
-  
     background-color: #222;
     padding: 8px;
     display: flex;
@@ -40,17 +37,11 @@ a {
     height: 100vh;
 }
 
-.logo {
-    width: auto;
-}
+.logo {width: auto;}
 
-.perfil {
-    text-align: center;
-}
+.perfil {text-align: center;}
 
-.perfil p {
-    font-size: 24px;
-}
+.perfil p {font-size: 24px;}
 
 .perfil img {
     width: 80px;
@@ -76,14 +67,9 @@ a {
     cursor: pointer;
 }
 
-.secoes:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
+.secoes:hover {background: rgba(255, 255, 255, 0.05);}
 
-/* Destaque para a página atual (Funcionários) */
-.secoes:nth-child(6) {
-    background-color: #2e4a3e; /* Verde escuro */
-}
+.secoes:nth-child(5) {background-color: #2e4a3e;}
 
 .secoes a {
     color: white;
@@ -91,13 +77,11 @@ a {
     font-size: 0.9rem;
 }
 
-/* Main Content Area */
 main {
     padding: 40px;
     overflow-y: auto;
 }
 
-/* O "Quadro" centralizado com borda brilhante */
 main {
     border: 1px solid #2e4a3e;
     width: 70%;
@@ -119,7 +103,6 @@ main {
     margin-bottom: 5px;
     display: flex;
     align-items: center;
-    
 }
 
 .titulo p {
@@ -134,14 +117,6 @@ main {
     margin-bottom: 30px;
 }
 
-.atalhos-main input {
-    background: transparent;
-    border: 1px solid #444;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
-    width: 250px;
-}
 
 .atalhos-main button {
     background-color: #5e5e5e;
@@ -165,7 +140,6 @@ form {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    
 }
 
 .inputs-cad {
@@ -196,7 +170,7 @@ label {
     gap: 8px;
 }
 
-#cadastrarFuncionario {
+#cadastrarVenda {
     background-color: #80B297;
     padding: 10px;
     border: none;
@@ -207,13 +181,10 @@ label {
     color: whitesmoke;
 }
 
-#cadastrarFuncionario:hover{
-    background-color: #81c784;
-}
+#cadastrarVenda:hover{background-color: #81c784;}
     </style>
 </head>
 <body>
-
     <section class="side-bar">
         <img src="./img/LogoBorealTools.png" alt="" class="logo">
         <div class="perfil">
@@ -260,91 +231,18 @@ label {
     <main>
         <div class="main-header">
             <div class="titulo">
-                <h2><img src="./img/mala.png" alt=""> Novo Funcionário</h2>
-                <p>Gerencie a equipe, cargos, salários e horas extras.</p>
+                <h2><img src="./img/vendas-grande.png" alt=""> Nova Venda</h2>
+                <p>Acompanhe pedidos, itens vendidos e faturamento.</p>
             </div>
             <div class="atalhos-main">
-                <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
+                <a href="vendas.html"><button>← Voltar aos Pedidos</button></a>
             </div>
         </div>
         <form action="">
             <div class="inputs-cad">
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">Nome Completo</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> RG</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> CPF</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/tel-cad-func.png" alt=""> elefone</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs"> 
-                    <label for=""><img src="./img/email-cad-func.png" alt=""> Email</label>
-                    <input type="email">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/data-cad-func.png" alt=""> Data de Nascimento</label>
-                    <input type="date">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Departamento</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Cargo/Função</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/sifrao-cad-func.png" alt=""> Salário Base (R$)</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> CEP</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Rua</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Bairro</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Cidade</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Estado</label>
-                    <input type="text">
-                </div>
-                
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Complemento</label>
-                    <input type="text">
-                </div>
+               
             </div>
-            <button type="submit" id="cadastrarFuncionario">Cadastrar Funcionário</button>
+            <button type="submit" id="cadastrarVenda">Finalizar Venda</button>
         </form>
     </main>
 </body>
