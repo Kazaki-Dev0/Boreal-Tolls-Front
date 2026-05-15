@@ -6,6 +6,7 @@
     <title>Boreal Tools - Controle de Estoque</title>
     <link rel="icon" type="image/png" href="./images/logo-removebg.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sidebar.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
@@ -21,8 +22,6 @@
         background-color: #0a0a0a;
         background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
         color: white;
-        display: grid;
-        grid-template-columns: 400px 1fr;
         min-height: 100vh;
     }
 
@@ -32,65 +31,16 @@ a {
     text-decoration: none;
 }
 
-/* Sidebar */
-.side-bar {
-    background-color: #222;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    border-right: 1px solid #222;
-}
+.main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
 
-.logo {
-    width: auto;
-}
 
-.perfil {
-    text-align: center;
-}
-
-.perfil p {
-    font-size: 24px;
-}
-
-.perfil img {
-    width: 80px;
-    background: #c8e6c9;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.nav-side-bar {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.secoes {
-    background-color: #0a0a0a;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 8px;
-    transition: 0.3s;
-    gap: 10%;
-    cursor: pointer;
-}
-
-.secoes:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Destaque para a página atual (Funcionários) */
+/* Destaque para a página atual  */
 .secoes:nth-child(3) {
     background-color: #2e4a3e; /* Verde escuro */
-}
-
-.secoes a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.9rem;
 }
 
 /* Main Content Area */
@@ -310,27 +260,27 @@ main {
     <div class="main-wrapper">
 
         <section class="side-bar">
-            <div class="sidebar-header">
+        <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-            </div>
+        </div>
         
-            <div class="perfil">
+        <div class="perfil">
                 <img src="./img/perfil-icon.png" alt="Foto de Perfil">
                 <p>Fulano de Tal</p>
-            </div>
+        </div> 
         
-            <nav class="nav-side-bar">
+        <nav class="nav-side-bar">
                 <div class="secoes">
                     <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="./dashboard.html">Início</a>
+                    <a href="dashboard.html">Início</a>
                 </div>
-                <div class="secoes" href="./produtos.html" >
+                <div class="secoes active" href="./produtos.html" >
                     <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="./produtos.html">Produtos</a>
+                    <a href="produtos.html">Produtos</a>
                 </div>
                 <div class="secoes">
                     <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="#">Estoques</a>
+                    <a href="./estoque.html">Estoques</a>
                 </div>
                 <div class="secoes">
                     <img src="./img/financeiro.png" alt="" class="secao-icon">
@@ -338,7 +288,7 @@ main {
                 </div>
                 <div class="secoes">
                     <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="./vendas.html">Vendas</a>
+                    <a href="vendas.html">Vendas</a>
                 </div>
                 <div class="secoes">
                     <img src="./img/funcionarios.png" alt="" class="secao-icon">
@@ -348,10 +298,11 @@ main {
                     <img src="./img/clientes.png" alt="" class="secao-icon">
                     <a href="./ClienteFornecedor.html">Clientes</a>
                 </div>
-            </nav>
-            <div class="logout-link">
-                <a href="./login.html">← Deslogar</a>
-            </div>
+        </nav>
+
+        <div class="logout-link">
+            <a href="./login.html">← Deslogar</a>
+        </div>
         </section>
 
         <main class="content">
