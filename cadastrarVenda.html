@@ -78,18 +78,17 @@ a {
 }
 
 main {
-    padding: 40px;
-    overflow-y: auto;
-}
-
-main {
-    border: 1px solid #2e4a3e;
-    width: 70%;
-    border-radius: 20px;
-    padding: 30px;
     background: rgba(255, 255, 255, 0.02);
     box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
+    border: 1px solid #2e4a3e;
+    border-radius: 20px;
+    width: 70%;
+    padding: 4%;
     margin: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .main-header {
@@ -117,7 +116,6 @@ main {
     margin-bottom: 30px;
 }
 
-
 .atalhos-main button {
     background-color: #5e5e5e;
     color: whitesmoke;
@@ -129,59 +127,122 @@ main {
     transition: 0.3s;
 }
 
-.atalhos-main button:hover {
-    background-color: #333;
+.atalhos-main button:hover {background-color: #333;}
+
+.venda-container {
+    background-color: #2c2a29;
+    border-radius: 25px;
+    padding: 30px;
+    width: fit-content;
+    color: white;
+    font-family: sans-serif;
 }
 
-form {
-    background-color: #333;
-    padding: 32px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.inputs-cad {
+.venda-header {
     display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #444;
 }
 
-.input-divs {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.input-divs input {
-    height: 32px;
-    border-radius: 12px;
-}
-
-label img {
-    width: 20px;
-    height: 20px;
-}
-
-label {
+.input-group label {
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #a5d6a7;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-#cadastrarVenda {
-    background-color: #80B297;
-    padding: 10px;
+.input-group select, .input-group input {
+    background-color: #d1d1d1;
     border: none;
-    border-radius: 8px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    width: 100%;
+}
+
+.venda-produtos {padding: 20px 0;}
+
+.venda-produtos h5 {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: whitesmoke;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
-#cadastrarVenda:hover{background-color: #81c784;}
+h5 img {
+    height: 32px;
+    width: 32px;
+}
+
+.add-row {
+    background-color: #383635;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 0.7rem; font-weight: bold; padding-left: 10px; }
+.field select, .field input { 
+    background-color: #d1d1d1; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 50px; 
+}
+
+.field.qty { width: 80px; }
+.field.price { width: 100px; }
+
+.btn-add {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.carrinho-vazio {
+    background-color: #333130;
+    margin-top: 20px;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: #888;
+}
+
+.carrinho-vazio img { width: 40px; margin-bottom: 10px; opacity: 0.5; }
+.carrinho-vazio p { color: white; font-weight: bold; margin-bottom: 5px; }
+
+.venda-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+}
+
+.total-venda h3 { font-size: 1.8rem; margin-top: 5px; }
+
+.acoes { display: flex; gap: 20px; align-items: center; }
+.btn-cancelar { background: none; border: none; color: white; cursor: pointer; }
+.btn-finalizar {
+    background-color: #80B297;
+    color: whitesmoke;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
     </style>
 </head>
 <body>
@@ -202,11 +263,11 @@ label {
             </div>
             <div class="secoes">
                 <img src="./img/estoque.png" alt="" class="secao-icon">
-                <a href="">Estoques</a>
+                <a href="./estoque.html">Estoques</a>
             </div>
             <div class="secoes">
                 <img src="./img/financeiro.png" alt="" class="secao-icon">
-                <a href="">Financeiro</a>
+                <a href="./financeiro.html">Financeiro</a>
             </div>
             <div class="secoes">
                 <img src="./img/vendas.png" alt="" class="secao-icon">
@@ -214,11 +275,7 @@ label {
             </div>
             <div class="secoes">
                 <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
-                <a href="#">Funcionários</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/relatorios.png" alt="" class="secao-icon">
-                <a href="Relatorios.html">Relatórios</a>
+                <a href="./funcionarios.html">Funcionários</a>
             </div>
             <div class="secoes">
                 <img src="./img/clientes.png" alt="" class="secao-icon">
@@ -238,12 +295,55 @@ label {
                 <a href="vendas.html"><button>← Voltar aos Pedidos</button></a>
             </div>
         </div>
-        <form action="">
-            <div class="inputs-cad">
-               
+        <section class="venda-container">
+            <div class="venda-header">
+                <div class="input-group">
+                    <label><img src="./img/inf-pessoais-cad-func.png"> Selecionar Cliente</label>
+                    <select><option>Selecione...</option></select>
+                </div>
+                <div class="input-group">
+                    <label><img src="./img/data-cad-func.png"> Data da Venda</label>
+                    <input type="date">
+                </div>
             </div>
-            <button type="submit" id="cadastrarVenda">Finalizar Venda</button>
-        </form>
+
+            <div class="venda-produtos">
+                <h5><img src="img/produtos.png"> Adicionar Produtos</h5>
+                
+                <div class="add-row">
+                    <div class="field">
+                        <label>PRODUTO</label>
+                        <select><option>Selecione...</option></select>
+                    </div>
+                    <div class="field qty">
+                        <label>QTD.</label>
+                        <input type="number" value="1">
+                    </div>
+                    <div class="field price">
+                        <label>PREÇO UN.</label>
+                        <input type="text" placeholder="0.00">
+                    </div>
+                    <button class="btn-add">+ Add</button>
+                </div>
+
+                <div class="carrinho-vazio">
+                    <img src="./img/vendas.png" alt="Carrinho">
+                    <p>Nenhum produto adicionado ao carrinho.</p>
+                    <span>Selecione e clique em "Add" acima.</span>
+                </div>
+            </div>
+
+            <div class="venda-footer">
+                <div class="total-venda">
+                    <span>Total:</span>
+                    <h3>R$ 0,00</h3>
+                </div>
+                <div class="acoes">
+                    <button class="btn-cancelar">Cancelar</button>
+                    <button class="btn-finalizar">Finalizar Venda</button>
+                </div>
+            </div>
+        </section>
     </main>
 </body>
 </html>
