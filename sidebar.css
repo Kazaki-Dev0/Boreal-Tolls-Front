@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --text-secondary: #c7c7c7; /**/
+    --border-color: #242e29; /**/
+}
+
+
+
+/* =========================================
+           4. SIDEBAR
+========================================= */
+        .side-bar {
+            background-color: #1a1a1a; 
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            min-width: 460px;
+            width: 320px;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+        }
+
+        .logo {
+            width: auto;
+            max-width: 406px;
+        }
+
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .perfil img {
+            width: 80px;
+            height: 80px;
+            background: #c8e6c9;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+
+        .perfil p {
+            font-size: 24px;
+        }
+
+        .perfil span {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .nav-side-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .secoes {
+            background-color: #0a0a0a;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+            gap: 10%;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .secoes:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .logout-link {
+            margin-top: auto;
+            padding: 15px 25px;
+            font-size: 0.85rem;
+        }
+
+        .logout-link a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .logout-link a:hover {color: #ff6b6b;}
