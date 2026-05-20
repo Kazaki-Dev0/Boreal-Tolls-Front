@@ -4,9 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<<<<<<< HEAD
+    <style>
+        /* =========================================
+           1. VARIÁVEIS DE COR
+        ========================================= */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-sidebar: #06100b;
+            --bg-panel: #131715;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa09d;
+            --neon-green: #87ffb9;
+            --border-color: #242e29;
+        }
+
+        /* =========================================
+           2. RESET E CONFIGURAÇÕES GERAIS
+        ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+=======
 <title>Boreal Tools - Produtos</title>
 
 <link rel="stylesheet" href="sidebar.css">
+>>>>>>> da95264d56d1425f822001e8b26df49f510d176f
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -48,6 +74,24 @@ a{
    PAGINA ATIVA
 ========================= */
 
+<<<<<<< HEAD
+        .nav-side-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .secoes {
+            background-color: #0a0a0a;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+            gap: 10%;
+            cursor: pointer;
+        }
+=======
 .secoes:nth-child(2){
     background-color:#2e4a3e;
 }
@@ -57,6 +101,7 @@ a{
 ========================= */
 
 main{
+>>>>>>> da95264d56d1425f822001e8b26df49f510d176f
 
 padding:25px;
 
@@ -128,11 +173,30 @@ box-shadow:
 
     border-radius:10px;
 
+<<<<<<< HEAD
+        /* =========================================
+           7. MODAL DE DETALHES
+        ========================================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(2px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+=======
     background:#163125;
 
     display:flex;
     justify-content:center;
     align-items:center;
+>>>>>>> da95264d56d1425f822001e8b26df49f510d176f
 
     color:#7bcf9c;
 
@@ -160,6 +224,27 @@ box-shadow:
 
     border:1px solid #3a4a43;
 
+<<<<<<< HEAD
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .img-detalhe-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .img-detalhe {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 8px;
+            border: 1px solid #4a5a50;
+            object-fit: cover;
+        }
+    </style>
+=======
     border-radius:30px;
 
     padding:10px 18px;
@@ -378,10 +463,101 @@ box-shadow:
 }
 
 </style>
+>>>>>>> da95264d56d1425f822001e8b26df49f510d176f
 </head>
 
 <body>
 
+<<<<<<< HEAD
+    <div class="main-wrapper">
+        <section class="side-bar">
+            <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+            </div>
+        
+            <div class="perfil">
+                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
+                <p>Fulano de Tal</p>
+            </div> 
+        
+            <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                    <a href="dashboard.html">Início</a>
+                </div>
+                <div class="secoes active">
+                    <img src="./img/produtos.png" alt="" class="secao-icon">
+                    <a href="#">Produtos</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/estoque.png" alt="" class="secao-icon">
+                    <a href="./estoque.html">Estoques</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/financeiro.png" alt="" class="secao-icon">
+                    <a href="./financeiro.html">Financeiro</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/vendas.png" alt="" class="secao-icon">
+                    <a href="vendas.html">Vendas</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                    <a href="./funcionarios.html">Funcionários</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/clientes.png" alt="" class="secao-icon">
+                    <a href="./ClienteFornecedor.html">Clientes</a>
+                </div>
+            </nav>
+
+            <div class="logout-link">
+                <a href="./login.html">← Deslogar</a>
+            </div>
+        </section>
+
+        <main class="content">
+            <div class="product-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <h2>Painel da Lista de Produtos</h2>
+                        <div class="breadcrumb">Produtos > <span>Lista de produtos</span></div>
+                    </div>
+                    <div class="panel-header-icon">
+                        <i class="ph ph-package"></i>
+                    </div>
+                </div>
+
+                <div class="table-toolbar">
+                    <div class="search-box">
+                        <input type="text" id="inputPesquisa" placeholder="Pesquisar por Id, Nome ou Marca" oninput="filtrarProdutos()">
+                        <i class="ph ph-magnifying-glass"></i>
+                    </div>
+                    <a href="./cadastro_produtos.html" class="btn-add">+ Cadastrar Produto</a>
+                </div>
+
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Id</th>
+                            <th>Marca</th>
+                            <th>Valor em R$</th>
+                            <th>Qtd. Estoque</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="modalDetalhes" class="modal-overlay" onclick="fecharModalFora(event)">
+        <div class="modal-box">
+            </div>
+=======
 <!-- SIDEBAR -->
 
 <section class="side-bar">
@@ -476,29 +652,185 @@ box-shadow:
             </div>
         </div>
 
+>>>>>>> da95264d56d1425f822001e8b26df49f510d176f
     </div>
 
     <script>
-        const modal = document.getElementById('modalDetalhes');
+        const apiURL = "http://localhost:5187/api/Produtos";
+        let produtosLocais = []; 
 
-        // Função para abrir o modal
-        function abrirModal() {
-            modal.style.display = 'flex';
+        function obterToken() {
+            return localStorage.getItem("token") || sessionStorage.getItem("token");
         }
 
-        // Função para fechar o modal explicitamente
+        document.addEventListener("DOMContentLoaded", () => {
+            buscarProdutos();
+        });
+
+        async function buscarProdutos() {
+            const tbody = document.querySelector(".product-table tbody");
+            if (!tbody) return;
+
+            try {
+                const token = obterToken();
+                const resposta = await fetch(apiURL, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!resposta.ok) {
+                    if (resposta.status === 401) {
+                        alert("Sessão expirada. Faça login novamente.");
+                        window.location.href = "./login.html";
+                        return;
+                    }
+                    throw new Error(`Erro: ${resposta.status}`);
+                }
+
+                produtosLocais = await resposta.json();
+                renderizarTabela(produtosLocais);
+
+            } catch (error) {
+                console.error("Erro ao listar produtos:", error);
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #ff6b6b;">Falha ao carregar produtos.</td></tr>`;
+            }
+        }
+
+        function renderizarTabela(lista) {
+            const tbody = document.querySelector(".product-table tbody");
+            tbody.innerHTML = "";
+
+            if (lista.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-secondary);">Nenhum produto encontrado.</td></tr>`;
+                return;
+            }
+
+            lista.forEach(produto => {
+                const tr = document.createElement("tr");
+                const valorFormatado = (produto.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+                tr.innerHTML = `
+                    <td style="color: #fff; font-weight: 500;">${produto.nome || 'Sem Nome'}</td>
+                    <td>${produto.id}</td>
+                    <td>${produto.marca || '-'}</td>
+                    <td>${valorFormatado}</td>
+                    <td>${produto.qtdEstoque ?? 0}</td>
+                    <td style="text-align: right;">
+                        <button class="btn-details" onclick="verDetalhesDoProduto(${produto.id})">Ver detalhes</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // BUSCA DETALHADA: Consome diretamente o novo endpoint GetProdutoPorId do backend
+        async function verDetalhesDoProduto(idProduto) {
+            const modalBox = document.querySelector("#modalDetalhes .modal-box");
+            if (!modalBox) return;
+
+            try {
+                const token = obterToken();
+                const resposta = await fetch(`${apiURL}/${idProduto}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!resposta.ok) {
+                    alert("Não foi possível buscar as informações detalhadas deste produto.");
+                    return;
+                }
+
+                const produtoCompleto = await resposta.json();
+                const valorFormatado = (produtoCompleto.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+                // Montagem do modal tratando variações comuns de nomes de propriedades do C#
+                modalBox.innerHTML = `
+                    <div class="modal-header">
+                        <div class="modal-header-left">
+                            <i class="ph ph-package"></i>
+                            <h3>Detalhes do Produto</h3>
+                        </div>
+                        <button class="btn-delete" title="Excluir Produto" onclick="deletarProduto(${produtoCompleto.id})">
+                            <i class="ph ph-trash-fill"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        ${produtoCompleto.urlImg ? `
+                        <div class="img-detalhe-container">
+                            <img src="${produtoCompleto.urlImg}" alt="Imagem do produto" class="img-detalhe" onerror="this.style.display='none'">
+                        </div>
+                        ` : ''}
+                        <div><strong>Nome:</strong> ${produtoCompleto.nome || '-'}</div>
+                        <div><strong>Id:</strong> ${produtoCompleto.id}</div>
+                        <div><strong>Marca:</strong> ${produtoCompleto.marca || '-'}</div>
+                        <div><strong>Valor:</strong> ${valorFormatado}</div>
+                        <div><strong>ID Categoria:</strong> ${produtoCompleto.categoriaId || 'Não informada'}</div>
+                        <div><strong>ID Fornecedor:</strong> ${produtoCompleto.fornecedorId || 'Não informado'}</div>
+                        <div class="full-width"><strong>Descrição:</strong> ${produtoCompleto.descricao || 'Sem descrição cadastrada.'}</div>
+                        <div><strong>Qtd Mínima Estoque:</strong> ${produtoCompleto.qtdMinimaEstoque || 0}</div>
+                        <div><strong>Qtd Atual Estoque:</strong> ${produtoCompleto.quantidadeEstoque ?? produtoCompleto.qtdEstoque ?? 0}</div>
+                    </div>
+                    <div style="text-align: right; margin-top: 1.5rem;">
+                        <button class="btn-details" onclick="fecharModal()">Fechar</button>
+                    </div>
+                `;
+
+                document.getElementById('modalDetalhes').style.display = 'flex';
+
+            } catch (error) {
+                console.error("Erro ao buscar detalhes do produto:", error);
+                alert("Erro de conexão ao buscar os detalhes.");
+            }
+        }
+
+        async function deletarProduto(idProduto) {
+            if (!confirm("Deseja realmente excluir este produto?")) return;
+
+            try {
+                const token = obterToken();
+                const resposta = await fetch(`${apiURL}/${idProduto}`, {
+                    method: "DELETE",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+
+                if (resposta.ok) {
+                    alert("Produto excluído!");
+                    fecharModal();
+                    buscarProdutos(); 
+                } else {
+                    alert("Erro ao excluir produto.");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function filtrarProdutos() {
+            const termo = document.getElementById("inputPesquisa").value.toLowerCase();
+            const filtrados = produtosLocais.filter(p => 
+                p.id.toString().includes(termo) || 
+                p.nome.toLowerCase().includes(termo) || 
+                p.marca.toLowerCase().includes(termo)
+            );
+            renderizarTabela(filtrados);
+        }
+
         function fecharModal() {
-            modal.style.display = 'none';
+            document.getElementById('modalDetalhes').style.display = 'none';
         }
 
-        // Função para fechar o modal se clicar na área escurecida (fora da caixa)
         function fecharModalFora(event) {
-            if (event.target === modal) {
+            if (event.target === document.getElementById('modalDetalhes')) {
                 fecharModal();
             }
         }
     </script>
-
-    <script src="cadastrarProdutos.js"></script>
 </body>
 </html>
