@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Produtos</title>
+    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-<<<<<<< HEAD
     <style>
         /* =========================================
            1. VARIÁVEIS DE COR
@@ -28,53 +31,85 @@
             box-sizing: border-box;
             font-family: 'Inter', sans-serif;
         }
-=======
-<title>Boreal Tools - Produtos</title>
 
-<link rel="stylesheet" href="sidebar.css">
->>>>>>> da95264d56d1425f822001e8b26df49f510d176f
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        } 
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
 
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+        /* =========================================
+           3. ESTRUTURA PRINCIPAL (LAYOUT)
+        ========================================= */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
 
-<style>
+        .content {
+            flex: 1;
+            padding: 3rem 4rem;
+            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+        /* =========================================
+           4. SIDEBAR
+        ========================================= */
+        .side-bar {
+            background-color: #1a1a1a; 
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            min-width: 460px;
+            width: 320px;
+            height: 100vh;
+        }
 
-body{
-    background:
-    linear-gradient(
-        109deg,
-        #090909 32.55%,
-        #002c18 79.54%,
-        #003019 88.95%
-    );
+        .sidebar-header {
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+        }
 
-    color:white;
+        .logo {
+            width: auto;
+            max-width: 406px;
+        }
 
-    display:grid;
-    grid-template-columns:400px 1fr;
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding-bottom: 1.5rem;
+            text-align: center;
+        }
 
-    min-height:100vh;
-}
+        .perfil img {
+            width: 80px;
+            height: 80px;
+            background: #c8e6c9;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
+        .perfil p {
+            font-size: 24px;
+        }
 
-/* =========================
-   PAGINA ATIVA
-========================= */
-
-<<<<<<< HEAD
         .nav-side-bar {
             display: flex;
             flex-direction: column;
@@ -91,89 +126,175 @@ a{
             gap: 10%;
             cursor: pointer;
         }
-=======
-.secoes:nth-child(2){
-    background-color:#2e4a3e;
-}
 
-/* =========================
-   MAIN
-========================= */
+        .secoes:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
 
-main{
->>>>>>> da95264d56d1425f822001e8b26df49f510d176f
+        .secoes.active {
+            background-color: #3b5745;
+        }
 
-padding:25px;
+        .logout-link {
+            margin-top: auto;
+            padding: 15px 25px;
+            font-size: 0.85rem;
+        }
 
-overflow-y:auto;
+        .logout-link a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
 
-display:flex;
+        .logout-link a:hover {
+            color: #ff6b6b;
+        }
 
-justify-content:center;
+        /* =========================================
+           5. PAINEL DE PRODUTOS E TOPO
+        ========================================= */
+        .product-panel {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(135, 255, 185, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 0 30px rgba(135, 255, 185, 0.05);
+            width: 100%;
+            max-width: 1100px;
+        }
 
-align-items:flex-start;
-}
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
 
-/* =========================
-   PAINEL
-========================= */
+        .panel-title h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
 
-.product-panel{
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: #6da381;
+        }
 
-width:95%;
+        .breadcrumb span {
+            color: #aaa;
+        }
 
-max-width:1250px;
+        .panel-header-icon {
+            background: rgba(135, 255, 185, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            color: var(--neon-green);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-border-radius:20px;
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
 
-padding:40px;
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border: 1px solid #4a5a50;
+            border-radius: 20px;
+            padding: 8px 16px;
+            width: 320px;
+        }
 
-margin:20px auto;
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            outline: none;
+            width: 100%;
+            font-size: 0.85rem;
+        }
 
-background:rgba(20,20,20,0.7);
+        .search-box input::placeholder {
+            color: #666;
+        }
 
-border:1px solid #2e4a3e;
+        .search-box i {
+            color: #666;
+            font-size: 1.1rem;
+            margin-left: 8px;
+        }
 
-box-shadow:
-0 0 25px rgba(0,255,120,0.08);
-}
+        .btn-add {
+            background-color: #80B297;
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
 
-/* =========================
-   HEADER
-========================= */
+        .btn-add:hover {
+            background-color: #81c784;
+        }
 
-.panel-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
+        /* =========================================
+           6. TABELA
+        ========================================= */
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    margin-bottom:30px;
-}
+        .product-table th {
+            text-align: left;
+            padding: 12px 15px;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-weight: 400;
+            border-bottom: 1px solid #333;
+        }
 
-.panel-title h2{
-    font-size:2rem;
-    font-weight:500;
+        .product-table td {
+            padding: 16px 15px;
+            color: #b0b0b0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #333;
+        }
 
-    margin-bottom:10px;
-}
+        .product-table tbody tr {
+            transition: background 0.2s;
+        }
 
-.breadcrumb{
-    color:#7bcf9c;
-    font-size:0.95rem;
-}
+        .product-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
 
-.breadcrumb span{
-    color:#aaa;
-}
+        .btn-details {
+            background-color: #80B297;
+            color: #000;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.panel-icon{
+        .btn-details:hover {
+            background-color: #81c784;
+        }
 
-    width:50px;
-    height:50px;
-
-    border-radius:10px;
-
-<<<<<<< HEAD
         /* =========================================
            7. MODAL DE DETALHES
         ========================================= */
@@ -190,41 +311,70 @@ box-shadow:
             align-items: center;
             z-index: 1000;
         }
-=======
-    background:#163125;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
->>>>>>> da95264d56d1425f822001e8b26df49f510d176f
+        .modal-box {
+            background-color: #222222;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
 
-    color:#7bcf9c;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    font-size:28px;
-}
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
 
-/* =========================
-   TOOLBAR
-========================= */
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.table-toolbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+        .modal-header-left i {
+            font-size: 2rem;
+            color: var(--neon-green);
+        }
 
-    margin-bottom:40px;
-}
+        .modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
 
-.search-box{
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+        }
 
-    width:320px;
+        .btn-delete:hover {
+            color: #ff2a1a;
+            transform: scale(1.1);
+        }
 
-    display:flex;
-    align-items:center;
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+            color: #cccccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
 
-    border:1px solid #3a4a43;
-
-<<<<<<< HEAD
         .full-width {
             grid-column: 1 / -1;
         }
@@ -244,231 +394,9 @@ box-shadow:
             object-fit: cover;
         }
     </style>
-=======
-    border-radius:30px;
-
-    padding:10px 18px;
-
-    background:transparent;
-}
-
-.search-box input{
-
-    width:100%;
-
-    background:none;
-
-    border:none;
-
-    outline:none;
-
-    color:white;
-
-    font-size:0.95rem;
-}
-
-.search-box input::placeholder{
-    color:#777;
-}
-
-.search-box i{
-    color:#777;
-}
-
-/* =========================
-   BOTAO
-========================= */
-
-.btn-add{
-
-    background:#9cc8aa;
-
-    color:black;
-
-    padding:12px 24px;
-
-    border-radius:10px;
-
-    font-weight:600;
-
-    transition:0.3s;
-}
-
-.btn-add:hover{
-    background:#81c784;
-}
-
-/* =========================
-   TABELA
-========================= */
-
-.product-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-}
-
-.product-table th{
-
-    text-align:left;
-
-    padding:18px 15px;
-
-    color:white;
-
-    font-size:0.95rem;
-
-    font-weight:500;
-
-    border-bottom:1px solid #2b2b2b;
-}
-
-.product-table td{
-
-    padding:22px 15px;
-
-    color:#cfcfcf;
-
-    border-bottom:1px solid #2b2b2b;
-}
-
-.product-table tbody tr:hover{
-    background:rgba(255,255,255,0.02);
-}
-
-/* =========================
-   BOTAO DETALHES
-========================= */
-
-.btn-detail{
-
-    background:#9cc8aa;
-
-    color:black;
-
-    border:none;
-
-    padding:8px 18px;
-
-    border-radius:20px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:0.3s;
-}
-
-.btn-detail:hover{
-    background:#81c784;
-}
-
-/* =========================
-   LINHAS VAZIAS
-========================= */
-
-.empty-row td{
-    height:55px;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal-overlay{
-
-    position:fixed;
-
-    top:0;
-    left:0;
-
-    width:100%;
-    height:100%;
-
-    background:rgba(0,0,0,0.7);
-
-    display:none;
-
-    justify-content:center;
-    align-items:center;
-
-    z-index:999;
-}
-
-.modal-box{
-
-    width:100%;
-    max-width:650px;
-
-    background:#1f1f1f;
-
-    border-radius:20px;
-
-    border:1px solid #444;
-
-    padding:30px;
-}
-
-.modal-header{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    margin-bottom:30px;
-}
-
-.modal-header-left{
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-}
-
-.modal-header-left i{
-
-    font-size:30px;
-
-    color:#7bcf9c;
-}
-
-.btn-delete{
-
-    background:none;
-
-    border:none;
-
-    color:#ff5e5e;
-
-    font-size:24px;
-
-    cursor:pointer;
-}
-
-.modal-body{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:20px;
-
-    color:#ccc;
-}
-
-.full-width{
-    grid-column:1 / -1;
-}
-
-</style>
->>>>>>> da95264d56d1425f822001e8b26df49f510d176f
 </head>
-
 <body>
 
-<<<<<<< HEAD
     <div class="main-wrapper">
         <section class="side-bar">
             <div class="sidebar-header">
@@ -557,102 +485,6 @@ box-shadow:
     <div id="modalDetalhes" class="modal-overlay" onclick="fecharModalFora(event)">
         <div class="modal-box">
             </div>
-=======
-<!-- SIDEBAR -->
-
-<section class="side-bar">
-
-    <div class="sidebar-header">
-        <img src="./img/LogoBorealTools.png"
-        alt="Boreal Tools"
-        class="logo">
-    </div>
-
-    <div class="perfil">
-        <img src="./img/perfil-icon.png"
-        alt="Perfil">
-
-        <p>Fulano de Tal</p>
-    </div>
-
-    <nav class="nav-side-bar">
-
-        <div class="secoes">
-            <img src="./img/inicio.sidebar.png" class="secao-icon">
-            <a href="dashboard.html">Início</a>
-        </div>
-
-        <div class="secoes active">
-            <img src="./img/produtos.png" class="secao-icon">
-            <a href="produtos.html">Produtos</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/estoque.png" class="secao-icon">
-            <a href="./estoque.html">Estoques</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/financeiro.png" class="secao-icon">
-            <a href="./financeiro.html">Financeiro</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/vendas.png" class="secao-icon">
-            <a href="vendas.html">Vendas</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/funcionarios.png" class="secao-icon">
-            <a href="./funcionarios.html">Funcionários</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/clientes.png" class="secao-icon">
-            <a href="./ClienteFornecedor.html">Clientes</a>
-        </div>
-
-    </nav>
-
-    <div class="logout-link">
-        <a href="./login.html">← Deslogar</a>
-    </div>
-
-</section>
-
-<!-- MAIN -->
-
-<main>
-
-<div class="product-panel">
-
-    <!-- HEADER -->
-
-    <div class="panel-header">
-
-        <div class="panel-title">
-
-            <h2>Painel da Lista de Produtos</h2>
-
-            <div class="breadcrumb">
-                Produtos >
-                <span>Lista de produtos</span>
-            </div>
-
-            <div class="modal-body">
-                <div>Nome: Iphone 17</div>
-                <div>Id: 01</div>
-                <div>Marca: Apple</div>
-                <div>Valor em R$: 15.000</div>
-                <div>Categoria: Eletroeletrônicos</div>
-                <div>Fornecedor: Mario Bidoia</div>
-                <div class="full-width">Descrição: Smartphone branco com 128Gb de armazenamento</div>
-                <div>Quantidade Mínima de Estoque: 65</div>
-                <div>Quantidade Atual de Estoque: 102</div>
-            </div>
-        </div>
-
->>>>>>> da95264d56d1425f822001e8b26df49f510d176f
     </div>
 
     <script>
