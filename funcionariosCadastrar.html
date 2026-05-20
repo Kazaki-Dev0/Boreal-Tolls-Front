@@ -211,85 +211,87 @@ label {
                 <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
             </div>
         </div>
-        <form action="">
+        <form id="formFuncionario">
             <div class="inputs-cad">
                 <div class="input-divs">
                     <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">Nome Completo</label>
-                    <input type="text">
+                    <input type="text" id="nome">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> RG</label>
-                    <input type="number">
+                    <input type="number" id="rg">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> CPF</label>
-                    <input type="number">
+                    <input type="number" id="cpf">
                 </div>
 
                 <div class="input-divs">
-                    <label for=""><img src="./img/tel-cad-func.png" alt=""> elefone</label>
-                    <input type="number">
+                    <label for=""><img src="./img/tel-cad-func.png" alt=""> Telefone</label>
+                    <input type="number" id="telefone">
                 </div>
 
                 <div class="input-divs"> 
                     <label for=""><img src="./img/email-cad-func.png" alt=""> Email</label>
-                    <input type="email">
+                    <input type="email" id="email">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/data-cad-func.png" alt=""> Data de Nascimento</label>
-                    <input type="date">
+                    <input type="date" id="dataNascimento">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Departamento</label>
-                    <input type="text">
+                    <input type="text" id="departamento">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Cargo/Função</label>
-                    <input type="text">
+                    <input type="text" id="cargo">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/sifrao-cad-func.png" alt=""> Salário Base (R$)</label>
-                    <input type="number">
+                    <input type="number" id="salario">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/ender-cad-func.png" alt=""> CEP</label>
-                    <input type="number">
+                    <input type="number" id="cep">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/ender-cad-func.png" alt=""> Rua</label>
-                    <input type="text">
+                    <input type="text" id="rua">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/ender-cad-func.png" alt=""> Bairro</label>
-                    <input type="text">
+                    <input type="text" id="bairro">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/ender-cad-func.png" alt=""> Cidade</label>
-                    <input type="text">
+                    <input type="text" id="cidade">
                 </div>
 
                 <div class="input-divs">
                     <label for=""><img src="./img/ender-cad-func.png" alt=""> Estado</label>
-                    <input type="text">
+                    <input type="text" id="estado">
                 </div>
                 
                 <div class="input-divs">
                     <label for=""><img src="./img/ender-cad-func.png" alt=""> Complemento</label>
-                    <input type="text">
+                    <input type="text" id="complemento">
                 </div>
             </div>
             <button type="submit" id="cadastrarFuncionario">Cadastrar Funcionário</button>
         </form>
     </main>
+
+    <script src="funcionariosCadastrar.js"></script>
 </body>
 </html>
