@@ -1,397 +1,621 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Controle de Estoque</title>
-    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="sidebar.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<title>Boreal Tools - Controle de Estoque</title>
+
+<link rel="stylesheet" href="sidebar.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body{
+    background:
+    linear-gradient(
+        109deg,
+        #090909 32.55%,
+        #002c18 79.54%,
+        #003019 88.95%
+    );
 
-    body {
-        background-color: #0a0a0a;
-        background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-        color: white;
-        min-height: 100vh;
+    color:white;
+
+    display:grid;
+    grid-template-columns:400px 1fr;
+
+    min-height:100vh;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+   PAGINA ATIVA
+========================= */
+
+.secoes:nth-child(3){
+    background-color:#2e4a3e;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+
+padding:25px;
+
+overflow-y:auto;
+
+display:flex;
+
+justify-content:center;
+
+align-items:flex-start;
+}
+
+/* =========================
+   PAINEL
+========================= */
+
+.stock-panel{
+
+width:95%;
+
+max-width:1250px;
+
+border-radius:20px;
+
+padding:40px;
+
+margin:20px auto;
+
+background:rgba(20,20,20,0.7);
+
+border:1px solid #2e4a3e;
+
+box-shadow:
+0 0 25px rgba(0,255,120,0.08);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    margin-bottom:30px;
+}
+
+.panel-title h2{
+    font-size:2rem;
+    font-weight:500;
+
+    margin-bottom:10px;
+}
+
+.panel-subtitle{
+    color:#aaa;
+    font-size:0.95rem;
+}
+
+.panel-icon{
+
+    width:50px;
+    height:50px;
+
+    border-radius:10px;
+
+    background:#163125;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:#7bcf9c;
+
+    font-size:28px;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.table-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:40px;
+
+    gap:20px;
+}
+
+.search-box{
+
+    width:350px;
+
+    display:flex;
+    align-items:center;
+
+    border:1px solid #3a4a43;
+
+    border-radius:30px;
+
+    padding:10px 18px;
+
+    background:transparent;
+}
+
+.search-box input{
+
+    width:100%;
+
+    background:none;
+
+    border:none;
+
+    outline:none;
+
+    color:white;
+
+    font-size:0.95rem;
+}
+
+.search-box input::placeholder{
+    color:#777;
+}
+
+.search-box i{
+    color:#777;
+}
+
+/* =========================
+   BOTÃO
+========================= */
+
+.btn-add{
+
+    background:#9cc8aa;
+
+    color:black;
+
+    padding:12px 24px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.btn-add:hover{
+    background:#81c784;
+}
+
+/* =========================
+   TABELA
+========================= */
+
+.stock-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.stock-table th{
+
+    text-align:left;
+
+    padding:18px 15px;
+
+    color:white;
+
+    font-size:0.95rem;
+
+    font-weight:500;
+
+    border-bottom:1px solid #2b2b2b;
+}
+
+.stock-table td{
+
+    padding:22px 15px;
+
+    color:#cfcfcf;
+
+    border-bottom:1px solid #2b2b2b;
+}
+
+.stock-table tbody tr:hover{
+    background:rgba(255,255,255,0.02);
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge{
+
+    padding:8px 14px;
+
+    border-radius:20px;
+
+    font-size:0.8rem;
+
+    font-weight:600;
+}
+
+.badge-entrada{
+
+    background:rgba(76,175,80,0.15);
+
+    color:#81c784;
+}
+
+.badge-saida{
+
+    background:rgba(244,67,54,0.15);
+
+    color:#ff7b7b;
+}
+
+/* =========================
+   AÇÕES
+========================= */
+
+.action-buttons{
+
+    display:flex;
+
+    gap:10px;
+}
+
+.btn-icon{
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#1f1f1f;
+
+    color:#ccc;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.btn-icon:hover{
+
+    background:#2e4a3e;
+
+    color:#7bcf9c;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:1200px){
+
+    body{
+        grid-template-columns:320px 1fr;
     }
 
+    .table-toolbar{
+        flex-direction:column;
+        align-items:flex-start;
+    }
 
-a {
-    color: inherit;
-    text-decoration: none;
+    .search-box{
+        width:100%;
+    }
 }
 
-.main-wrapper {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
+@media(max-width:900px){
 
+    body{
+        grid-template-columns:1fr;
+    }
 
-/* Destaque para a página atual  */
-.secoes:nth-child(3) {
-    background-color: #2e4a3e; /* Verde escuro */
+    .side-bar{
+        display:none;
+    }
+
+    .stock-panel{
+        width:100%;
+    }
+
+    .stock-table{
+        min-width:900px;
+    }
 }
 
-/* Main Content Area */
-main {
-    padding: 40px;
-    overflow-y: auto;
-}
-
-        /* --- CONTEÚDO PRINCIPAL --- */
-        .content {
-            flex: 1;
-            padding: 2.5rem;
-            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
-            overflow-y: auto;
-        }
-
-        /* --- PAINEL DE ESTOQUE (NOVO UI) --- */
-        .panel-container {
-            background-color: var(--bg-panel);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        /* Efeito visual da borda do painel como na imagem */
-        .panel-container::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: -1px; right: -1px; bottom: -1px;
-            border-radius: 13px;
-            background: linear-gradient(135deg, var(--neon-green-glow), transparent 60%);
-            z-index: -1;
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .panel-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .panel-title i {
-            font-size: 2rem;
-            color: var(--neon-green);
-        }
-
-        .panel-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #1a1a1a;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 8px 15px;
-            width: 300px;
-            transition: 0.3s;
-        }
-
-        .search-box:focus-within {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green-glow);
-        }
-
-        .search-box i {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            margin-right: 10px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            width: 100%;
-            outline: none;
-            font-size: 0.9rem;
-        }
-
-        .btn-primary {
-            background-color: rgba(135, 255, 185, 0.1);
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--neon-green);
-            color: var(--bg-main);
-            box-shadow: 0 0 15px var(--neon-green-glow);
-        }
-
-        /* --- TABELA DE ESTOQUE --- */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        .custom-table th {
-            background-color: #1a1a1a;
-            color: var(--text-primary);
-            font-weight: 600;
-            padding: 15px;
-            font-size: 0.9rem;
-            border-bottom: 2px solid var(--border-color);
-            white-space: nowrap;
-        }
-
-        .custom-table td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            vertical-align: middle;
-        }
-
-        .custom-table tbody tr {
-            transition: 0.3s;
-        }
-
-        .custom-table tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.03);
-        }
-
-        .custom-table td strong {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        /* Badges de Status (Entrada/Saída) */
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-block;
-        }
-
-        .badge-entrada {
-            background-color: rgba(135, 255, 185, 0.1);
-            color: var(--neon-green);
-            border: 1px solid rgba(135, 255, 185, 0.3);
-        }
-
-        .badge-saida {
-            background-color: rgba(255, 107, 107, 0.1);
-            color: var(--danger-color);
-            border: 1px solid rgba(255, 107, 107, 0.3);
-        }
-
-        /* Ações da Tabela */
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn-icon {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            transition: 0.3s;
-            padding: 5px;
-            border-radius: 4px;
-        }
-
-        .btn-icon:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-        }
-
-        .btn-delete:hover {
-            background-color: var(--danger-glow);
-            color: var(--danger-color);
-        }
-
-    </style>
+</style>
 </head>
+
 <body>
 
-    <div class="main-wrapper">
+<!-- SIDEBAR -->
 
-        <section class="side-bar">
-        <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+<section class="side-bar">
+
+    <div class="sidebar-header">
+        <img src="./img/LogoBorealTools.png"
+        alt="Boreal Tools"
+        class="logo">
+    </div>
+
+    <div class="perfil">
+        <img src="./img/perfil-icon.png"
+        alt="Perfil">
+
+        <p>Fulano de Tal</p>
+    </div>
+
+    <nav class="nav-side-bar">
+
+        <div class="secoes">
+            <img src="./img/inicio.sidebar.png" class="secao-icon">
+            <a href="dashboard.html">Início</a>
         </div>
-        
-        <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="produtos.html">Produtos</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="vendas.html">Vendas</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-        </nav>
 
-        <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
+        <div class="secoes">
+            <img src="./img/produtos.png" class="secao-icon">
+            <a href="produtos.html">Produtos</a>
         </div>
-        </section>
 
-        <main class="content">
-            
-            <div class="panel-container">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <i class="ph ph-archive-box"></i>
-                        Controle de Estoque
-                    </div>
-                    
-                    <div class="panel-actions">
-                        <div class="search-box">
-                            <i class="ph ph-magnifying-glass"></i>
-                            <input type="text" placeholder="Pesquisar por Produto ou Fornecedor...">
-                        </div>
-                        
-                        <a href="novo-movimento.html" class="btn-primary">
-                            <i class="ph ph-plus"></i>
-                            Registrar Movimento
-                        </a>
-                    </div>
-                </div>
+        <div class="secoes active">
+            <img src="./img/estoque.png" class="secao-icon">
+            <a href="./estoque.html">Estoques</a>
+        </div>
 
-                <div class="table-wrapper">
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Tipo de Movimento</th>
-                                <th>Produto</th>
-                                <th>Quantidade</th>
-                                <th>Fornecedor</th>
-                                <th>Capacidade Máx.</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>29/02/2024</td>
-                                <td><span class="badge badge-entrada">Entrada</span></td>
-                                <td><strong>Produto 1</strong></td>
-                                <td>20 UND</td>
-                                <td>Forn-1</td>
-                                <td>100 UN</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalhes"><i class="ph ph-eye"></i></button>
-                                        <button class="btn-icon btn-delete" title="Excluir Registro"><i class="ph ph-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>04/03/2024</td>
-                                <td><span class="badge badge-saida">Saída</span></td>
-                                <td><strong>Produto 2</strong></td>
-                                <td>2 UND</td>
-                                <td>Forn-2</td>
-                                <td>50 UN</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalhes"><i class="ph ph-eye"></i></button>
-                                        <button class="btn-icon btn-delete" title="Excluir Registro"><i class="ph ph-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
+        <div class="secoes">
+            <img src="./img/financeiro.png" class="secao-icon">
+            <a href="./financeiro.html">Financeiro</a>
+        </div>
 
-                            <tr>
-                                <td>10/03/2024</td>
-                                <td><span class="badge badge-entrada">Entrada</span></td>
-                                <td><strong>Iphone 17</strong></td>
-                                <td>50 UND</td>
-                                <td>Apple / Forn-3</td>
-                                <td>200 UN</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalhes"><i class="ph ph-eye"></i></button>
-                                        <button class="btn-icon btn-delete" title="Excluir Registro"><i class="ph ph-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="secoes">
+            <img src="./img/vendas.png" class="secao-icon">
+            <a href="vendas.html">Vendas</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/funcionarios.png" class="secao-icon">
+            <a href="./funcionarios.html">Funcionários</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/clientes.png" class="secao-icon">
+            <a href="./ClienteFornecedor.html">Clientes</a>
+        </div>
+
+    </nav>
+
+    <div class="logout-link">
+        <a href="./login.html">← Deslogar</a>
+    </div>
+
+</section>
+
+<!-- MAIN -->
+
+<main>
+
+<div class="stock-panel">
+
+    <!-- HEADER -->
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+
+            <h2>Controle de Estoque</h2>
+
+            <div class="panel-subtitle">
+                Gerencie entradas, saídas e movimentações do estoque.
             </div>
 
-        </main>
+        </div>
+
+        <div class="panel-icon">
+            <i class="ph ph-archive-box"></i>
+        </div>
+
     </div>
+
+    <!-- TOOLBAR -->
+
+    <div class="table-toolbar">
+
+        <div class="search-box">
+
+            <input type="text"
+            placeholder="Pesquisar por Produto ou Fornecedor">
+
+            <i class="ph ph-magnifying-glass"></i>
+
+        </div>
+
+        <a href="novo-movimento.html"
+        class="btn-add">
+
+            + Registrar Movimento
+
+        </a>
+
+    </div>
+
+    <!-- TABELA -->
+
+    <table class="stock-table">
+
+        <thead>
+
+            <tr>
+                <th>Data</th>
+                <th>Movimento</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Fornecedor</th>
+                <th>Capacidade</th>
+                <th>Ações</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>29/02/2024</td>
+
+                <td>
+                    <span class="badge badge-entrada">
+                        Entrada
+                    </span>
+                </td>
+
+                <td style="color:white;">
+                    Produto 1
+                </td>
+
+                <td>20 UND</td>
+
+                <td>Forn-1</td>
+
+                <td>100 UND</td>
+
+                <td>
+
+                    <div class="action-buttons">
+
+                        <button class="btn-icon">
+                            <i class="ph ph-eye"></i>
+                        </button>
+
+                        <button class="btn-icon">
+                            <i class="ph ph-trash"></i>
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>04/03/2024</td>
+
+                <td>
+                    <span class="badge badge-saida">
+                        Saída
+                    </span>
+                </td>
+
+                <td style="color:white;">
+                    Produto 2
+                </td>
+
+                <td>2 UND</td>
+
+                <td>Forn-2</td>
+
+                <td>50 UND</td>
+
+                <td>
+
+                    <div class="action-buttons">
+
+                        <button class="btn-icon">
+                            <i class="ph ph-eye"></i>
+                        </button>
+
+                        <button class="btn-icon">
+                            <i class="ph ph-trash"></i>
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>10/03/2024</td>
+
+                <td>
+                    <span class="badge badge-entrada">
+                        Entrada
+                    </span>
+                </td>
+
+                <td style="color:white;">
+                    Iphone 17
+                </td>
+
+                <td>50 UND</td>
+
+                <td>Apple / Forn-3</td>
+
+                <td>200 UND</td>
+
+                <td>
+
+                    <div class="action-buttons">
+
+                        <button class="btn-icon">
+                            <i class="ph ph-eye"></i>
+                        </button>
+
+                        <button class="btn-icon">
+                            <i class="ph ph-trash"></i>
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            <!-- LINHAS VAZIAS -->
+
+            <tr><td colspan="7" style="height:70px;"></td></tr>
+            <tr><td colspan="7" style="height:70px;"></td></tr>
+            <tr><td colspan="7" style="height:70px;"></td></tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</main>
 
 </body>
 </html>
