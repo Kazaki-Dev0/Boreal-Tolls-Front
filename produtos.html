@@ -463,174 +463,42 @@ box-shadow:
                 <span>Lista de produtos</span>
             </div>
 
-        </div>
-
-        <div class="panel-icon">
-            <i class="ph ph-package"></i>
+            <div class="modal-body">
+                <div>Nome: Iphone 17</div>
+                <div>Id: 01</div>
+                <div>Marca: Apple</div>
+                <div>Valor em R$: 15.000</div>
+                <div>Categoria: Eletroeletrônicos</div>
+                <div>Fornecedor: Mario Bidoia</div>
+                <div class="full-width">Descrição: Smartphone branco com 128Gb de armazenamento</div>
+                <div>Quantidade Mínima de Estoque: 65</div>
+                <div>Quantidade Atual de Estoque: 102</div>
+            </div>
         </div>
 
     </div>
 
-    <!-- TOOLBAR -->
-
-    <div class="table-toolbar">
-
-        <div class="search-box">
-
-            <input type="text"
-            placeholder="Pesquisar por Id, Descrição ou Marca">
-
-            <i class="ph ph-magnifying-glass"></i>
-
-        </div>
-
-        <a href="./cadastro_produtos.html"
-        class="btn-add">
-
-            + Cadastrar Produto
-
-        </a>
-
-    </div>
-
-    <!-- TABELA -->
-
-    <table class="product-table">
-
-        <thead>
-
-            <tr>
-                <th>Nome</th>
-                <th>Id</th>
-                <th>Descrição</th>
-                <th>Marca</th>
-                <th>Valor em R$</th>
-                <th>Qtd. Estoque</th>
-                <th></th>
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            <tr>
-
-                <td style="color:white;">
-                    Iphone 17
-                </td>
-
-                <td>01</td>
-
-                <td>Smartphone bran...</td>
-
-                <td>Apple</td>
-
-                <td>15.000</td>
-
-                <td>102</td>
-
-                <td style="text-align:right;">
-
-                    <button class="btn-detail"
-                    onclick="abrirModal()">
-
-                        Ver detalhes
-
-                    </button>
-
-                </td>
-
-            </tr>
-
-            <!-- LINHAS VAZIAS -->
-
-            <tr class="empty-row"><td colspan="7"></td></tr>
-            <tr class="empty-row"><td colspan="7"></td></tr>
-            <tr class="empty-row"><td colspan="7"></td></tr>
-            <tr class="empty-row"><td colspan="7"></td></tr>
-            <tr class="empty-row"><td colspan="7"></td></tr>
-
-        </tbody>
-
-    </table>
-
-</div>
-
-</main>
-
-<!-- MODAL -->
-
-<div id="modalDetalhes"
-class="modal-overlay"
-onclick="fecharModalFora(event)">
-
-<div class="modal-box">
-
-    <div class="modal-header">
-
-        <div class="modal-header-left">
-
-            <i class="ph ph-package"></i>
-
-            <h3>Detalhes do Produto</h3>
-
-        </div>
-
-        <button class="btn-delete"
-        onclick="fecharModal()">
-
-            <i class="ph ph-trash-fill"></i>
-
-        </button>
-
-    </div>
-
-    <div class="modal-body">
-
-        <div>Nome: Iphone 17</div>
-        <div>Id: 01</div>
-
-        <div>Marca: Apple</div>
-        <div>Valor em R$: 15.000</div>
-
-        <div>Categoria: Eletroeletrônicos</div>
-        <div>Fornecedor: Mario Bidoia</div>
-
-        <div class="full-width">
-            Descrição: Smartphone branco com 128GB
-        </div>
-
-        <div>Quantidade mínima: 65</div>
-        <div>Quantidade atual: 102</div>
-
-    </div>
-
-</div>
-
-</div>
-
-<script>
-
-const modal =
-document.getElementById('modalDetalhes');
-
-function abrirModal(){
-    modal.style.display='flex';
-}
-
-function fecharModal(){
-    modal.style.display='none';
-}
-
-function fecharModalFora(event){
-
-    if(event.target === modal){
-        fecharModal();
-    }
-
-}
-
-</script>
-
+    <script>
+        const modal = document.getElementById('modalDetalhes');
+
+        // Função para abrir o modal
+        function abrirModal() {
+            modal.style.display = 'flex';
+        }
+
+        // Função para fechar o modal explicitamente
+        function fecharModal() {
+            modal.style.display = 'none';
+        }
+
+        // Função para fechar o modal se clicar na área escurecida (fora da caixa)
+        function fecharModalFora(event) {
+            if (event.target === modal) {
+                fecharModal();
+            }
+        }
+    </script>
+
+    <script src="cadastrarProdutos.js"></script>
 </body>
 </html>
