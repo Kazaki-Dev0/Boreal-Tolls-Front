@@ -1,389 +1,518 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Dashboard</title>
-    <link rel="stylesheet" href="sidebar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Boreal Tools - Clientes</title>
+
+<link rel="stylesheet" href="sidebar.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body{
 
-    body {
-        background-color: #0a0a0a;
-        background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-        color: white;
-        display: grid;
-        grid-template-columns: 400px 1fr;
-        min-height: 100vh;
-    }
+    background:
+    linear-gradient(
+        109deg,
+        #090909 32.55%,
+        #002c18 79.54%,
+        #003019 88.95%
+    );
 
+    color:white;
 
-a {
-    color: inherit;
-    text-decoration: none;
+    display:grid;
+
+    grid-template-columns:400px 1fr;
+
+    min-height:100vh;
 }
 
-
-/* Destaque para a página atual*/
-.secoes:nth-child(7) {
-    background-color: #2e4a3e;
+a{
+    text-decoration:none;
+    color:inherit;
 }
 
-/* Main Content Area */
-main {
-    padding: 40px;
-    overflow-y: auto;
+/* =========================
+   PAGINA ATIVA
+========================= */
+
+.secoes:nth-child(7){
+    background-color:#2e4a3e;
 }
 
-/* --- CLIENTES / FORNECEDORES --- */
+/* =========================
+   MAIN
+========================= */
 
-.clients-card {
-    border: 1px solid #2e4a3e;
-    width: 70%;
-    border-radius: 20px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.02);
-    box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
-    margin: 10%;
+main{
+
+    padding:25px;
+
+    overflow-y:auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
 }
 
-/* HEADER */
-.clients-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+/* =========================
+   PAINEL
+========================= */
+
+.clients-card{
+
+    width:95%;
+
+    max-width:1250px;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    margin:20px auto;
+
+    background:rgba(20,20,20,0.7);
+
+    border:1px solid #2e4a3e;
+
+    box-shadow:
+    0 0 25px rgba(0,255,120,0.08);
 }
 
-.clients-header h2 {
-    font-size: 1.5rem;
-    color: white;
+/* =========================
+   HEADER
+========================= */
+
+.clients-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:30px;
 }
 
-.clients-header i {
-    margin-right: 10px;
-    color: var(--accent-green);
+.title-area h2{
+
+    font-size:2rem;
+
+    font-weight:500;
+
+    margin-bottom:10px;
 }
 
-/* SUBTITLE */
-.subtitle {
-    font-size: 0.9rem;
-    color: var(--text-gray);
-    margin-bottom: 25px;
+.subtitle{
+
+    color:#7bcf9c;
+
+    font-size:0.95rem;
 }
 
-/* ACTIONS */
-.actions {
-    display: flex;
-    gap: 15px;
+.subtitle span{
+    color:#aaa;
 }
 
-.search-box {
-    display: flex;
-    align-items: center;
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 8px 12px;
-    gap: 8px;
+.panel-icon{
+
+    width:50px;
+    height:50px;
+
+    border-radius:10px;
+
+    background:#163125;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    color:#7bcf9c;
+
+    font-size:24px;
 }
 
-.search-box input {
-    background: transparent;
-    border: none;
-    color: white;
-    outline: none;
+/* =========================
+   TOOLBAR
+========================= */
+
+.actions{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:40px;
 }
 
-.search-box i {color: #777;}
+.search-box{
 
-.search-box.small {padding: 6px 10px;}
+    width:340px;
 
-/* BUTTON */
-.btn-add {
-    background: #7bcf9c;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #0a0a0a;
+    display:flex;
+
+    align-items:center;
+
+    border:1px solid #3a4a43;
+
+    border-radius:30px;
+
+    padding:10px 18px;
+
+    background:transparent;
 }
 
-.btn-detail {
-    background: #7bcf9c;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 0.8rem;
+.search-box input{
+
+    width:100%;
+
+    background:none;
+
+    border:none;
+
+    outline:none;
+
+    color:white;
+
+    font-size:0.95rem;
 }
 
-/* TABLE */
-.table-block {margin-top: 20px;}
-
-.table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.search-box input::placeholder{
+    color:#777;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.search-box i{
+    color:#777;
 }
 
-thead {
-    color: #aaa;
-    font-size: 0.85rem;
+/* =========================
+   BOTAO
+========================= */
+
+.btn-add{
+
+    background:#9cc8aa;
+
+    color:black;
+
+    padding:12px 24px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:0.3s;
 }
 
-td, th {
-    padding: 12px;
-    text-align: left;
+.btn-add:hover{
+    background:#81c784;
 }
 
-tbody tr {
-    background: #111;
-    border-radius: 8px;
+/* =========================
+   TABELA
+========================= */
+
+.clients-table{
+
+    width:100%;
+
+    border-collapse:collapse;
 }
 
-tbody tr + tr {margin-top: 10px;}
+.clients-table th{
 
-tbody td {border-top: 1px solid #222;}
+    text-align:left;
 
-/* --- SEÇÃO CADASTRO --- */
+    padding:18px 15px;
 
-.main {
-    border: 1px solid #2e4a3e;
-    width: 70%;
-    border-radius: 20px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.02);
-    box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
-    margin: 10%;
+    color:white;
+
+    font-size:0.95rem;
+
+    font-weight:500;
+
+    border-bottom:1px solid #2b2b2b;
 }
 
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.clients-table td{
+
+    padding:22px 15px;
+
+    color:#cfcfcf;
+
+    border-bottom:1px solid #2b2b2b;
 }
 
-.titulo h2 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    
+.clients-table tbody tr:hover{
+    background:rgba(255,255,255,0.02);
 }
 
-.titulo p {
-    color: #888;
-    margin-bottom: 25px;
+/* =========================
+   BOTAO DETALHES
+========================= */
+
+.btn-detail{
+
+    background:#9cc8aa;
+
+    color:black;
+
+    border:none;
+
+    padding:8px 18px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
 }
 
-.atalhos-main {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-bottom: 30px;
+.btn-detail:hover{
+    background:#81c784;
 }
 
-.atalhos-main input {
-    background: transparent;
-    border: 1px solid #444;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
-    width: 250px;
+/* =========================
+   LINHAS VAZIAS
+========================= */
+
+.empty-row td{
+    height:55px;
 }
 
-.atalhos-main button {
-    background-color: #5e5e5e;
-    color: whitesmoke;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.atalhos-main button:hover {background-color: #333;}
-
-form {
-    background-color: #333;
-    padding: 32px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    
-}
-
-.inputs-cad {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 10px;
-}
-
-.input-divs {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.input-divs input {
-    height: 32px;
-    border-radius: 12px;
-}
-
-label img {
-    width: 20px;
-    height: 20px;
-}
-
-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-#cadastrarFuncionario {
-    background-color: #80B297;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: whitesmoke;
-}
-
-#cadastrarFuncionario:hover{-color: #81c784;}
-    </style>
+</style>
 </head>
+
 <body>
 
-    <section class="side-bar">
-        <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
-        
-        <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="produtos.html">Produtos</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="vendas.html">Vendas</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-        </nav>
+<!-- SIDEBAR -->
 
-        <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
-        </div>
-    </section>
+<section class="side-bar">
 
-
-
-            <section class="clients-section">
-                <div class="clients-card">
-            
-                    <div class="clients-header">
-                        <h2><i class="fa-solid fa-user"></i> Clientes e Fornecedores Registrados</h2>
-            
-                        <div class="actions">
-                            <div class="search-box">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" placeholder="Buscar por ID, Nome ou CPF/CNPJ">
-                            </div>
-                            <button class="btn-add"><a href="cadastrarCliente.html">+ Cadastrar</a></button>
-                        </div>
-                    </div>
-            
-                    <p class="subtitle">
-                        Gerencie sua base de clientes e fornecedores, acompanhando informações detalhadas.
-                    </p>
-            
-                    <!-- CLIENTES -->
-                    <div class="table-block">
-                       
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Id</th>
-                                    <th>Email</th>
-                                    <th>CPF</th>
-                                    <th>Data de Nascimento</th>
-                                    <th>Tipo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Kaique Kawasaki</td>
-                                    <td>01</td>
-                                    <td>kaique@email.com</td>
-                                    <td>12345678910</td>
-                                    <td>10/10/2008</td>
-                                    <td>Cliente</td>
-                                    <td><button class="btn-detail">Ver detalhes</button></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td>Vinícius Cardoso</td>
-                                    <td>02</td>
-                                    <td>vini@email.com</td>
-                                    <td>19204893726</td>
-                                    <td>21/05/2008</td>
-                                    <td>Fornecedor</td>
-                                    <td><button class="btn-detail">Ver detalhes</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-        </main>
+    <div class="sidebar-header">
+        <img src="./img/LogoBorealTools.png"
+        alt="Boreal Tools"
+        class="logo">
     </div>
+
+    <div class="perfil">
+
+        <img src="./img/perfil-icon.png"
+        alt="Perfil">
+
+        <p>Fulano de Tal</p>
+
+    </div>
+
+    <nav class="nav-side-bar">
+
+        <div class="secoes">
+            <img src="./img/inicio.sidebar.png" class="secao-icon">
+            <a href="dashboard.html">Início</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/produtos.png" class="secao-icon">
+            <a href="produtos.html">Produtos</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/estoque.png" class="secao-icon">
+            <a href="./estoque.html">Estoques</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/financeiro.png" class="secao-icon">
+            <a href="./financeiro.html">Financeiro</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/vendas.png" class="secao-icon">
+            <a href="vendas.html">Vendas</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/funcionarios.png" class="secao-icon">
+            <a href="./funcionarios.html">Funcionários</a>
+        </div>
+
+        <div class="secoes active">
+            <img src="./img/clientes.png" class="secao-icon">
+            <a href="./ClienteFornecedor.html">Clientes</a>
+        </div>
+
+    </nav>
+
+    <div class="logout-link">
+        <a href="./login.html">← Deslogar</a>
+    </div>
+
+</section>
+
+<!-- MAIN -->
+
+<main>
+
+<div class="clients-card">
+
+    <!-- HEADER -->
+
+    <div class="clients-header">
+
+        <div class="title-area">
+
+            <h2>
+                Clientes e Fornecedores
+            </h2>
+
+            <div class="subtitle">
+
+                Clientes >
+                <span>Lista de registros</span>
+
+            </div>
+
+        </div>
+
+        <div class="panel-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+    </div>
+
+    <!-- TOOLBAR -->
+
+    <div class="actions">
+
+        <div class="search-box">
+
+            <input type="text"
+            placeholder="Buscar por ID, Nome ou CPF/CNPJ">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </div>
+
+        <a href="cadastrarCliente.html"
+        class="btn-add">
+
+            + Cadastrar
+
+        </a>
+
+    </div>
+
+    <!-- TABELA -->
+
+    <table class="clients-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Nome</th>
+                <th>Id</th>
+                <th>Email</th>
+                <th>CPF</th>
+                <th>Data de Nascimento</th>
+                <th>Tipo</th>
+                <th></th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td style="color:white;">
+                    Kaique Kawasaki
+                </td>
+
+                <td>01</td>
+
+                <td>kaique@email.com</td>
+
+                <td>12345678910</td>
+
+                <td>10/10/2008</td>
+
+                <td>Cliente</td>
+
+                <td style="text-align:right;">
+
+                    <button class="btn-detail">
+                        Ver detalhes
+                    </button>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td style="color:white;">
+                    Vinícius Cardoso
+                </td>
+
+                <td>02</td>
+
+                <td>vini@email.com</td>
+
+                <td>19204893726</td>
+
+                <td>21/05/2008</td>
+
+                <td>Fornecedor</td>
+
+                <td style="text-align:right;">
+
+                    <button class="btn-detail">
+                        Ver detalhes
+                    </button>
+
+                </td>
+
+            </tr>
+
+            <!-- LINHAS VAZIAS -->
+
+            <tr class="empty-row"><td colspan="7"></td></tr>
+            <tr class="empty-row"><td colspan="7"></td></tr>
+            <tr class="empty-row"><td colspan="7"></td></tr>
+            <tr class="empty-row"><td colspan="7"></td></tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</main>
 
 </body>
 </html>
