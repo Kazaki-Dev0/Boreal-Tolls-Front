@@ -1,169 +1,518 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Dashboard</title>
-    <link rel="stylesheet" href="ClienteFornecedor.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Boreal Tools - Clientes</title>
+
+<link rel="stylesheet" href="sidebar.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+
+    background:
+    linear-gradient(
+        109deg,
+        #090909 32.55%,
+        #002c18 79.54%,
+        #003019 88.95%
+    );
+
+    color:white;
+
+    display:grid;
+
+    grid-template-columns:400px 1fr;
+
+    min-height:100vh;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+   PAGINA ATIVA
+========================= */
+
+.secoes:nth-child(7){
+    background-color:#2e4a3e;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+
+    padding:25px;
+
+    overflow-y:auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+}
+
+/* =========================
+   PAINEL
+========================= */
+
+.clients-card{
+
+    width:95%;
+
+    max-width:1250px;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    margin:20px auto;
+
+    background:rgba(20,20,20,0.7);
+
+    border:1px solid #2e4a3e;
+
+    box-shadow:
+    0 0 25px rgba(0,255,120,0.08);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.clients-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:30px;
+}
+
+.title-area h2{
+
+    font-size:2rem;
+
+    font-weight:500;
+
+    margin-bottom:10px;
+}
+
+.subtitle{
+
+    color:#7bcf9c;
+
+    font-size:0.95rem;
+}
+
+.subtitle span{
+    color:#aaa;
+}
+
+.panel-icon{
+
+    width:50px;
+    height:50px;
+
+    border-radius:10px;
+
+    background:#163125;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    color:#7bcf9c;
+
+    font-size:24px;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.actions{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:40px;
+}
+
+.search-box{
+
+    width:340px;
+
+    display:flex;
+
+    align-items:center;
+
+    border:1px solid #3a4a43;
+
+    border-radius:30px;
+
+    padding:10px 18px;
+
+    background:transparent;
+}
+
+.search-box input{
+
+    width:100%;
+
+    background:none;
+
+    border:none;
+
+    outline:none;
+
+    color:white;
+
+    font-size:0.95rem;
+}
+
+.search-box input::placeholder{
+    color:#777;
+}
+
+.search-box i{
+    color:#777;
+}
+
+/* =========================
+   BOTAO
+========================= */
+
+.btn-add{
+
+    background:#9cc8aa;
+
+    color:black;
+
+    padding:12px 24px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.btn-add:hover{
+    background:#81c784;
+}
+
+/* =========================
+   TABELA
+========================= */
+
+.clients-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.clients-table th{
+
+    text-align:left;
+
+    padding:18px 15px;
+
+    color:white;
+
+    font-size:0.95rem;
+
+    font-weight:500;
+
+    border-bottom:1px solid #2b2b2b;
+}
+
+.clients-table td{
+
+    padding:22px 15px;
+
+    color:#cfcfcf;
+
+    border-bottom:1px solid #2b2b2b;
+}
+
+.clients-table tbody tr:hover{
+    background:rgba(255,255,255,0.02);
+}
+
+/* =========================
+   BOTAO DETALHES
+========================= */
+
+.btn-detail{
+
+    background:#9cc8aa;
+
+    color:black;
+
+    border:none;
+
+    padding:8px 18px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.btn-detail:hover{
+    background:#81c784;
+}
+
+/* =========================
+   LINHAS VAZIAS
+========================= */
+
+.empty-row td{
+    height:55px;
+}
+
+</style>
 </head>
+
 <body>
 
-    
+<!-- SIDEBAR -->
 
-    <section class="side-bar">
-        <img src="./img/LogoBorealTools.png" alt="" class="logo">
-        <div class="perfil">
-            <img src="./img/perfil-icon.png" alt="">
-            <p>Fulano de Tal</p>
-        </div>
-        <div class="nav-side-bar">
-            <div class="secoes">
-                <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                <a href="dashboard.html">Início</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/produtos.png" alt="" class="secao-icon">
-                <a href="produtos.html">Produtos</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/estoque.png" alt="" class="secao-icon">
-                <a href="./estoque.html">Estoques</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/financeiro.png" alt="" class="secao-icon">
-                <a href="./financeiro.html">Financeiro</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/vendas.png" alt="" class="secao-icon">
-                <a href="./vendas.html">Vendas</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
-                <a href="funcionarios.html">Funcionários</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/relatorios.png" alt="" class="secao-icon">
-                <a href="Relatorios.html">Relatórios</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/clientes.png" alt="" class="secao-icon">
-                <a href="./ClienteFornecedor.html">Clientes</a>
-            </div>
-        </div>
-        <a href="./login.html">← Deslogar</a>
-    </section>
+<section class="side-bar">
 
-
-
-            <section class="clients-section">
-                <div class="clients-card">
-            
-                    <div class="clients-header">
-                        <h2><i class="fa-solid fa-user"></i> Clientes e Fornecedores Registrados</h2>
-            
-                        <div class="actions">
-                            <div class="search-box">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" placeholder="Buscar por ID, Nome ou CPF/CNPJ">
-                            </div>
-                            <button class="btn-add"><a href="cadastrarCliente.html">+ Cadastrar</a></button>
-                        </div>
-                    </div>
-            
-                    <p class="subtitle">
-                        Gerencie sua base de clientes e fornecedores, acompanhando informações detalhadas.
-                    </p>
-            
-                    <!-- CLIENTES -->
-                    <div class="table-block">
-                        <h3>Clientes:</h3>
-            
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Id</th>
-                                    <th>Email</th>
-                                    <th>CPF</th>
-                                    <th>Data de Nascimento</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Kaique Kawasaki</td>
-                                    <td>01</td>
-                                    <td>kaique@email.com</td>
-                                    <td>12345678910</td>
-                                    <td>10/10/2008</td>
-                                    <td><button class="btn-detail">Ver detalhes</button></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td>Vinícius Cardoso</td>
-                                    <td>02</td>
-                                    <td>vini@email.com</td>
-                                    <td>19204893726</td>
-                                    <td>21/05/2008</td>
-                                    <td><button class="btn-detail">Ver detalhes</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-            
-                    <!-- FORNECEDORES -->
-                    <div class="table-block">
-                        <div class="table-header">
-                            <h3>Fornecedores:</h3>
-            
-                            <div class="search-box small">
-                                <input type="text" placeholder="Pesquisar por Id, Nome ou CPF/CNPJ">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </div>
-                        </div>
-            
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Id</th>
-                                    <th>Email</th>
-                                    <th>CNPJ</th>
-                                    <th>Telefone</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mario Bidoia</td>
-                                    <td>01</td>
-                                    <td>mario@email.com</td>
-                                    <td>12345678912345</td>
-                                    <td>11 99999-9999</td>
-                                    <td><button class="btn-detail">Ver detalhes</button></td>
-                                </tr>
-                            </tbody>
-
-                            <tbody>
-                                <tr>
-                                    <td>Bruna Muniz</td>
-                                    <td>02</td>
-                                    <td>bruna@email.com</td>
-                                    <td>28943716389201</td>
-                                    <td>11 99999-9999</td>
-                                    <td><button class="btn-detail">Ver detalhes</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-            
-                </div>
-            </section>
-        </main>
+    <div class="sidebar-header">
+        <img src="./img/LogoBorealTools.png"
+        alt="Boreal Tools"
+        class="logo">
     </div>
+
+    <div class="perfil">
+
+        <img src="./img/perfil-icon.png"
+        alt="Perfil">
+
+        <p>Fulano de Tal</p>
+
+    </div>
+
+    <nav class="nav-side-bar">
+
+        <div class="secoes">
+            <img src="./img/inicio.sidebar.png" class="secao-icon">
+            <a href="dashboard.html">Início</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/produtos.png" class="secao-icon">
+            <a href="produtos.html">Produtos</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/estoque.png" class="secao-icon">
+            <a href="./estoque.html">Estoques</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/financeiro.png" class="secao-icon">
+            <a href="./financeiro.html">Financeiro</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/vendas.png" class="secao-icon">
+            <a href="vendas.html">Vendas</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/funcionarios.png" class="secao-icon">
+            <a href="./funcionarios.html">Funcionários</a>
+        </div>
+
+        <div class="secoes active">
+            <img src="./img/clientes.png" class="secao-icon">
+            <a href="./ClienteFornecedor.html">Clientes</a>
+        </div>
+
+    </nav>
+
+    <div class="logout-link">
+        <a href="./login.html">← Deslogar</a>
+    </div>
+
+</section>
+
+<!-- MAIN -->
+
+<main>
+
+<div class="clients-card">
+
+    <!-- HEADER -->
+
+    <div class="clients-header">
+
+        <div class="title-area">
+
+            <h2>
+                Clientes e Fornecedores
+            </h2>
+
+            <div class="subtitle">
+
+                Clientes >
+                <span>Lista de registros</span>
+
+            </div>
+
+        </div>
+
+        <div class="panel-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+    </div>
+
+    <!-- TOOLBAR -->
+
+    <div class="actions">
+
+        <div class="search-box">
+
+            <input type="text"
+            placeholder="Buscar por ID, Nome ou CPF/CNPJ">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </div>
+
+        <a href="cadastrarCliente.html"
+        class="btn-add">
+
+            + Cadastrar
+
+        </a>
+
+    </div>
+
+    <!-- TABELA -->
+
+    <table class="clients-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Nome</th>
+                <th>Id</th>
+                <th>Email</th>
+                <th>CPF</th>
+                <th>Data de Nascimento</th>
+                <th>Tipo</th>
+                <th></th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td style="color:white;">
+                    Kaique Kawasaki
+                </td>
+
+                <td>01</td>
+
+                <td>kaique@email.com</td>
+
+                <td>12345678910</td>
+
+                <td>10/10/2008</td>
+
+                <td>Cliente</td>
+
+                <td style="text-align:right;">
+
+                    <button class="btn-detail">
+                        Ver detalhes
+                    </button>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td style="color:white;">
+                    Vinícius Cardoso
+                </td>
+
+                <td>02</td>
+
+                <td>vini@email.com</td>
+
+                <td>19204893726</td>
+
+                <td>21/05/2008</td>
+
+                <td>Fornecedor</td>
+
+                <td style="text-align:right;">
+
+                    <button class="btn-detail">
+                        Ver detalhes
+                    </button>
+
+                </td>
+
+            </tr>
+
+            <!-- LINHAS VAZIAS -->
+
+            <tr class="empty-row"><td colspan="7"></td></tr>
+            <tr class="empty-row"><td colspan="7"></td></tr>
+            <tr class="empty-row"><td colspan="7"></td></tr>
+            <tr class="empty-row"><td colspan="7"></td></tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</main>
 
 </body>
 </html>

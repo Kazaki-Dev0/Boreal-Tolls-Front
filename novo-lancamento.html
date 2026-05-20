@@ -6,6 +6,7 @@
     <title>Boreal Tools - Nova Transação</title>
     <link rel="icon" type="image/png" href="./images/logo-removebg.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sidebar.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
@@ -29,7 +30,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -41,112 +42,21 @@
             overflow: hidden;
         } 
 
-        /* =========================================
-           SIDEBAR INTOCÁVEL (MANTIDA INTEGRALMENTE)
-           ========================================= */
         .main-wrapper {
             display: flex;
             flex: 1;
             overflow: hidden;
         }
-        .secoes-seleciondo{
-            background-color: #3b5745;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.3s;
-            gap: 10%;
-            cursor: pointer;
-            text-decoration: none;
-        }
 
-        .side-bar {
-            text-decoration: none;
-            grid-row: 2 / 3;
-            background-color: #222;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #222;
-            min-width: 260px;
-        }
-        .sidebar-header img{
-            width: 406px;
-            height: 121px;
-        }
+        a {
+    color: inherit;
+    text-decoration: none;
+}
 
-        .sidebar-header {
-            padding: 2rem 1rem 1rem 1rem;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .perfil {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            padding-bottom: 1rem;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .perfil p { font-size: 24px; }
-
-        .perfil img {
-            width: 80px;
-            background: #c8e6c9;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-
-        a { text-decoration: none; color: #ffffff; }
-
-        .nav-side-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .secoes {
-            background-color: #0a0a0a;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.3s;
-            gap: 10%;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .secoes i {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            transition: 0.3s;
-        }
-
-        .secoes:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-        }
-
-        .secoes:hover i { color: var(--neon-green); }
-
-        .logout-link { margin-top: auto; padding: 15px; }
-
-        .logout-link a {
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-
-        .logout-link a:hover { color: var(--danger-color); }
+/* Destaque para a página atual  */
+.secoes:nth-child(4) {
+    background-color: #2e4a3e; /* Verde escuro */
+}
 
         /* =========================================
            CONTEÚDO PRINCIPAL (NOVA TRANSAÇÃO)
@@ -347,31 +257,31 @@
     <div class="main-wrapper">
 
         <section class="side-bar">
-            <div class="sidebar-header">
+        <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-            </div>
+        </div>
         
-            <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto">
+        <div class="perfil">
+                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
                 <p>Fulano de Tal</p>
-            </div>
+        </div> 
         
-            <nav class="nav-side-bar">
+        <nav class="nav-side-bar">
                 <div class="secoes">
                     <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="./dashboard.html">Início</a>
+                    <a href="dashboard.html">Início</a>
                 </div>
-                <div class="secoes">
+                <div class="secoes active" href="./produtos.html" >
                     <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="./produtos.html">Produtos</a>
+                    <a href="produtos.html">Produtos</a>
                 </div>
                 <div class="secoes">
                     <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoque</a>
+                    <a href="./estoque.html">Estoques</a>
                 </div>
-                <div class="secoes-seleciondo">
+                <div class="secoes">
                     <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./folhaPagamento.html">Financeiro</a>
+                    <a href="#">Financeiro</a>
                 </div>
                 <div class="secoes">
                     <img src="./img/vendas.png" alt="" class="secao-icon">
@@ -382,18 +292,15 @@
                     <a href="./funcionarios.html">Funcionários</a>
                 </div>
                 <div class="secoes">
-                    <img src="./img/relatorios.png" alt="" class="secao-icon">
-                    <a href="./Relatorios.html">Relatórios</a>
-                </div>
-                <div class="secoes">
                     <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="ClienteFornecedor.html">Clientes</a>
+                    <a href="./ClienteFornecedor.html">Clientes</a>
                 </div>
-            </nav>
-            <div class="logout-link">
-                <a href="./login.html">← Deslogar</a>
-            </div>
-        </section>
+        </nav>
+
+        <div class="logout-link">
+            <a href="./login.html">← Deslogar</a>
+        </div>
+    </section>
 
         <main class="content">
             <div class="form-panel">
