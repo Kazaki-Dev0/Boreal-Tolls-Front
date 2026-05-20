@@ -1,527 +1,466 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Produtos</title>
-    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        /* =========================================
-           1. VARIÁVEIS DE COR
-        ========================================= */
-        :root {
-            --bg-main: #0a0a0a;
-            --bg-sidebar: #06100b;
-            --bg-panel: #131715;
-            --bg-topbar: #111111;
-            --text-primary: #ffffff;
-            --text-secondary: #9aa09d;
-            --neon-green: #87ffb9;
-            --neon-green-glow: rgba(135, 255, 185, 0.4);
-            --dark-green: #1a3a29;
-            --border-color: #242e29;
-            --white-glow: rgba(255, 255, 255, 0.3);
-        }
+<title>Boreal Tools - Produtos</title>
 
-        /* =========================================
-           2. RESET E CONFIGURAÇÕES GERAIS
-        ========================================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<link rel="stylesheet" href="sidebar.css">
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        } 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        a {
-            text-decoration: none;
-            color: #ffffff;
-        }
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-        /* =========================================
-           3. ESTRUTURA PRINCIPAL (LAYOUT)
-        ========================================= */
-        .main-wrapper {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
+<style>
 
-        .content {
-            flex: 1;
-            padding: 3rem 4rem;
-            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
-            overflow-y: auto;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        /* =========================================
-           4. SIDEBAR
-        ========================================= */
-        .side-bar {
-            background-color: #1a1a1a; 
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid var(--border-color);
-            min-width: 460px;
-            width: 320px;
-            height: 100vh;
-        }
+body{
+    background:
+    linear-gradient(
+        109deg,
+        #090909 32.55%,
+        #002c18 79.54%,
+        #003019 88.95%
+    );
 
-        .sidebar-header {
-            padding: 2rem 1rem 1rem 1rem;
-            text-align: center;
-        }
+    color:white;
 
-        .logo {
-            width: auto;
-            max-width: 406px;
-        }
+    display:grid;
+    grid-template-columns:400px 1fr;
 
-        .perfil {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            padding-bottom: 1.5rem;
-            text-align: center;
-        }
+    min-height:100vh;
+}
 
-        .perfil img {
-            width: 80px;
-            height: 80px;
-            background: #c8e6c9;
-            border-radius: 50%;
-            margin-bottom: 5px;
-        }
+a{
+    text-decoration:none;
+    color:inherit;
+}
 
-        .perfil p {
-            font-size: 24px;
-        }
+/* =========================
+   PAGINA ATIVA
+========================= */
 
-        .perfil span {
-            color: #888;
-            font-size: 0.8rem;
-        }
+.secoes:nth-child(2){
+    background-color:#2e4a3e;
+}
 
-        .nav-side-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            text-decoration: none;
-        }
+/* =========================
+   MAIN
+========================= */
 
-        .secoes {
-            background-color: #0a0a0a;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.3s;
-            gap: 10%;
-            cursor: pointer;
-            text-decoration: none;
-        }
+main{
 
-        .secoes:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+padding:25px;
 
-        .secoes.active {
-            background-color: #3b5745;
-        }
+overflow-y:auto;
 
-        .logout-link {
-            margin-top: auto;
-            padding: 15px 25px;
-            font-size: 0.85rem;
-        }
+display:flex;
 
-        .logout-link a {
-            color: var(--text-secondary);
-            transition: color 0.3s;
-        }
+justify-content:center;
 
-        .logout-link a:hover {
-            color: #ff6b6b;
-        }
+align-items:flex-start;
+}
 
-        /* =========================================
-           5. PAINEL DE PRODUTOS E TOPO
-        ========================================= */
-        .product-panel {
-            background: rgba(26, 26, 26, 0.8);
-            border: 1px solid rgba(135, 255, 185, 0.2);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 0 30px rgba(135, 255, 185, 0.05);
-            width: 100%;
-            max-width: 1100px;
-        }
+/* =========================
+   PAINEL
+========================= */
 
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
+.product-panel{
 
-        .panel-title h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-        }
+width:95%;
 
-        .breadcrumb {
-            font-size: 0.8rem;
-            color: #6da381;
-        }
+max-width:1250px;
 
-        .breadcrumb span {
-            color: #aaa;
-        }
+border-radius:20px;
 
-        .panel-header-icon {
-            background: rgba(135, 255, 185, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            color: var(--neon-green);
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+padding:40px;
 
-        .table-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-        }
+margin:20px auto;
 
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: transparent;
-            border: 1px solid #4a5a50;
-            border-radius: 20px;
-            padding: 8px 16px;
-            width: 320px;
-        }
+background:rgba(20,20,20,0.7);
 
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            outline: none;
-            width: 100%;
-            font-size: 0.85rem;
-        }
+border:1px solid #2e4a3e;
 
-        .search-box input::placeholder {
-            color: #666;
-        }
+box-shadow:
+0 0 25px rgba(0,255,120,0.08);
+}
 
-        .search-box i {
-            color: #666;
-            font-size: 1.1rem;
-            margin-left: 8px;
-        }
+/* =========================
+   HEADER
+========================= */
 
-        .btn-add {
-            background-color: #80B297;
-            color: #000;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
 
-        .btn-add:hover {
-            background-color: #81c784;
-        }
+    margin-bottom:30px;
+}
 
-        /* =========================================
-           6. TABELA
-        ========================================= */
-        .product-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.panel-title h2{
+    font-size:2rem;
+    font-weight:500;
 
-        .product-table th {
-            text-align: left;
-            padding: 12px 15px;
-            color: var(--text-primary);
-            font-size: 0.8rem;
-            font-weight: 400;
-            border-bottom: 1px solid #333;
-        }
+    margin-bottom:10px;
+}
 
-        .product-table td {
-            padding: 16px 15px;
-            color: #b0b0b0;
-            font-size: 0.85rem;
-            border-bottom: 1px solid #333;
-        }
+.breadcrumb{
+    color:#7bcf9c;
+    font-size:0.95rem;
+}
 
-        .product-table tbody tr {
-            transition: background 0.2s;
-        }
+.breadcrumb span{
+    color:#aaa;
+}
 
-        .product-table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
+.panel-icon{
 
-        .btn-details {
-            background-color: #80B297;
-            color: #000;
-            border: none;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    width:50px;
+    height:50px;
 
-        .btn-details:hover {
-            background-color: #81c784;
-        }
+    border-radius:10px;
 
-        .product-table .empty-row td {
-            padding: 24px 15px;
-        }
+    background:#163125;
 
-        /* =========================================
-           7. MODAL DE DETALHES
-        ========================================= */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(2px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-        .modal-box {
-            background-color: #222222;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 650px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s ease-in-out;
-        }
+    color:#7bcf9c;
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    font-size:28px;
+}
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
+/* =========================
+   TOOLBAR
+========================= */
 
-        .modal-header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+.table-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-        .modal-header-left i {
-            font-size: 2rem;
-            color: var(--neon-green);
-        }
+    margin-bottom:40px;
+}
 
-        .modal-header h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
+.search-box{
 
-        .btn-delete {
-            background: none;
-            border: none;
-            color: #e74c3c;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
-        }
+    width:320px;
 
-        .btn-delete:hover {
-            color: #ff2a1a;
-            transform: scale(1.1);
-        }
+    display:flex;
+    align-items:center;
 
-        .modal-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem 2rem;
-            color: #cccccc;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
+    border:1px solid #3a4a43;
 
-        .full-width {
-            grid-column: 1 / -1;
-        }
-    </style>
+    border-radius:30px;
+
+    padding:10px 18px;
+
+    background:transparent;
+}
+
+.search-box input{
+
+    width:100%;
+
+    background:none;
+
+    border:none;
+
+    outline:none;
+
+    color:white;
+
+    font-size:0.95rem;
+}
+
+.search-box input::placeholder{
+    color:#777;
+}
+
+.search-box i{
+    color:#777;
+}
+
+/* =========================
+   BOTAO
+========================= */
+
+.btn-add{
+
+    background:#9cc8aa;
+
+    color:black;
+
+    padding:12px 24px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.btn-add:hover{
+    background:#81c784;
+}
+
+/* =========================
+   TABELA
+========================= */
+
+.product-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.product-table th{
+
+    text-align:left;
+
+    padding:18px 15px;
+
+    color:white;
+
+    font-size:0.95rem;
+
+    font-weight:500;
+
+    border-bottom:1px solid #2b2b2b;
+}
+
+.product-table td{
+
+    padding:22px 15px;
+
+    color:#cfcfcf;
+
+    border-bottom:1px solid #2b2b2b;
+}
+
+.product-table tbody tr:hover{
+    background:rgba(255,255,255,0.02);
+}
+
+/* =========================
+   BOTAO DETALHES
+========================= */
+
+.btn-detail{
+
+    background:#9cc8aa;
+
+    color:black;
+
+    border:none;
+
+    padding:8px 18px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.btn-detail:hover{
+    background:#81c784;
+}
+
+/* =========================
+   LINHAS VAZIAS
+========================= */
+
+.empty-row td{
+    height:55px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.7);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+}
+
+.modal-box{
+
+    width:100%;
+    max-width:650px;
+
+    background:#1f1f1f;
+
+    border-radius:20px;
+
+    border:1px solid #444;
+
+    padding:30px;
+}
+
+.modal-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.modal-header-left{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+}
+
+.modal-header-left i{
+
+    font-size:30px;
+
+    color:#7bcf9c;
+}
+
+.btn-delete{
+
+    background:none;
+
+    border:none;
+
+    color:#ff5e5e;
+
+    font-size:24px;
+
+    cursor:pointer;
+}
+
+.modal-body{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+    color:#ccc;
+}
+
+.full-width{
+    grid-column:1 / -1;
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="main-wrapper">
+<!-- SIDEBAR -->
 
-        <section class="side-bar">
-            <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-            </div>
-        
-            <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-            </div> 
-        
-            <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="#">Produtos</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="vendas.html">Vendas</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-            </nav>
+<section class="side-bar">
 
-            <div class="logout-link">
-                <a href="./login.html">← Deslogar</a>
-            </div>
-        </section>
-
-        <main class="content">
-            <div class="product-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <h2>Painel da Lista de Produtos</h2>
-                        <div class="breadcrumb">Produtos > <span>Lista de produtos</span></div>
-                    </div>
-                    <div class="panel-header-icon">
-                        <i class="ph ph-package"></i>
-                    </div>
-                </div>
-
-                <div class="table-toolbar">
-                    <div class="search-box">
-                        <input type="text" placeholder="Pesquisar por Id, Descrição ou Marca">
-                        <i class="ph ph-magnifying-glass"></i>
-                    </div>
-                    <a href="./cadastro_produtos.html" class="btn-add">+ Cadastrar Produto</a>
-                </div>
-
-                <table class="product-table">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Id</th>
-                            <th>Descrição</th>
-                            <th>Marca</th>
-                            <th>Valor em R$</th>
-                            <th>Qtd. Estoque</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="color: #fff;">Iphone 17</td>
-                            <td>01</td>
-                            <td>Smartphone bran...</td>
-                            <td>Apple</td>
-                            <td>15.000</td>
-                            <td>102</td>
-                            <td style="text-align: right;">
-                                <button class="btn-details" onclick="abrirModal()">Ver detalhes</button>
-                            </td>
-                        </tr>
-                        <tr class="empty-row"><td colspan="7"></td></tr>
-                        <tr class="empty-row"><td colspan="7"></td></tr>
-                        <tr class="empty-row"><td colspan="7"></td></tr>
-                        <tr class="empty-row"><td colspan="7"></td></tr>
-                        <tr class="empty-row"><td colspan="7"></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
+    <div class="sidebar-header">
+        <img src="./img/LogoBorealTools.png"
+        alt="Boreal Tools"
+        class="logo">
     </div>
 
-    <div id="modalDetalhes" class="modal-overlay" onclick="fecharModalFora(event)">
-        <div class="modal-box">
-            <div class="modal-header">
-                <div class="modal-header-left">
-                    <i class="ph ph-package"></i>
-                    <h3>Detalhes do Produto</h3>
-                </div>
-                <button class="btn-delete" title="Excluir Produto" onclick="fecharModal()">
-                    <i class="ph ph-trash-fill"></i>
-                </button>
-            </div>
-            
-            <div class="modal-body">
-                <div>Nome: Iphone 17</div>
-                <div>Id: 01</div>
-                <div>Marca: Apple</div>
-                <div>Valor em R$: 15.000</div>
-                <div>Categoria: Eletroeletrônicos</div>
-                <div>Fornecedor: Mario Bidoia</div>
-                <div class="full-width">Descrição: Smartphone branco com 128Gb de armazenamento</div>
-                <div>Quantidade Mínima de Estoque: 65</div>
-                <div>Quantidade Atual de Estoque: 102</div>
+    <div class="perfil">
+        <img src="./img/perfil-icon.png"
+        alt="Perfil">
+
+        <p>Fulano de Tal</p>
+    </div>
+
+    <nav class="nav-side-bar">
+
+        <div class="secoes">
+            <img src="./img/inicio.sidebar.png" class="secao-icon">
+            <a href="dashboard.html">Início</a>
+        </div>
+
+        <div class="secoes active">
+            <img src="./img/produtos.png" class="secao-icon">
+            <a href="produtos.html">Produtos</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/estoque.png" class="secao-icon">
+            <a href="./estoque.html">Estoques</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/financeiro.png" class="secao-icon">
+            <a href="./financeiro.html">Financeiro</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/vendas.png" class="secao-icon">
+            <a href="vendas.html">Vendas</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/funcionarios.png" class="secao-icon">
+            <a href="./funcionarios.html">Funcionários</a>
+        </div>
+
+        <div class="secoes">
+            <img src="./img/clientes.png" class="secao-icon">
+            <a href="./ClienteFornecedor.html">Clientes</a>
+        </div>
+
+    </nav>
+
+    <div class="logout-link">
+        <a href="./login.html">← Deslogar</a>
+    </div>
+
+</section>
+
+<!-- MAIN -->
+
+<main>
+
+<div class="product-panel">
+
+    <!-- HEADER -->
+
+    <div class="panel-header">
+
+        <div class="panel-title">
+
+            <h2>Painel da Lista de Produtos</h2>
+
+            <div class="breadcrumb">
+                Produtos >
+                <span>Lista de produtos</span>
             </div>
 
             <div class="modal-body">
@@ -536,6 +475,7 @@
                 <div>Quantidade Atual de Estoque: 102</div>
             </div>
         </div>
+
     </div>
 
     <script>
