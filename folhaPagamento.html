@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RH - Holerite</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0a0a0a; /* Fundo bem escuro */
+    background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+    color: white;
+    display: flex;
+    height: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* Destaque para a página atual (Funcionários) */
+.secoes:nth-child(6) {background-color: #2e4a3e; /* Verde escuro */}
+
+/* O "Quadro" centralizado com borda brilhante */
+main {
+    border: 1px solid #2e4a3e;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
+    margin: 10%;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titulo h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.titulo p {
+    color: #888;
+    margin-bottom: 25px;
+}
+
+.atalhos-main {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.atalhos-main input {
+    background: transparent;
+    border: 1px solid #444;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    width: 250px;
+}
+
+.atalhos-main button {
+    background-color: #5e5e5e;
+    color: whitesmoke;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.atalhos-main button:hover {background-color: #333;}
+
+.containt {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    gap: 16px;
+}
+
+.left, .right {
+    background-color: #222;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+.left input {
+    border-radius: 20px;
+    height: 30px;
+    padding: 10px;
+}
+
+.proventos, .descontos {
+    background-color: #3d3d3d;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+}
+
+.left {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.proventos h5 {
+    color: #a5d6a7; 
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.descontos h5 {
+    color: #ee6559; 
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+/* Labels e Inputs */
+label {
+    display: block;
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+input {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 28px;
+    width: 100%;
+    font-weight: bold;
+    outline: none;
+}
+
+.input-provento {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 80%;
+}
+
+.descontosInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.input-desconto {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-desconto input{
+    width: 100%;
+}
+
+.right {width: auto; }
+
+/* Espaçamento entre as seções Up e Down */
+.up {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444; /* Linha divisória sutil */
+    padding-bottom: 20px;
+}
+
+/* Estilização do Select */
+.select {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.select label {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.select select {
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+h5 {font-size: 1.1rem; margin-bottom: 20px;}
+
+table {width: 100%; border-collapse: collapse;}
+
+td {padding: 8px 0;font-size: 0.95rem;}
+
+/* Alinha os valores (R$) à direita */
+td:last-child {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Estilo específico para o Total Líquido */
+.down td:first-child {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.down td:last-child {font-size: 1.5rem;}
+
+.down p {
+    text-align: right;
+    font-size: 0.75rem;
+    color: #bbb;
+    margin-top: -5px;
+    margin-bottom: 30px;
+}
+
+/* Botão Estilizado */
+.btn-holerite {
+    width: 100%;
+    border: 2px solid #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.25);
+    background: #2B2A2A;
+    color: whitesmoke;
+    padding: 16px;
+}
+
+.btn-holerite:hover {background-color: #444; border-color: #00b359;}
+
+.btn-holerite img {width: 40px; height: auto;}
+    </style>
+</head>
+<body>
+
+
+    <section class="side-bar">
+        <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+        </div>
+        
+        <div class="perfil">
+                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
+                <p>Fulano de Tal</p>
+        </div> 
+        
+        <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                    <a href="dashboard.html">Início</a>
+                </div>
+                <div class="secoes active" href="./produtos.html" >
+                    <img src="./img/produtos.png" alt="" class="secao-icon">
+                    <a href="produtos.html">Produtos</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/estoque.png" alt="" class="secao-icon">
+                    <a href="./estoque.html">Estoques</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/financeiro.png" alt="" class="secao-icon">
+                    <a href="./financeiro.html">Financeiro</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/vendas.png" alt="" class="secao-icon">
+                    <a href="vendas.html">Vendas</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                    <a href="./funcionarios.html">Funcionários</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/clientes.png" alt="" class="secao-icon">
+                    <a href="./ClienteFornecedor.html">Clientes</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/relatorios.png" class="secao-icon">
+                    <a href="./categorias.html">Categorias</a>
+                </div>
+        </nav>
+
+        <div class="logout-link">
+            <a href="./login.html">← Deslogar</a>
+        </div>
+    </section>
+
+    <main>
+        <div class="main-header">
+            <div class="titulo">
+                <h2><img src="./img/RH-Icon.png" alt=""> Recursos Humanos (Holerite) </h2>
+                <p>Gerencie a equipe, cargos, salários e horas extras.</p>
+            </div>
+            <div class="atalhos-main">
+                <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
+            </div>
+        </div>
+        <div class="containt">
+            <div class="left">
+                <div class="proventos">
+                    <h5>Proventos (+)</h5>
+                    <div class="input-provento">
+                        <label for="">Salário Base</label>
+                        <input type="number" placeholder="0.00">
+                    </div>
+                    <div class="input-provento">
+                        <label for="">Outros (Horas Extras, Bônus)</label>
+                        <input type="number" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="descontos">
+                    <h5>Descontos (-)</h5>
+                    <div class="descontosInputs">
+                        <div class="input-desconto">
+                            <label for="">INSS</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                        <div class="input-desconto">
+                            <label for="">IRRF</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                        <div class="input-desconto">
+                            <label for="">Benefícios (Vt/Vr)</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                        <div class="input-desconto">
+                            <label for="">Outros (Faltas)</label>
+                            <input type="number" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="up">
+                    <div class="select">
+                        <label for="">Selecione o funcionário</label>
+                        <select name="funcionario" id="funcionario">
+                
+                        </select>
+                    </div>
+                    <h5>Resumo da Folha</h5>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Total de Proventos:</td>
+                                <td>R$ 0,00</td>
+                            </tr>
+                            <tr>
+                                <td>Total de Descontos:</td>
+                                <td>- R$ 0,00</td>z
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="down">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Total Líquido:</td>
+                                <td>R$ 0,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Valor a ser lançado no Contas a Pagar</p>
+
+                    <button type="submit" class="btn-holerite" id="btn-holerite"> <img src="./img/cedula.png" alt="">Lançar despesas no financeiro</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
