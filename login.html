@@ -178,35 +178,35 @@
         <div class="right-panel">
             
             <div class="form-container" id="login-section">
-    <h2 class="form-title">Acessar sua conta</h2>
-    <form onsubmit="handleLogin(event)">
-        <div class="input-group">
-            <input type="email" placeholder="user@mail.com" required>
-        </div>
-        <div class="input-group">
-            <input type="password" placeholder="Senha" required>
-        </div>
-        <button type="submit" class="btn-submit">Fazer Login</button>
-    </form>
-    <div class="form-footer">
-        Não possui cadastro? <a onclick="toggleForms()">Registre-se</a>
-    </div>
-</div>
+                <h2 class="form-title">Acessar sua conta</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <input type="email" id="login-email" placeholder="user@mail.com" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="login-senha" placeholder="Senha" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Fazer Login</button>
+                </form>
+                <div class="form-footer">
+                    Não possui cadastro? <a onclick="toggleForms()">Registre-se</a>
+                </div>
+            </div>
 
             <div class="form-container" id="register-section">
                 <h2 class="form-title">Registrar-se</h2>
-                <form onsubmit="event.preventDefault();">
+                <form id="form-registro" onsubmit="handleRegister(event)">
                     <div class="input-group">
-                        <input type="text" placeholder="Nome" required>
+                        <input type="text" id="reg-nome" placeholder="Nome" required>
                     </div>
                     <div class="input-group">
-                        <input type="email" placeholder="user@mail.com" required>
+                        <input type="email" id="reg-email" placeholder="user@mail.com" required>
                     </div>
                     <div class="input-group">
-                        <input type="password" placeholder="Senha" required>
+                        <input type="password" id="reg-senha" placeholder="Senha" required>
                     </div>
                     <div class="input-group">
-                        <input type="password" placeholder="Confirme sua senha" required>
+                        <input type="password" id="reg-confirmar-senha" placeholder="Confirme sua senha" required>
                     </div>
                     <button type="submit" class="btn-submit">Registrar</button>
                 </form>
@@ -218,29 +218,114 @@
         </div>
     </div>
 
-   <script>
-    
-    function handleLogin(event) {
-        event.preventDefault(); 
-        
-        // Aqui você futuramente adicionará a lógica de validação da API
-        // Por enquanto, apenas redirecionamos:
-        window.location.href = "dashboard.html";
-    }
+    <script>
+        // Configuração base das URLs da sua API C#
+        const apiBaseURL = "http://localhost:5187/api/Auth"; 
 
-    function toggleForms() {
-        const loginSection = document.getElementById('login-section');
-        const registerSection = document.getElementById('register-section');
+        // 1. FUNÇÃO DE LOGIN
+        async function handleLogin(event) {
+            event.preventDefault(); 
+            
+            const emailInput = document.getElementById('login-email').value;
+            const senhaInput = document.getElementById('login-senha').value;
 
-        if (loginSection.style.display === 'none') {
-            loginSection.style.display = 'block';
-            registerSection.style.display = 'none';
-        } else {
-            loginSection.style.display = 'none';
-            registerSection.style.display = 'block';
+            try {
+                const resposta = await fetch(`${apiBaseURL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: emailInput,
+                        senha: senhaInput // Mapeia perfeitamente para o LoginDto do C#
+                    })
+                });
+
+                if (!resposta.ok) {
+                    // Trata o retorno "Unauthorized" da sua API
+                    const erroMsg = await resposta.text();
+                    alert(erroMsg || "E-mail ou senha incorretos.");
+                    return;
+                }
+
+                const dados = await resposta.json();
+
+                // Armazena o JWT retornado por GerarTokenJwt()
+                if (dados.token) {
+                    localStorage.setItem('token', dados.token);
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Erro no servidor: Token não encontrado na resposta.");
+                }
+
+            } catch (error) {
+                console.error("Falha ao comunicar com a API de login:", error);
+                alert("Erro ao conectar com o servidor.");
+            }
         }
-    }
-</script>
+
+        // 2. FUNÇÃO DE CADASTRO (REGISTRO)
+        async function handleRegister(event) {
+            event.preventDefault();
+
+            const nomeInput = document.getElementById('reg-nome').value;
+            const emailInput = document.getElementById('reg-email').value;
+            const senhaInput = document.getElementById('reg-senha').value;
+            const confirmarSenhaInput = document.getElementById('reg-confirmar-senha').value;
+
+            // Validação básica no front-end antes de mandar pro back-end
+            if (senhaInput !== confirmarSenhaInput) {
+                alert("As senhas informadas não coincidem!");
+                return;
+            }
+
+            try {
+                const resposta = await fetch(`${apiBaseURL}/registrar`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nome: nomeInput,
+                        email: emailInput,
+                        senha: senhaInput // Mapeia para o RegistroDto do C#
+                    })
+                });
+
+                if (!resposta.ok) {
+                    // Captura mensagens como "E-mail já cadastrado." vindas do BadRequest da API
+                    const erroMsg = await resposta.text();
+                    alert(erroMsg || "Falha ao registrar usuário.");
+                    return;
+                }
+
+                const dados = await resposta.json();
+                alert(dados.message || "Usuário criado com sucesso!");
+                
+                // Reseta o formulário e joga o usuário de volta para a tela de login
+                document.getElementById('form-registro').reset();
+                toggleForms();
+
+            } catch (error) {
+                console.error("Falha ao comunicar com a API de registro:", error);
+                alert("Erro ao conectar com o servidor.");
+            }
+        }
+
+        // 3. ALTERNADOR DE TELAS (LOGIN / REGISTRO)
+        function toggleForms() {
+            const loginSection = document.getElementById('login-section');
+            const registerSection = document.getElementById('register-section');
+
+            if (loginSection.style.display === 'none') {
+                loginSection.style.display = 'block';
+                registerSection.style.display = 'none';
+            } else {
+                loginSection.style.display = 'none';
+                registerSection.style.display = 'block';
+            }
+        }
+    </script>
 
 </body>
 </html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Vendas</title>
+
+    <link rel="stylesheet" href="pedido.css">
+</head>
+<body>
+    <section class="side-bar">
+        <img src="./img/LogoBorealTools.png" alt="" class="logo">
+        <div class="perfil">
+            <img src="./img/perfil-icon.png" alt="">
+            <p>Fulano de Tal</p>
+        </div>
+        <div class="nav-side-bar">
+            <div class="secoes">
+                <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                <a href="">Início</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/produtos.png" alt="" class="secao-icon">
+                <a href="">Produtos</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/estoque.png" alt="" class="secao-icon">
+                <a href="">Estoques</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/financeiro.png" alt="" class="secao-icon">
+                <a href="">Financeiro</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/vendas.png" alt="" class="secao-icon">
+                <a href="">Vendas</a>       <!--DESTAQUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE-->
+            </div>
+            <div class="secoes">
+                <img src="./img/funcionarios.png" alt="" class="secao-icon"> 
+                <a href="">Funcionários</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/relatorios.png" alt="" class="secao-icon">
+                <a href="">Relatórios</a>
+            </div>
+            <div class="secoes">
+                <img src="./img/clientes.png" alt="" class="secao-icon">
+                <a href="">Clientes</a>
+            </div>
+        </div>
+        <a href="">← Deslogar</a>
+    </section>
+
+    <main>
+        <div class="main-header">
+            <div class="titulo">
+                <h2><img src="./img/vendas.png" alt="">Registro de Vendas</h2>
+                <p>Acompanhe pedidos, itens vendidos e faturamento.</p>
+            </div>
+            <div class="header-controls">
+                <div class="search-container">
+                    <img src="./img/lupa-branca.png" alt="Lupa" class="search-icon">
+                    <input type="text" placeholder="Buscar por cliente ou ID...">
+                </div>
+            </div>
+            <div class="atalhos-main"> 
+                <a href=""><button>+ Registrar Venda</button></a>
+            </div>
+        </div>
+        <article class="vendas-container">
+            <div class="card-pedido">
+                <div class="info-grupo">
+                    <span class="label">Pedido</span>
+                    <span class="valor">#1</span>
+                </div>
+                <div class="info-grupo">
+                    <span class="label">Data</span>
+                    <span class="valor">29/02/2024</span>
+                </div>
+                <div class="info-grupo">
+                    <span class="label"><img src="./img/perfil-icon.png" class="mini-icon"> Cliente</span>
+                    <span class="valor">João Silva</span>
+                </div>
+                <button class="btn-detalhes">Ver detalhes</button>
+                <div class="info-total">
+                    <span class="label">Total da Venda</span>
+                    <span class="valor-total">R$ 1.250,00</span>
+                </div>
+            </div>
+
+            <div class="card-pedido">
+                <div class="info-grupo">
+                    <span class="label">Pedido</span>
+                    <span class="valor">#2</span>
+                </div>
+                <div class="info-grupo">
+                    <span class="label">Data</span>
+                    <span class="valor">03/03/2024</span>
+                </div>
+                <div class="info-grupo">
+                    <span class="label"><img src="./img/perfil-icon.png" class="mini-icon"> Cliente</span>
+                    <span class="valor">Maria Oliveira</span>
+                </div>
+                <button class="btn-detalhes">Ver detalhes</button>
+                <div class="info-total">
+                    <span class="label">Total da Venda</span>
+                    <span class="valor-total">R$ 4.200,00</span>
+                </div>
+            </div>
+
+            <div class="card-pedido">
+                <div class="info-grupo">
+                    <span class="label">Pedido</span>
+                    <span class="valor">#3</span>
+                </div>
+                <div class="info-grupo">
+                    <span class="label">Data</span>
+                    <span class="valor">12/03/2024</span>
+                </div>
+                <div class="info-grupo">
+                    <span class="label"><img src="./img/perfil-icon.png" class="mini-icon"> Cliente</span>
+                    <span class="valor">Joana Martins</span>
+                </div>
+                <button class="btn-detalhes">Ver detalhes</button>
+                <div class="info-total">
+                    <span class="label">Total da Venda</span>
+                    <span class="valor-total">R$ 7.000,00</span>
+                </div>
+            </div>
+        </article>
+    </main>
+    
+</body>
+</html>
