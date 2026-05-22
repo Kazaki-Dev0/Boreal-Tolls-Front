@@ -300,7 +300,6 @@
             background-color: #81c784;
         }
 
-        /* Estilização da sua imagem de Lixeira */
         .btn-table-delete {
             background: none;
             border: none;
@@ -313,16 +312,14 @@
         }
 
         .trash-icon {
-            width: 20px; /* Ajuste o tamanho da sua imagem aqui */
+            width: 20px; 
             height: auto;
             transition: transform 0.2s ease, filter 0.2s ease;
-            /* Este filtro converte a imagem para a cor vermelha */
             filter: invert(39%) sepia(88%) saturate(5412%) hue-rotate(344deg) brightness(100%) contrast(106%);
         }
 
         .btn-table-delete:hover .trash-icon {
-            transform: scale(1.15); /* Aumenta ao passar o mouse */
-            /* Um vermelho um pouco mais escuro no hover */
+            transform: scale(1.15); 
             filter: invert(19%) sepia(96%) saturate(6090%) hue-rotate(352deg) brightness(97%) contrast(118%);
         }
 
@@ -390,7 +387,7 @@
         }
 
         .trash-icon-modal {
-            width: 24px; /* Imagem levemente maior no modal */
+            width: 24px; 
             transition: transform 0.2s ease, filter 0.2s ease;
             filter: invert(39%) sepia(88%) saturate(5412%) hue-rotate(344deg) brightness(100%) contrast(106%);
         }
@@ -679,13 +676,22 @@
             }
         }
 
+        // ==========================================================
+        // NOVA FUNÇÃO DE FILTRO: Mais segura e protegida contra nulos
+        // ==========================================================
         function filtrarProdutos() {
             const termo = document.getElementById("inputPesquisa").value.toLowerCase();
-            const filtrados = produtosLocais.filter(p => 
-                p.id.toString().includes(termo) || 
-                p.nome.toLowerCase().includes(termo) || 
-                p.marca.toLowerCase().includes(termo)
-            );
+            
+            const filtrados = produtosLocais.filter(p => {
+                const idProduto = p.id ? p.id.toString() : "";
+                const nomeProduto = p.nome ? p.nome.toLowerCase() : "";
+                const marcaProduto = p.marca ? p.marca.toLowerCase() : "";
+
+                return idProduto.includes(termo) || 
+                       nomeProduto.includes(termo) || 
+                       marcaProduto.includes(termo);
+            });
+            
             renderizarTabela(filtrados);
         }
 
