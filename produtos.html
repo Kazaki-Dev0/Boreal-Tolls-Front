@@ -300,6 +300,23 @@
             background-color: #81c784;
         }
 
+        .btn-edit {
+            background-color: #80B297;
+            color: #000;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-edit:hover {
+            background-color: #81c784;
+        }
+
         .btn-table-delete {
             background: none;
             border: none;
@@ -503,7 +520,9 @@
                             <th>Marca</th>
                             <th>Valor em R$</th>
                             <th>Qtd. Estoque</th>
-                            <th></th> <th></th> </tr>
+                            <th></th> 
+                            <th></th> 
+                        </tr>
                     </thead>
                     <tbody>
                         </tbody>
@@ -513,7 +532,8 @@
     </div>
 
     <div id="modalDetalhes" class="modal-overlay" onclick="fecharModalFora(event)">
-        <div class="modal-box"></div>
+        <div class="modal-box">
+            </div>
     </div>
 
     <script>
@@ -573,18 +593,21 @@
                 const tr = document.createElement("tr");
                 const valorFormatado = (produto.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+                // CORREÇÃO: Varre todas as possíveis nomenclaturas que o backend C# pode enviar para a quantidade de estoque
+                const estoqueAtual = produto.quantidadeEstoque ?? produto.qtdEstoque ?? produto.QuantidadeEstoque ?? produto.QtdEstoque ?? 0;
+
                 tr.innerHTML = `
                     <td style="color: #fff; font-weight: 500;">${produto.nome || 'Sem Nome'}</td>
                     <td>${produto.id}</td>
                     <td>${produto.marca || '-'}</td>
                     <td>${valorFormatado}</td>
-                    <td>${produto.qtdEstoque ?? 0}</td>
+                    <td>${estoqueAtual}</td>
                     <td style="text-align: right; width: 120px;">
                         <button class="btn-details" onclick="verDetalhesDoProduto(${produto.id})">Ver detalhes</button>
                     </td>
                     <td style="text-align: center; width: 50px;">
                         <button class="btn-table-delete" title="Excluir Produto" onclick="deletarProduto(${produto.id})">
-                            <img src="img/trash.png" alt="Excluir" class="trash-icon">
+                            <img src="img/trash.png" alt="Excluir" class="trash-icon" onerror="this.outerHTML='<i class=\\'ph ph-trash-fill\\' style=\\'color:#e74c3c; font-size:1.2rem;\\'></i>'">
                         </button>
                     </td>
                 `;
@@ -613,6 +636,9 @@
 
                 const produtoCompleto = await resposta.json();
                 const valorFormatado = (produtoCompleto.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                
+                // CORREÇÃO: Varre as nomenclaturas no modal também para evitar exibir 0 indevidamente
+                const estoqueAtualModal = produtoCompleto.quantidadeEstoque ?? produtoCompleto.qtdEstoque ?? produtoCompleto.QuantidadeEstoque ?? produtoCompleto.QtdEstoque ?? 0;
 
                 modalBox.innerHTML = `
                     <div class="modal-header">
@@ -621,7 +647,7 @@
                             <h3>Detalhes do Produto</h3>
                         </div>
                         <button class="btn-delete" title="Excluir Produto" onclick="deletarProduto(${produtoCompleto.id})">
-                            <img src="img/trash.png" alt="Excluir" class="trash-icon-modal">
+                            <img src="img/trash.png" alt="Excluir" class="trash-icon-modal" onerror="this.outerHTML='<i class=\\'ph ph-trash-fill\\' style=\\'color:#e74c3c; font-size:1.5rem;\\'></i>'">
                         </button>
                     </div>
                     
@@ -638,10 +664,12 @@
                         <div><strong>ID Categoria:</strong> ${produtoCompleto.categoriaId || 'Não informada'}</div>
                         <div><strong>ID Fornecedor:</strong> ${produtoCompleto.fornecedorId || 'Não informado'}</div>
                         <div class="full-width"><strong>Descrição:</strong> ${produtoCompleto.descricao || 'Sem descrição cadastrada.'}</div>
-                        <div><strong>Qtd Mínima Estoque:</strong> ${produtoCompleto.qtdMinimaEstoque || 0}</div>
-                        <div><strong>Qtd Atual Estoque:</strong> ${produtoCompleto.quantidadeEstoque ?? produtoCompleto.qtdEstoque ?? 0}</div>
+                        <div><strong>Qtd Mínima Estoque:</strong> ${produtoCompleto.qtdMinimaEstoque || produtoCompleto.QtdMinimaEstoque || 0}</div>
+                        <div><strong>Qtd Atual Estoque:</strong> ${estoqueAtualModal}</div>
                     </div>
-                    <div style="text-align: right; margin-top: 1.5rem;">
+
+                    <div style="text-align: right; margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+                        <button class="btn-edit" onclick="abrirModalEdicao(${produtoCompleto.id})">Editar</button>
                         <button class="btn-details" onclick="fecharModal()">Fechar</button>
                     </div>
                 `;
@@ -676,12 +704,8 @@
             }
         }
 
-        // ==========================================================
-        // NOVA FUNÇÃO DE FILTRO: Mais segura e protegida contra nulos
-        // ==========================================================
         function filtrarProdutos() {
             const termo = document.getElementById("inputPesquisa").value.toLowerCase();
-            
             const filtrados = produtosLocais.filter(p => {
                 const idProduto = p.id ? p.id.toString() : "";
                 const nomeProduto = p.nome ? p.nome.toLowerCase() : "";
@@ -691,7 +715,6 @@
                        nomeProduto.includes(termo) || 
                        marcaProduto.includes(termo);
             });
-            
             renderizarTabela(filtrados);
         }
 
@@ -703,6 +726,11 @@
             if (event.target === document.getElementById('modalDetalhes')) {
                 fecharModal();
             }
+        }
+
+        // Redireciona para a página de cadastro passando o ID na URL
+        function abrirModalEdicao(idProduto) {
+            window.location.href = `./cadastro_produtos.html?id=${idProduto}`;
         }
     </script>
 </body>

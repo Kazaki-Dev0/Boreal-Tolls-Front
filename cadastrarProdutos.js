@@ -1,17 +1,47 @@
-// Configurações Iniciais
-const apiURL = "http://localhost:5187/api/Produtos";
-const formProduto = document.getElementById("productForm"); // Captura o ID correto do seu HTML
+// Busca os dados do produto específico e preenche os inputs
+async function carregarDadosParaEdicao(id) {
+    try {
+        const token = obterToken();
+        const resposta = await fetch(`${apiURL}/${id}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
 
-// Função para obter o Token JWT salvo no navegador
-function obterToken() {
-    return localStorage.getItem("token") || sessionStorage.getItem("token");
+        if (!resposta.ok) {
+            alert("Erro ao buscar dados do produto para edição.");
+            return;
+        }
+
+        const produto = await resposta.json();
+
+        // Preenche os campos, cobrindo as variações de nomes que a API pode retornar
+        document.getElementById("urlImagem").value = produto.urlImg || produto.UrlImg || "";
+        document.getElementById("nome").value = produto.nome || produto.Nome || "";
+        document.getElementById("marca").value = produto.marca || produto.Marca || "";
+        document.getElementById("valor").value = produto.valor || produto.Valor || "";
+        document.getElementById("categoria").value = produto.categoriaId || produto.CategoriaId || "";
+        document.getElementById("fornecedor").value = produto.fornecedorId || produto.FornecedorId || "";
+        document.getElementById("qtd_minima").value = produto.qtdMinimaEstoque || produto.QtdMinimaEstoque || 0;
+        
+        // CORREÇÃO AQUI: Garante que vai puxar o estoque atual não importa como o C# mande
+        document.getElementById("qtd_atual").value = produto.quantidadeEstoque ?? produto.qtdEstoque ?? produto.QuantidadeEstoque ?? produto.QtdEstoque ?? 0;
+        
+        document.getElementById("descricao").value = produto.descricao || produto.Descricao || "";
+
+    } catch (error) {
+        console.error("Erro ao carregar edição:", error);
+        alert("Falha de conexão ao tentar carregar o produto.");
+    }
 }
 
-// Função Principal de Cadastro
-async function cadastrarProduto(event) {
-    event.preventDefault(); // Impede a página de recarregar
+// Função Unificada: Cadastra (POST) ou Atualiza (PUT)
+async function salvarProduto(event) {
+    event.preventDefault(); 
     
-    // 1. Captura os valores digitados no formulário HTML
+    // Captura os valores
     const urlImagem = document.getElementById("urlImagem").value; 
     const nome = document.getElementById("nome").value;
     const marca = document.getElementById("marca").value;
@@ -25,22 +55,29 @@ async function cadastrarProduto(event) {
     try {
         const token = obterToken();
 
-        // 2. Monta o objeto (Payload) com as chaves exatas que o C# espera
+        // Monta o payload enviando as duas variações de estoque para a API C# não zerar
         const payload = {
             UrlImg: urlImagem, 
             nome: nome,
             marca: marca,
             valor: parseFloat(valor) || 0.0,
-            Descricao: descricao, // CORREÇÃO: 'D' maiúsculo para o C# validar corretamente
-            categoriaId: parseInt(categoria) || 1, // Convertido para número para não quebrar o banco
-            fornecedorId: parseInt(fornecedor) || 1, // Convertido para número
+            Descricao: descricao, 
+            categoriaId: parseInt(categoria) || 1, 
+            fornecedorId: parseInt(fornecedor) || 1, 
             qtdMinimaEstoque: parseInt(qtdMinima) || 0,
-            qtdEstoque: parseInt(qtdAtual) || 0 
+            qtdEstoque: parseInt(qtdAtual) || 0,
+            quantidadeEstoque: parseInt(qtdAtual) || 0 // <-- Adicionado para prevenir que a API zere
         };
 
-        // 3. Envia os dados para a API
-        const resposta = await fetch(apiURL, {
-            method: "POST",
+        if (modoEdicao) {
+            payload.id = parseInt(produtoId);
+        }
+
+        const urlDestino = modoEdicao ? `${apiURL}/${produtoId}` : apiURL;
+        const metodoHttP = modoEdicao ? "PUT" : "POST";
+
+        const resposta = await fetch(urlDestino, {
+            method: metodoHttP,
             headers: {
                 "Content-Type" : "application/json",
                 "Authorization": `Bearer ${token}` 
@@ -48,33 +85,23 @@ async function cadastrarProduto(event) {
             body: JSON.stringify(payload)
         });
 
-        // 4. Tratamento de Erros do Servidor
         if (!resposta.ok) {
             const erroDetalhado = await resposta.text();
             console.error("Detalhes da rejeição do Backend:", erroDetalhado);
-            alert(`Falha no cadastro (Erro ${resposta.status}). Verifique o console.`);
+            alert(`Falha na requisição (Erro ${resposta.status}). Verifique o console.`);
             return;
         }
         
-        // 5. Cadastro efetuado com sucesso
-        const dados = await resposta.json(); 
-        console.log("Sucesso no backend:", dados);
-        
-        formProduto.reset(); // Limpa a tela
-        alert("Produto cadastrado com sucesso!");
-        
-        // Atualiza a listagem caso a função exista no seu projeto
-        if (typeof buscarProduto === "function") {
-            await buscarProduto();
+        if (modoEdicao) {
+            alert("Produto atualizado com sucesso!");
+            window.location.href = "./produtos.html"; 
+        } else {
+            alert("Produto cadastrado com sucesso!");
+            formProduto.reset(); 
         }
         
     } catch (error) {
         console.error("Falha de comunicação:", error);
         alert("Erro de rede ao tentar contactar o servidor.");
     }
-}
-
-// Vincula o evento de clique no botão (Submit) à função de cadastro
-if (formProduto) {
-    formProduto.addEventListener("submit", cadastrarProduto);
 }
