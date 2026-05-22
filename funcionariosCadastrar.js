@@ -25,7 +25,7 @@ form.addEventListener("submit", async (e) => {
 
     try {
 
-        const token = localStorage.getItem("app_auth_token");
+        const token = localStorage.getItem("token");
 
         const response = await fetch(API_URL, {
             method: "POST",

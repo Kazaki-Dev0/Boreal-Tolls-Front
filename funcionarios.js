@@ -2,15 +2,28 @@ const API_URL = "http://localhost:5187/api/Funcionarios";
 
 async function carregarFuncionarios() {
 
-    const token = localStorage.getItem("app_auth_token");
+    const token = localStorage.getItem("token");
+
+    console.log("TOKEN:", token);
 
     try {
 
         const response = await fetch(API_URL, {
+            method: "GET",
             headers: {
-                Authorization: `Bearer ${token}`
+                "Authorization": `Bearer ${token}`
             }
         });
+
+        if (!response.ok) {
+
+            const erro = await response.text();
+
+            console.error("Status:", response.status);
+            console.error("Resposta:", erro);
+
+            throw new Error(`Erro ${response.status}`);
+        }
 
         const funcionarios = await response.json();
 
@@ -47,10 +60,13 @@ async function carregarFuncionarios() {
                         <tr>
                             <td>Salário Base</td>
                             <td>
-                                R$ ${Number(funcionario.salario)
-                                    .toLocaleString('pt-BR',{
-                                        minimumFractionDigits:2
-                                    })}
+                                R$ ${Number(funcionario.salario).toLocaleString(
+                                    "pt-BR",
+                                    {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }
+                                )}
                             </td>
                         </tr>
 
@@ -66,7 +82,14 @@ async function carregarFuncionarios() {
         });
 
     } catch (erro) {
-        console.error(erro);
+
+        console.error("Erro:", erro);
+
+        document.querySelector(".employee-grid").innerHTML = `
+            <p style="color:red;">
+                Erro ao carregar funcionários.
+            </p>
+        `;
     }
 }
 
