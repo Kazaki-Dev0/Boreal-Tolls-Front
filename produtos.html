@@ -248,7 +248,7 @@
         }
 
         /* =========================================
-           6. TABELA
+           6. TABELA E BOTÕES DE AÇÃO
         ========================================= */
         .product-table {
             width: 100%;
@@ -264,11 +264,16 @@
             border-bottom: 1px solid #333;
         }
 
+        .product-table th:last-child {
+            text-align: center;
+        }
+
         .product-table td {
             padding: 16px 15px;
             color: #b0b0b0;
             font-size: 0.85rem;
             border-bottom: 1px solid #333;
+            vertical-align: middle;
         }
 
         .product-table tbody tr {
@@ -293,6 +298,32 @@
 
         .btn-details:hover {
             background-color: #81c784;
+        }
+
+        /* Estilização da sua imagem de Lixeira */
+        .btn-table-delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            margin: 0 auto;
+        }
+
+        .trash-icon {
+            width: 20px; /* Ajuste o tamanho da sua imagem aqui */
+            height: auto;
+            transition: transform 0.2s ease, filter 0.2s ease;
+            /* Este filtro converte a imagem para a cor vermelha */
+            filter: invert(39%) sepia(88%) saturate(5412%) hue-rotate(344deg) brightness(100%) contrast(106%);
+        }
+
+        .btn-table-delete:hover .trash-icon {
+            transform: scale(1.15); /* Aumenta ao passar o mouse */
+            /* Um vermelho um pouco mais escuro no hover */
+            filter: invert(19%) sepia(96%) saturate(6090%) hue-rotate(352deg) brightness(97%) contrast(118%);
         }
 
         /* =========================================
@@ -355,15 +386,18 @@
         .btn-delete {
             background: none;
             border: none;
-            color: #e74c3c;
-            font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
         }
 
-        .btn-delete:hover {
-            color: #ff2a1a;
+        .trash-icon-modal {
+            width: 24px; /* Imagem levemente maior no modal */
+            transition: transform 0.2s ease, filter 0.2s ease;
+            filter: invert(39%) sepia(88%) saturate(5412%) hue-rotate(344deg) brightness(100%) contrast(106%);
+        }
+
+        .btn-delete:hover .trash-icon-modal {
             transform: scale(1.1);
+            filter: invert(19%) sepia(96%) saturate(6090%) hue-rotate(352deg) brightness(97%) contrast(118%);
         }
 
         .modal-body {
@@ -472,8 +506,7 @@
                             <th>Marca</th>
                             <th>Valor em R$</th>
                             <th>Qtd. Estoque</th>
-                            <th></th>
-                        </tr>
+                            <th></th> <th></th> </tr>
                     </thead>
                     <tbody>
                         </tbody>
@@ -483,8 +516,7 @@
     </div>
 
     <div id="modalDetalhes" class="modal-overlay" onclick="fecharModalFora(event)">
-        <div class="modal-box">
-            </div>
+        <div class="modal-box"></div>
     </div>
 
     <script>
@@ -527,7 +559,7 @@
 
             } catch (error) {
                 console.error("Erro ao listar produtos:", error);
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #ff6b6b;">Falha ao carregar produtos.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #ff6b6b;">Falha ao carregar produtos.</td></tr>`;
             }
         }
 
@@ -536,7 +568,7 @@
             tbody.innerHTML = "";
 
             if (lista.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-secondary);">Nenhum produto encontrado.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-secondary);">Nenhum produto encontrado.</td></tr>`;
                 return;
             }
 
@@ -550,15 +582,19 @@
                     <td>${produto.marca || '-'}</td>
                     <td>${valorFormatado}</td>
                     <td>${produto.qtdEstoque ?? 0}</td>
-                    <td style="text-align: right;">
+                    <td style="text-align: right; width: 120px;">
                         <button class="btn-details" onclick="verDetalhesDoProduto(${produto.id})">Ver detalhes</button>
+                    </td>
+                    <td style="text-align: center; width: 50px;">
+                        <button class="btn-table-delete" title="Excluir Produto" onclick="deletarProduto(${produto.id})">
+                            <img src="img/trash.png" alt="Excluir" class="trash-icon">
+                        </button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // BUSCA DETALHADA: Consome diretamente o novo endpoint GetProdutoPorId do backend
         async function verDetalhesDoProduto(idProduto) {
             const modalBox = document.querySelector("#modalDetalhes .modal-box");
             if (!modalBox) return;
@@ -581,7 +617,6 @@
                 const produtoCompleto = await resposta.json();
                 const valorFormatado = (produtoCompleto.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-                // Montagem do modal tratando variações comuns de nomes de propriedades do C#
                 modalBox.innerHTML = `
                     <div class="modal-header">
                         <div class="modal-header-left">
@@ -589,7 +624,7 @@
                             <h3>Detalhes do Produto</h3>
                         </div>
                         <button class="btn-delete" title="Excluir Produto" onclick="deletarProduto(${produtoCompleto.id})">
-                            <i class="ph ph-trash-fill"></i>
+                            <img src="img/trash.png" alt="Excluir" class="trash-icon-modal">
                         </button>
                     </div>
                     
