@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Kedebideri', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #f5f5f5;
             color: #333;
         }
@@ -116,7 +116,6 @@
             box-shadow: 0 0 0 3px rgba(6, 59, 36, 0.1);
         }
 
-        /* Ajuste sutil para o campo de arquivo para combinar com o layout */
         .input-group input[type="file"] {
             padding: 10px 16px;
             cursor: pointer;
@@ -246,7 +245,7 @@
     <script>
         const apiBaseURL = "http://localhost:5187/api/Auth"; 
 
-        // 1. FUNÇÃO DE LOGIN
+        // 1. FUNÇÃO DE LOGIN (Salva os dados de imagem retornados pelo C# no navegador)
         async function handleLogin(event) {
             event.preventDefault(); 
             
@@ -276,9 +275,22 @@
                 if (dados.token) {
                     // CORREÇÃO: Armazena o Token, Nome e Foto retornados pelo Backend para usar no Dashboard
                     localStorage.setItem('token', dados.token);
+<<<<<<< HEAD
                     localStorage.setItem('usuarioNome', dados.nome || '');
                     localStorage.setItem('usuarioFoto', dados.urlFoto || '');
                     
+=======
+                    
+                    // Prioriza urlFoto recebida, senhas usa fotoBase64 se houver
+                    if (dados.urlFoto && dados.urlFoto !== "null") {
+                        localStorage.setItem('urlFoto', dados.urlFoto);
+                    } else if (dados.fotoBase64 && dados.fotoBase64 !== "null") {
+                        localStorage.setItem('urlFoto', dados.fotoBase64);
+                    } else {
+                        localStorage.removeItem('urlFoto'); 
+                    }
+
+>>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
                     window.location.href = "dashboard.html";
                 } else {
                     alert("Erro no servidor: Token não encontrado na resposta.");
@@ -290,7 +302,7 @@
             }
         }
 
-        // 2. FUNÇÃO DE CADASTRO (REGISTRO)
+        // 2. FUNÇÃO DE CADASTRO CORRIGIDA (Formata o Base64 corretamente antes do envio)
         async function handleRegister(event) {
             event.preventDefault();
 
@@ -298,6 +310,10 @@
             const emailInput = document.getElementById('reg-email').value;
             const senhaInput = document.getElementById('reg-senha').value;
             const confirmarSenhaInput = document.getElementById('reg-confirmar-senha').value;
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
             const fotoUrlInput = document.getElementById('reg-foto-url').value;
             const fotoArquivoInput = document.getElementById('reg-foto-arquivo').files[0];
 
@@ -306,10 +322,16 @@
                 return;
             }
 
+<<<<<<< HEAD
             let imagemBase64 = "";
+=======
+            let imagemBase64Raw = "";
+>>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
             if (fotoArquivoInput) {
                 try {
-                    imagemBase64 = await converterParaBase64(fotoArquivoInput);
+                    const base64Completo = await converterParaBase64(fotoArquivoInput);
+                    // CORREÇÃO: Remove o cabeçalho "data:image/...;base64," deixando apenas os dados puros para o C#
+                    imagemBase64Raw = base64Completo.split(',')[1];
                 } catch (err) {
                     alert("Erro ao processar a imagem selecionada.");
                     return;
@@ -326,9 +348,14 @@
                         nome: nomeInput,
                         email: emailInput,
                         senha: senhaInput,
+<<<<<<< HEAD
                         // CORREÇÃO: Alterado de 'fotoUrl' para 'urlFoto' para mapear corretamente com o C# (camelCase)
                         urlFoto: fotoUrlInput || null,
                         fotoBase64: imagemBase64 || null
+=======
+                        fotoUrl: fotoUrlInput || null,
+                        fotoBase64: imagemBase64Raw || null // Envia a string limpa ou null
+>>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
                     })
                 });
 
@@ -350,7 +377,11 @@
             }
         }
 
+<<<<<<< HEAD
         // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64
+=======
+        // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64 completa
+>>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
         function converterParaBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();

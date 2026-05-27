@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="./images/logo-removebg.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="sidebar.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> 
 
     <style>
         /* VARIÁVEIS DE COR */
@@ -44,16 +44,25 @@
         } 
 
         a {
-    color: inherit;
-    text-decoration: none;
-}
+            color: inherit;
+            text-decoration: none;
+        }
 
-/* Destaque para a página atual  */
-.secoes:nth-child(3) {
-    background-color: #2e4a3e; /* Verde escuro */
-}
+        /* CORREÇÃO DO MAIN-WRAPPER PARA OS ELEMENTOS FICAREM LADO A LADO */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-        /* --- CONTEÚDO PRINCIPAL (MAIN CORRIGIDO) --- */
+        /* Destaque para a página atual  */
+        .secoes:nth-child(3) {
+            background-color: #2e4a3e; /* Verde escuro */
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
         .content {
             flex: 1;
             padding: 2.5rem;
@@ -185,7 +194,6 @@
             background-color: var(--neon-green);
             color: #000;
         }
-
     </style>
 </head>
 <body>
@@ -193,25 +201,25 @@
     <div class="main-wrapper">
 
         <section class="side-bar">
-        <div class="sidebar-header">
+            <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
-        
-        <div class="perfil">
+            </div>
+            
+            <div class="perfil">
                 <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
+                <p id="nomeUsuarioSidebar">Fulano de Tal</p>
+            </div> 
+            
+            <nav class="nav-side-bar">
                 <div class="secoes">
                     <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
                     <a href="dashboard.html">Início</a>
                 </div>
-                <div class="secoes active" href="./produtos.html" >
+                <div class="secoes">
                     <img src="./img/produtos.png" alt="" class="secao-icon">
                     <a href="produtos.html">Produtos</a>
                 </div>
-                <div class="secoes">
+                <div class="secoes active">
                     <img src="./img/estoque.png" alt="" class="secao-icon">
                     <a href="./estoque.html">Estoques</a>
                 </div>
@@ -235,12 +243,12 @@
                     <img src="./img/relatorios.png" class="secao-icon">
                     <a href="./categorias.html">Categorias</a>
                 </div>
-        </nav>
+            </nav>
 
-        <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
-        </div>
-    </section>
+            <div class="logout-link">
+                <a href="./login.html" onclick="localStorage.clear()">← Deslogar</a>
+            </div>
+        </section>
 
         <main class="content">
             <div class="form-container">
@@ -262,33 +270,33 @@
                     </div>
                 </div>
 
-                <form class="form-grid">
+                <form class="form-grid" id="formMovimentacao">
                     <div class="input-group">
                         <label>Tipo de Movimento</label>
-                        <select>
-                            <option value="entrada">Entrada (Adicionar ao Estoque)</option>
-                            <option value="saida">Saída (Remover do Estoque)</option>
+                        <select id="tipoMovimento" required>
+                            <option value="ENTRADA">Entrada (Adicionar ao Estoque)</option>
+                            <option value="SAIDA">Saída (Remover do Estoque)</option>
                         </select>
                     </div>
 
                     <div class="input-group">
                         <label>Data de Operação</label>
-                        <input type="date" value="2026-05-13">
+                        <input type="date" id="dataOperacao" required>
                     </div>
 
                     <div class="input-group full-width">
-                        <label>Identificação do Produto (ID ou Nome)</label>
-                        <input type="text" placeholder="Ex: 1024 ou Parafusadeira Titanium">
+                        <label>Identificação do Produto (ID)</label>
+                        <input type="number" id="produtoId" placeholder="Ex: 1024" required min="1">
                     </div>
 
                     <div class="input-group">
                         <label>Quantidade</label>
-                        <input type="number" placeholder="0" min="1">
+                        <input type="number" id="quantidade" placeholder="0" min="1" required>
                     </div>
 
                     <div class="input-group">
-                        <label>ID do Fornecedor (Opcional)</label>
-                        <input type="text" placeholder="Deixe em branco se for saída">
+                        <label>Motivo da Movimentação</label>
+                        <input type="text" id="motivo" placeholder="Ex: Ajuste de inventário" required>
                     </div>
 
                     <div class="form-actions full-width">
@@ -300,5 +308,62 @@
         </main>
     </div>
 
+    <script>
+        // Define a data atual automaticamente no formulário e lê dados da sessão
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('dataOperacao').valueAsDate = new Date();
+            
+            const nomeSalvo = localStorage.getItem("nome");
+            if (nomeSalvo) {
+                const elementNome = document.querySelector(".perfil p");
+                if (elementNome) elementNome.innerText = nomeSalvo;
+            }
+        });
+
+        document.getElementById('formMovimentacao').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Você precisa estar autenticado. Faça login novamente.');
+                window.location.href = './login.html';
+                return;
+            }
+
+            // Propriedades mapeadas no formato PascalCase compatível com o DTO C# do Backend
+            const movimentacaoDto = {
+                ProdutoId: parseInt(document.getElementById('produtoId').value),
+                Quantidade: parseInt(document.getElementById('quantidade').value),
+                Tipo: document.getElementById('tipoMovimento').value,
+                Data: new Date(document.getElementById('dataOperacao').value).toISOString(),
+                Motivo: document.getElementById('motivo').value
+            };
+
+            // URL Atualizada e Corrigida para a porta 5187
+            const urlApi = 'http://localhost:5187/api/MovimentacaoEstoque'; 
+
+            try {
+                const response = await fetch(urlApi, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(movimentacaoDto)
+                });
+
+                if (response.ok) {
+                    alert('Movimentação registrada com sucesso!');
+                    window.location.href = './estoque.html';
+                } else {
+                    const msgErro = await response.text();
+                    alert(`Erro na operação: ${msgErro}`);
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Não foi possível conectar ao servidor da API. Certifique-se de que o backend está ativo na porta 5187.');
+            }
+        });
+    </script>
 </body>
 </html>
