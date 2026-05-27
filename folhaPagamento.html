@@ -325,11 +325,11 @@ td:last-child {
                     <h5>Proventos (+)</h5>
                     <div class="input-provento">
                         <label for="">Salário Base</label>
-                        <input type="number" placeholder="0.00">
+                        <input type="number" id="salario" placeholder="0.00">
                     </div>
                     <div class="input-provento">
                         <label for="">Outros (Horas Extras, Bônus)</label>
-                        <input type="number" placeholder="0.00">
+                        <input type="number" id="adicionais" placeholder="0.00">
                     </div>
                 </div>
                 <div class="descontos">
@@ -337,19 +337,19 @@ td:last-child {
                     <div class="descontosInputs">
                         <div class="input-desconto">
                             <label for="">INSS</label>
-                            <input type="number" placeholder="0.00">
+                            <input type="number" id="inss" placeholder="0.00">
                         </div>
                         <div class="input-desconto">
                             <label for="">IRRF</label>
-                            <input type="number" placeholder="0.00">
+                            <input type="number" id="irrf" placeholder="0.00">
                         </div>
                         <div class="input-desconto">
                             <label for="">Benefícios (Vt/Vr)</label>
-                            <input type="number" placeholder="0.00">
+                            <input type="number" id="beneficios" placeholder="0.00">
                         </div>
                         <div class="input-desconto">
                             <label for="">Outros (Faltas)</label>
-                            <input type="number" placeholder="0.00">
+                            <input type="number" id="faltas" placeholder="0.00">
                         </div>
                     </div>
                 </div>
@@ -367,11 +367,11 @@ td:last-child {
                         <tbody>
                             <tr>
                                 <td>Total de Proventos:</td>
-                                <td>R$ 0,00</td>
+                                <td id="totalProventos">R$ 0,00</td>
                             </tr>
                             <tr>
                                 <td>Total de Descontos:</td>
-                                <td>- R$ 0,00</td>z
+                                <td id="totalDesconto">- R$ 0,00</td>z
                             </tr>
                         </tbody>
                     </table>
@@ -381,7 +381,7 @@ td:last-child {
                         <tbody>
                             <tr>
                                 <td>Total Líquido:</td>
-                                <td>R$ 0,00</td>
+                                <td id="totalLiquido">R$ 0,00</td>
                             </tr>
                         </tbody>
                     </table>
@@ -392,5 +392,7 @@ td:last-child {
             </div>
         </div>
     </main>
+
+    <script src="holerite.js"></script>
 </body>
 </html>
