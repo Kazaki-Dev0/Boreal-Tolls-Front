@@ -198,7 +198,7 @@ main{
 }
 
 /* =========================
-   LISTA DE CATEGORIAS
+   LISTA DE CATEGORIAS (Grid para ID, Nome e Botão)
 ========================= */
 .category-list{
     display:flex;
@@ -212,7 +212,7 @@ main{
     border-radius:18px;
     padding:22px 28px;
     display:grid;
-    grid-template-columns: 1fr 3fr 2fr auto;
+    grid-template-columns: 1fr 4fr auto; 
     align-items:center;
     transition:0.3s;
     gap:20px;
@@ -276,11 +276,6 @@ main{
     color:white;
 }
 
-.total-items{
-    color:#7bcf9c;
-    font-weight:600;
-}
-
 /* =========================
    RESPONSIVO
 ========================= */
@@ -330,6 +325,16 @@ main{
         width:100%;
     }
 }
+
+.perfil img {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #7bcf9c;
+    box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+    background-color: #141414;
+}
 </style>
 </head>
 
@@ -342,8 +347,8 @@ main{
     </div>
 
     <div class="perfil">
-        <img src="./img/perfil-icon.png" alt="Perfil">
-        <p>Fulano de Tal</p>
+        <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
+        <p id="user-name">Carregando...</p>
     </div>
 
     <nav class="nav-side-bar">
@@ -389,7 +394,7 @@ main{
     </nav>
 
     <div class="logout-link">
-        <a href="./login.html">← Deslogar</a>
+        <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
     </div>
 
 </section>
@@ -414,7 +419,7 @@ main{
     <div id="view-listing">
         <div class="table-toolbar">
             <div class="search-box">
-                <input type="text" placeholder="Pesquisar por categoria...">
+                <input type="text" id="search-input" placeholder="Pesquisar por categoria...">
                 <i class="ph ph-magnifying-glass"></i>
             </div>
 
@@ -423,42 +428,8 @@ main{
             </button>
         </div>
 
-        <div class="category-list">
-            <article class="category-card">
-                <div class="info-group">
-                    <span class="info-label">ID</span>
-                    <span class="info-value">#001</span>
-                </div>
-                <div class="info-group">
-                    <span class="info-label">Nome da Categoria</span>
-                    <span class="info-value">Ferramentas Elétricas</span>
-                </div>
-                <div class="info-group">
-                    <span class="info-label">Produtos Vinculados</span>
-                    <span class="info-value total-items">142 itens</span>
-                </div>
-                <button class="btn-delete" title="Excluir Categoria">
-                    <i class="ph ph-trash"></i>
-                </button>
-            </article>
-
-            <article class="category-card">
-                <div class="info-group">
-                    <span class="info-label">ID</span>
-                    <span class="info-value">#002</span>
-                </div>
-                <div class="info-group">
-                    <span class="info-label">Nome da Categoria</span>
-                    <span class="info-value">Equipamentos de Proteção (EPI)</span>
-                </div>
-                <div class="info-group">
-                    <span class="info-label">Produtos Vinculados</span>
-                    <span class="info-value total-items">89 itens</span>
-                </div>
-                <button class="btn-delete" title="Excluir Categoria">
-                    <i class="ph ph-trash"></i>
-                </button>
-            </article>
+        <div class="category-list" id="category-container">
+            <p style="color: #7bcf9c; text-align: center;">Carregando categorias...</p>
         </div>
     </div>
 
@@ -489,55 +460,225 @@ main{
 </main>
 
 <script>
-    // Seleção de elementos das telas
+    // ========================================================
+    // URL CORRIGIDA CONFORME SEU BACKEND (PORTA 5187 / PLURAL)
+    // ========================================================
+    const API_URL = "http://localhost:5187/api/Categorias"; 
+
+    let listaCategoriasGlobal = [];
+
     const viewListing = document.getElementById('view-listing');
     const viewForm = document.getElementById('view-form');
+    const containerCategorias = document.getElementById('category-container');
+    const inputPesquisa = document.getElementById('search-input');
     
-    // Seleção de botões de controle
     const btnOpenForm = document.getElementById('btn-open-form');
     const btnBackList = document.getElementById('btn-back-list');
     
-    // Elementos de texto do header para atualizar dinamicamente
     const panelTitle = document.getElementById('panel-main-title');
     const panelSubtitle = document.getElementById('panel-main-subtitle');
 
-    // Evento para abrir o Formulário
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!token) {
+            window.location.replace("./login.html");
+            return;
+        }
+
+        const payloadJson = parseJwt(token);
+        const imgElement = document.getElementById('user-avatar');
+        const fotoDireta = localStorage.getItem('urlFoto');
+
+        if (payloadJson) {
+            document.getElementById('user-name').textContent = payloadJson["unique_name"] || payloadJson["name"] || "Usuário Boreal";
+        }
+        
+        let fotoFinal = "./img/perfil-icon.png";
+        if (fotoDireta && fotoDireta !== "null") fotoFinal = fotoDireta;
+        else if (payloadJson) fotoFinal = payloadJson["urlFoto"] || payloadJson["foto"] || fotoFinal;
+
+        if (fotoFinal.startsWith('iVBORw0KGgo') || (fotoFinal.length > 200 && !fotoFinal.startsWith('data:'))) {
+            imgElement.src = `data:image/jpeg;base64,${fotoFinal}`;
+        } else {
+            imgElement.src = fotoFinal;
+        }
+
+        carregarCategorias();
+    });
+
+    /* ========================================================
+       GET: BUSCAR CATEGORIAS NO BANCO
+    ======================================================== */
+    async function carregarCategorias() {
+        try {
+            const response = await fetch(API_URL, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) throw new Error("Erro ao buscar dados do servidor.");
+
+            const dados = await response.json();
+            listaCategoriasGlobal = dados; 
+            renderizarLista(listaCategoriasGlobal);
+
+        } catch (erro) {
+            console.error("Erro na requisição GET:", erro);
+            containerCategorias.innerHTML = `<p style="color: #e57373; text-align: center;">Não foi possível carregar as categorias do banco.</p>`;
+        }
+    }
+
+    /* ========================================================
+       RENDERIZAÇÃO DA LISTA (APENAS ID E NOME DA CATEGORIA)
+    ======================================================== */
+    function renderizarLista(lista) {
+        if (lista.length === 0) {
+            containerCategorias.innerHTML = `<p style="color: #aaa; text-align: center;">Nenhuma categoria encontrada.</p>`;
+            return;
+        }
+
+        containerCategorias.innerHTML = ""; 
+
+        lista.forEach(categoria => {
+            const id = categoria.id ?? categoria.Id;
+            const nome = categoria.nome ?? categoria.Nome;
+
+            const cardHtml = `
+                <article class="category-card">
+                    <div class="info-group">
+                        <span class="info-label">ID</span>
+                        <span class="info-value">#${id}</span>
+                    </div>
+                    <div class="info-group">
+                        <span class="info-label">Nome da Categoria</span>
+                        <span class="info-value">${nome}</span>
+                    </div>
+                    <button class="btn-delete" title="Excluir Categoria" onclick="deletarCategoria(${id})">
+                        <i class="ph ph-trash"></i>
+                    </button>
+                </article>
+            `;
+            containerCategorias.insertAdjacentHTML('beforeend', cardHtml);
+        });
+    }
+
+    /* ========================================================
+       POST CORRIGIDO: ENVIAR PARA O CONTROLLER C#
+    ======================================================== */
+    document.getElementById('form-nova-categoria').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const nomeInput = document.getElementById('nome-categoria').value;
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                // Passando exatamente o DTO esperado pelo seu C# (CategoriaCreateDto)
+                body: JSON.stringify({ Nome: nomeInput }) 
+            });
+
+            if (response.ok) {
+                alert("Categoria cadastrada com sucesso!");
+                document.getElementById('nome-categoria').value = '';
+                btnBackList.click(); 
+                carregarCategorias(); 
+            } else {
+                const erroTexto = await response.text();
+                alert("Falha ao registrar categoria: " + erroTexto);
+            }
+        } catch (erro) {
+            console.error("Erro na requisição POST:", erro);
+            alert("Erro de conexão com o servidor.");
+        }
+    });
+
+    /* ========================================================
+       DELETE: EXCLUIR CATEGORIA DO BANCO
+    ======================================================== */
+    async function deletarCategoria(id) {
+        if (!confirm("Tem certeza que deseja excluir esta categoria permanentemente?")) return;
+
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                alert("Categoria removida com sucesso!");
+                carregarCategorias(); 
+            } else {
+                if (response.status === 400) {
+                    alert("Não é possível excluir uma categoria que possui produtos vinculados.");
+                } else {
+                    alert("Não foi possível excluir a categoria.");
+                }
+            }
+        } catch (erro) {
+            console.error("Erro na requisição DELETE:", erro);
+            alert("Erro de rede ao tentar deletar.");
+        }
+    }
+
+    /* ========================================================
+       FILTRO DINÂMICO DE PESQUISA
+    ======================================================== */
+    inputPesquisa.addEventListener('input', (e) => {
+        const termoBusca = e.target.value.toLowerCase().trim();
+        const filtradas = listaCategoriasGlobal.filter(cat => {
+            const nome = (cat.nome ?? cat.Nome).toLowerCase();
+            return nome.includes(termoBusca);
+        });
+        renderizarLista(filtradas);
+    });
+
+    /* ========================================================
+       CONTROLES DE FLUXO DA INTERFACE
+    ======================================================== */
     btnOpenForm.addEventListener('click', () => {
         viewListing.style.display = 'none';
         viewForm.style.display = 'block';
-        
-        // Atualiza textos do Header contextualizando o usuário
         panelTitle.innerText = 'Cadastrar Nova Categoria';
         panelSubtitle.innerText = 'Preencha o campo abaixo para inserir uma nova classificação ao banco.';
     });
 
-    // Evento para voltar à Listagem
     btnBackList.addEventListener('click', () => {
         viewForm.style.display = 'none';
         viewListing.style.display = 'block';
-        
-        // Retorna os textos originais do painel
         panelTitle.innerText = 'Categorias de Produtos';
         panelSubtitle.innerText = 'Gerencie, cadastre e organize as categorias do estoque.';
-        
-        // Opcional: Limpa o input do formulário ao voltar
         document.getElementById('nome-categoria').value = '';
     });
 
-    // Captura o submit do formulário (Pronto para integrar com seu fetch/POST API)
-    document.getElementById('form-nova-categoria').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const nomeCategoria = document.getElementById('nome-categoria').value;
-        
-        // Aqui você fará a requisição para a sua API futuramente
-        console.log("Enviando via POST para API:", nomeCategoria);
-        
-        alert(`Categoria "${nomeCategoria}" registrada com sucesso! (Simulação)`);
-        
-        // Força o retorno para a listagem após salvar
-        btnBackList.click();
-    });
-</script>
+    function efetuarLogout() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("./login.html");
+    }
+</script> 
 
 </body>
 </html>

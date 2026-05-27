@@ -43,6 +43,51 @@
             overflow-y: auto;
         }
 
+        /* Fixação estrita do rodapé da sidebar */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+        }
+
+        /* =========================
+           DIV PERFIL COMPACTA (SEM MARGINS)
+        ========================= */
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px;              
+            margin: 0;             
+            padding: 8px 0;       
+            width: 100%;
+        }
+
+        .perfil img {
+            width: 95px;          
+            height: 95px;         
+            border-radius: 50%;
+            object-fit: cover;    
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
+
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin: 0;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         /* =========================
            CARROSSEL
         ========================= */
@@ -123,13 +168,12 @@
         }
 
         /* =========================
-           MÓDULOS (CORRIGIDO: 4 POR FILEIRA CENTRALIZADOS)
+           MÓDULOS
         ========================= */
         .modules-grid {
             display: grid;
-            /* Trava em exatamente 4 colunas com largura de 240px cada */
             grid-template-columns: repeat(4, 240px);
-            justify-content: center; /* Centraliza a grade na tela */
+            justify-content: center;
             gap: 25px;
             margin-bottom: 40px;
         }
@@ -145,7 +189,6 @@
             justify-content: center;
             gap: 18px;
             text-align: center;
-            /* Transição otimizada focada apenas nos atributos que mudam */
             transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
@@ -181,11 +224,10 @@
         }
 
         /* =========================
-           INFO CARDS (INFERIORES)
+           INFO CARDS
         ========================= */
         .info-cards-container {
             display: grid;
-            /* Organiza os 3 cards centralizados alinhados ao tamanho da grade de cima */
             grid-template-columns: repeat(3, minmax(250px, 328px));
             justify-content: center;
             gap: 25px;
@@ -231,52 +273,54 @@
 <div class="main-wrapper">
 
     <section class="side-bar">
-        <div class="sidebar-header">
-            <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
+        <div>
+            <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+            </div>
 
-        <div class="perfil">
-            <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-            <p>Fulano de Tal</p>
-        </div>
+            <div class="perfil">
+                <img id="user-avatar" src="./img/perfil-icon.png" alt="Foto de Perfil">
+                <p id="user-name">Carregando...</p>
+            </div>
 
-        <nav class="nav-side-bar">
-            <div class="secoes">
-                <img src="./img/inicio.sidebar.png" class="secao-icon">
-                <a href="dashboard.html">Início</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/produtos.png" class="secao-icon">
-                <a href="produtos.html">Produtos</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/estoque.png" class="secao-icon">
-                <a href="./estoque.html">Estoques</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/financeiro.png" class="secao-icon">
-                <a href="./financeiro.html">Financeiro</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/vendas.png" class="secao-icon">
-                <a href="vendas.html">Vendas</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/funcionarios.png" class="secao-icon">
-                <a href="./funcionarios.html">Funcionários</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/clientes.png" class="secao-icon">
-                <a href="./ClienteFornecedor.html">Clientes</a>
-            </div>
-            <div class="secoes">
-                <img src="./img/relatorios.png" class="secao-icon">
-                <a href="./categorias.html">Categorias</a>
-            </div>
-        </nav>
+            <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/inicio.sidebar.png" class="secao-icon">
+                    <a href="dashboard.html">Início</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/produtos.png" class="secao-icon">
+                    <a href="produtos.html">Produtos</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/estoque.png" class="secao-icon">
+                    <a href="./estoque.html">Estoques</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/financeiro.png" class="secao-icon">
+                    <a href="./financeiro.html">Financeiro</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/vendas.png" class="secao-icon">
+                    <a href="vendas.html">Vendas</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/funcionarios.png" class="secao-icon">
+                    <a href="./funcionarios.html">Funcionários</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/clientes.png" class="secao-icon">
+                    <a href="./ClienteFornecedor.html">Clientes</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/relatorios.png" class="secao-icon">
+                    <a href="./categorias.html">Categorias</a>
+                </div>
+            </nav>
+        </div>
 
         <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
         </div>
     </section>
 
@@ -386,7 +430,94 @@
 </div>
 
 <script>
-    /* Javascript Minificado e Otimizado */
+    /* ========================================================
+       FUNÇÃO AUXILIAR DE DECODIFICAÇÃO JWT SEGURA
+    ======================================================== */
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            console.error("Falha ao decodificar token:", e);
+            return null;
+        }
+    }
+
+    /* ========================================================
+       CARREGAMENTO DINÂMICO DE PERFIL
+    ======================================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+        let token = null;
+        let fotoDiretaDoLogin = null;
+        
+        try {
+            token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            // Busca a foto caso ela tenha sido salva no localStorage durante o Login
+            fotoDiretaDoLogin = localStorage.getItem('urlFoto');
+        } catch (e) {
+            console.warn("Acesso ao storage bloqueado.");
+        }
+        
+        if (!token) {
+            document.getElementById('user-name').textContent = "Usuário Logado";
+            return;
+        }
+
+        const payloadJson = parseJwt(token);
+        const imgElement = document.getElementById('user-avatar');
+
+        // 1. Processamento Dinâmico do Nome do Usuário
+        if (payloadJson) {
+            const nomeUsuario = payloadJson["unique_name"] || 
+                                payloadJson["name"] || 
+                                payloadJson["given_name"] || 
+                                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                                "Usuário Boreal";
+            
+            document.getElementById('user-name').textContent = nomeUsuario;
+        } else {
+            document.getElementById('user-name').textContent = "Erro de Sessão";
+        }
+
+        // 2. Sistema de fallback Inteligente para renderizar a Imagem
+        let fotoFinal = "./img/perfil-icon.png"; // Imagem padrão (Bolinha verde)
+
+        if (fotoDiretaDoLogin && fotoDiretaDoLogin !== "null" && fotoDiretaDoLogin !== "") {
+            fotoFinal = fotoDiretaDoLogin;
+        } else if (payloadJson) {
+            // Se não achou no localStorage direto, tenta varrer as propriedades do JWT
+            fotoFinal = payloadJson["urlFoto"] || payloadJson["fotoUrl"] || payloadJson["foto"] || payloadJson["avatar"] || fotoFinal;
+        }
+
+        // Aplica a imagem de forma segura no elemento src
+        if (fotoFinal.startsWith('iVBORw0KGgo') || (fotoFinal.length > 200 && !fotoFinal.startsWith('data:'))) {
+            imgElement.src = `data:image/jpeg;base64,${fotoFinal}`;
+        } else {
+            imgElement.src = fotoFinal;
+        }
+    });
+
+    /* ========================================================
+       LOGOUT SEGURO - LIMPEZA INTEGRAL
+    ======================================================== */
+    function efetuarLogout() {
+        try {
+            localStorage.clear();
+            sessionStorage.clear();
+        } catch (e) {
+            console.error("Erro ao efetuar limpeza:", e);
+        }
+        window.location.replace("./login.html");
+    }
+
+    /* =========================
+       CARROSSEL AUTOPLAY
+    ========================= */
     let slideIndex = 0;
     let slideInterval;
     const slides = document.querySelectorAll(".carousel-slide");
