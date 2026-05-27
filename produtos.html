@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="./images/logo-removebg.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
+    <link rel="stylesheet" href="sidebar.css">
     <style>
         /* =========================================
            1. VARIÁVEIS DE COR
@@ -17,7 +17,6 @@
             --bg-sidebar: #06100b;
             --bg-panel: #131715;
             --text-primary: #ffffff;
-            --text-secondary: #9aa09d;
             --neon-green: #87ffb9;
             --border-color: #242e29;
         }
@@ -33,7 +32,13 @@
         }
 
         body {
-            background-color: var(--bg-main);
+            background:
+    linear-gradient(
+        109deg,
+        #090909 32.55%,
+        #002c18 79.54%,
+        #003019 88.95%
+    );
             color: var(--text-primary);
             display: flex;
             flex-direction: column;
@@ -125,29 +130,39 @@
             transition: 0.3s;
             gap: 10%;
             cursor: pointer;
+            color: #b0b0b0; /* Cor padrão alterada para bater com as outras páginas */
+            font-size: 0.9rem; /* Tamanho ajustado conforme solicitado */
+            font-weight: 500;
+        }
+
+        .secoes a {
+            color: inherit;
         }
 
         .secoes:hover {
             background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
         }
 
         .secoes.active {
             background-color: #3b5745;
+            color: #ffffff;
         }
 
         .logout-link {
             margin-top: auto;
             padding: 15px 25px;
-            font-size: 0.85rem;
+            font-size: 0.9rem; /* Ajustado para acompanhar os atalhos */
+            font-weight: 500;
         }
 
         .logout-link a {
-            color: var(--text-secondary);
+            color: #b0b0b0; /* Alterado para a cor cinza padrão discreta */
             transition: color 0.3s;
         }
 
         .logout-link a:hover {
-            color: #ff6b6b;
+            color: #ffffff; /* Acende em branco ao passar o mouse */
         }
 
         /* =========================================
@@ -484,6 +499,10 @@
                 <div class="secoes">
                     <img src="./img/clientes.png" alt="" class="secao-icon">
                     <a href="./ClienteFornecedor.html">Clientes</a>
+                </div>
+                <div class="secoes">
+                    <img src="./img/relatorios.png" class="secao-icon">
+                    <a href="./categorias.html">Categorias</a>
                 </div>
             </nav>
 
