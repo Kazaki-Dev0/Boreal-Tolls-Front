@@ -116,20 +116,6 @@
             box-shadow: 0 0 0 3px rgba(6, 59, 36, 0.1);
         }
 
-        .input-group input[type="file"] {
-            padding: 10px 16px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .input-group .field-hint {
-            color: #777;
-            font-size: 0.75rem;
-            display: block;
-            margin-top: 4px;
-            padding-left: 4px;
-        }
-
         .btn-submit {
             width: 100%;
             padding: 14px;
@@ -223,15 +209,6 @@
                         <input type="password" id="reg-confirmar-senha" placeholder="Confirme sua senha" required>
                     </div>
                     
-                    <div class="input-group">
-                        <input type="url" id="reg-foto-url" placeholder="Link/URL da foto de perfil (Opcional)">
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="file" id="reg-foto-arquivo" accept="image/*">
-                        <span class="field-hint">Ou selecione um arquivo de imagem do seu dispositivo</span>
-                    </div>
-
                     <button type="submit" class="btn-submit">Registrar</button>
                 </form>
                 <div class="form-footer">
@@ -245,7 +222,7 @@
     <script>
         const apiBaseURL = "http://localhost:5187/api/Auth"; 
 
-        // 1. FUNÇÃO DE LOGIN (Salva os dados de imagem retornados pelo C# no navegador)
+        // 1. FUNÇÃO DE LOGIN (Guarda apenas o Token JWT com segurança)
         async function handleLogin(event) {
             event.preventDefault(); 
             
@@ -273,17 +250,8 @@
                 const dados = await resposta.json();
 
                 if (dados.token) {
+                    // Armazena estritamente o token JWT para validação de rota
                     localStorage.setItem('token', dados.token);
-                    
-                    // Prioriza urlFoto recebida, senhas usa fotoBase64 se houver
-                    if (dados.urlFoto && dados.urlFoto !== "null") {
-                        localStorage.setItem('urlFoto', dados.urlFoto);
-                    } else if (dados.fotoBase64 && dados.fotoBase64 !== "null") {
-                        localStorage.setItem('urlFoto', dados.fotoBase64);
-                    } else {
-                        localStorage.removeItem('urlFoto'); 
-                    }
-
                     window.location.href = "dashboard.html";
                 } else {
                     alert("Erro no servidor: Token não encontrado na resposta.");
@@ -295,7 +263,7 @@
             }
         }
 
-        // 2. FUNÇÃO DE CADASTRO CORRIGIDA (Formata o Base64 corretamente antes do envio)
+        // 2. FUNÇÃO DE CADASTRO (Envia apenas Nome, Email e Senha)
         async function handleRegister(event) {
             event.preventDefault();
 
@@ -303,25 +271,10 @@
             const emailInput = document.getElementById('reg-email').value;
             const senhaInput = document.getElementById('reg-senha').value;
             const confirmarSenhaInput = document.getElementById('reg-confirmar-senha').value;
-            
-            const fotoUrlInput = document.getElementById('reg-foto-url').value;
-            const fotoArquivoInput = document.getElementById('reg-foto-arquivo').files[0];
 
             if (senhaInput !== confirmarSenhaInput) {
                 alert("As senhas informadas não coincidem!");
                 return;
-            }
-
-            let imagemBase64Raw = "";
-            if (fotoArquivoInput) {
-                try {
-                    const base64Completo = await converterParaBase64(fotoArquivoInput);
-                    // CORREÇÃO: Remove o cabeçalho "data:image/...;base64," deixando apenas os dados puros para o C#
-                    imagemBase64Raw = base64Completo.split(',')[1];
-                } catch (err) {
-                    alert("Erro ao processar a imagem selecionada.");
-                    return;
-                }
             }
 
             try {
@@ -333,9 +286,7 @@
                     body: JSON.stringify({
                         nome: nomeInput,
                         email: emailInput,
-                        senha: senhaInput,
-                        fotoUrl: fotoUrlInput || null,
-                        fotoBase64: imagemBase64Raw || null // Envia a string limpa ou null
+                        senha: senhaInput
                     })
                 });
 
@@ -355,16 +306,6 @@
                 console.error("Falha ao comunicar com a API de registro:", error);
                 alert("Erro ao conectar com o servidor.");
             }
-        }
-
-        // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64 completa
-        function converterParaBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
         }
 
         // 3. ALTERNADOR DE TELAS (LOGIN / REGISTRO)
