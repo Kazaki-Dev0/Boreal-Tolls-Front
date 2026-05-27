@@ -359,8 +359,6 @@ box-shadow:
 
 <body>
 
-<!-- SIDEBAR -->
-
 <section class="side-bar">
 
     <div class="sidebar-header">
@@ -373,7 +371,7 @@ box-shadow:
         <img src="./img/perfil-icon.png"
         alt="Perfil">
 
-        <p>Fulano de Tal</p>
+        <p id="nomeUsuarioSidebar">Fulano de Tal</p>
     </div>
 
     <nav class="nav-side-bar">
@@ -421,18 +419,14 @@ box-shadow:
     </nav>
 
     <div class="logout-link">
-        <a href="./login.html">← Deslogar</a>
+        <a href="./login.html" onclick="localStorage.clear()">← Deslogar</a>
     </div>
 
 </section>
 
-<!-- MAIN -->
-
 <main>
 
 <div class="stock-panel">
-
-    <!-- HEADER -->
 
     <div class="panel-header">
 
@@ -452,14 +446,12 @@ box-shadow:
 
     </div>
 
-    <!-- TOOLBAR -->
-
     <div class="table-toolbar">
 
         <div class="search-box">
 
-            <input type="text"
-            placeholder="Pesquisar por Produto ou Fornecedor">
+            <input type="text" id="txtPesquisa"
+            placeholder="Pesquisar por ID do Produto ou Motivo">
 
             <i class="ph ph-magnifying-glass"></i>
 
@@ -474,8 +466,6 @@ box-shadow:
 
     </div>
 
-    <!-- TABELA -->
-
     <table class="stock-table">
 
         <thead>
@@ -483,138 +473,17 @@ box-shadow:
             <tr>
                 <th>Data</th>
                 <th>Movimento</th>
-                <th>Produto</th>
+                <th>Produto (ID)</th>
                 <th>Quantidade</th>
-                <th>Fornecedor</th>
-                <th>Capacidade</th>
+                <th>Motivo</th>
+                <th>Status / Sistema</th>
                 <th>Ações</th>
             </tr>
 
         </thead>
 
-        <tbody>
-
-            <tr>
-
-                <td>29/02/2024</td>
-
-                <td>
-                    <span class="badge badge-entrada">
-                        Entrada
-                    </span>
-                </td>
-
-                <td style="color:white;">
-                    Produto 1
-                </td>
-
-                <td>20 UND</td>
-
-                <td>Forn-1</td>
-
-                <td>100 UND</td>
-
-                <td>
-
-                    <div class="action-buttons">
-
-                        <button class="btn-icon">
-                            <i class="ph ph-eye"></i>
-                        </button>
-
-                        <button class="btn-icon">
-                            <i class="ph ph-trash"></i>
-                        </button>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>04/03/2024</td>
-
-                <td>
-                    <span class="badge badge-saida">
-                        Saída
-                    </span>
-                </td>
-
-                <td style="color:white;">
-                    Produto 2
-                </td>
-
-                <td>2 UND</td>
-
-                <td>Forn-2</td>
-
-                <td>50 UND</td>
-
-                <td>
-
-                    <div class="action-buttons">
-
-                        <button class="btn-icon">
-                            <i class="ph ph-eye"></i>
-                        </button>
-
-                        <button class="btn-icon">
-                            <i class="ph ph-trash"></i>
-                        </button>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>10/03/2024</td>
-
-                <td>
-                    <span class="badge badge-entrada">
-                        Entrada
-                    </span>
-                </td>
-
-                <td style="color:white;">
-                    Iphone 17
-                </td>
-
-                <td>50 UND</td>
-
-                <td>Apple / Forn-3</td>
-
-                <td>200 UND</td>
-
-                <td>
-
-                    <div class="action-buttons">
-
-                        <button class="btn-icon">
-                            <i class="ph ph-eye"></i>
-                        </button>
-
-                        <button class="btn-icon">
-                            <i class="ph ph-trash"></i>
-                        </button>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-            <!-- LINHAS VAZIAS -->
-
-            <tr><td colspan="7" style="height:70px;"></td></tr>
-            <tr><td colspan="7" style="height:70px;"></td></tr>
-            <tr><td colspan="7" style="height:70px;"></td></tr>
-
-        </tbody>
+        <tbody id="listaMovimentacoes">
+            </tbody>
 
     </table>
 
@@ -622,5 +491,171 @@ box-shadow:
 
 </main>
 
+<script>
+    // URL Corrigida conforme a sua API do Visual Studio
+    const API_URL = "http://localhost:5187/api/MovimentacaoEstoque";
+    let cacheMovimentacoes = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Tenta recuperar o nome do usuário salvo no login para exibir na sidebar
+        const nomeSalvo = localStorage.getItem("nome");
+        if (nomeSalvo) {
+            document.getElementById("nomeUsuarioSidebar").innerText = nomeSalvo;
+        }
+
+        obterMovimentacoesDoServidor();
+        document.getElementById("txtPesquisa").addEventListener("input", filtrarTabelaEstoque);
+    });
+
+    async function obterMovimentacoesDoServidor() {
+        const tabelaCorpo = document.getElementById("listaMovimentacoes");
+        const tokenAtivo = localStorage.getItem("token");
+
+        if (!tokenAtivo) {
+            alert("Acesso negado. Faça login para acessar o sistema.");
+            window.location.href = "./login.html";
+            return;
+        }
+
+        try {
+            tabelaCorpo.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#9cc8aa;">Consultando banco de dados...</td></tr>`;
+
+            const resposta = await fetch(API_URL, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${tokenAtivo}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (resposta.status === 401) {
+                alert("Sua sessão expirou. Por favor, realize o login novamente.");
+                window.location.href = "./login.html";
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw new Error("Erro ao buscar dados do servidor.");
+            }
+
+            cacheMovimentacoes = await resposta.json();
+            atualizarInterfaceTabela(cacheMovimentacoes);
+
+        } catch (erro) {
+            console.error(erro);
+            tabelaCorpo.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#ff7b7b;">Erro ao carregar dados do estoque. Certifique-se de que o backend na porta 5187 está rodando.</td></tr>`;
+        }
+    }
+
+    function atualizarInterfaceTabela(listaExibicao) {
+        const tabelaCorpo = document.getElementById("listaMovimentacoes");
+        tabelaCorpo.innerHTML = "";
+
+        if (listaExibicao.length === 0) {
+            tabelaCorpo.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#aaa;">Nenhuma movimentação encontrada.</td></tr>`;
+            return;
+        }
+
+        listaExibicao.forEach(item => {
+            // Mapeia tanto propriedades minúsculas quanto maiúsculas vindas do C# DTO
+            const id = item.id || item.Id;
+            const dataRaw = item.data || item.Data;
+            const tipoRaw = item.tipo || item.Tipo || "";
+            const produtoId = item.produtoId || item.ProdutoId;
+            const quantidade = item.quantidade || item.Quantidade;
+            const motivo = item.motivo || item.Motivo || "Não especificado";
+
+            const objetoData = new Date(dataRaw);
+            const dataLegivel = objetoData.toLocaleDateString("pt-BR");
+
+            const stringTipo = tipoRaw.toUpperCase();
+            const ehSaida = stringTipo === "SAIDA" || stringTipo === "SAÍDA";
+            
+            const classeBadge = ehSaida ? "badge-saida" : "badge-entrada";
+            const textoExibido = ehSaida ? "Saída" : "Entrada";
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${dataLegivel}</td>
+                <td>
+                    <span class="badge ${classeBadge}">
+                        ${textoExibido}
+                    </span>
+                </td>
+                <td style="color:white; font-weight:500;">
+                    Produto ${produtoId}
+                </td>
+                <td>${quantidade} UND</td>
+                <td>${motivo}</td>
+                <td style="font-size:0.85rem; color:#888;">Ativo</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-icon" title="Ver Detalhes" onclick="exibirAlertaDetalhes(${id})">
+                            <i class="ph ph-eye"></i>
+                        </button>
+                        <button class="btn-icon" title="Excluir Movimento" onclick="removerMovimentacaoFisica(${id})">
+                            <i class="ph ph-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tabelaCorpo.appendChild(tr);
+        });
+    }
+
+    function filtrarTabelaEstoque() {
+        const textoFiltro = document.getElementById("txtPesquisa").value.toLowerCase().trim();
+
+        const filtrados = cacheMovimentacoes.filter(mov => {
+            const prodId = (mov.produtoId || mov.ProdutoId || "").toString();
+            const mot = (mov.motivo || mov.Motivo || "").toLowerCase();
+            return prodId.includes(textoFiltro) || mot.includes(textoFiltro);
+        });
+
+        atualizarInterfaceTabela(filtrados);
+    }
+
+    function exibirAlertaDetalhes(idDoItem) {
+        const registro = cacheMovimentacoes.find(m => (m.id || m.Id) === idDoItem);
+        if (registro) {
+            const id = registro.id || registro.Id;
+            const prodId = registro.produtoId || registro.ProdutoId;
+            const tipo = registro.tipo || registro.Tipo;
+            const qtd = registro.quantidade || registro.Quantidade;
+            const data = registro.data || registro.Data;
+            const mot = registro.motivo || registro.Motivo || 'Nenhum';
+
+            alert(`--- DETALHES DA MOVIMENTAÇÃO ---\n\nID do Registro: ${id}\nID do Produto: ${prodId}\nOperação: ${tipo}\nQuantidade: ${qtd} UND\nData: ${new Date(data).toLocaleString("pt-BR")}\nMotivo: ${mot}`);
+        }
+    }
+
+    async function removerMovimentacaoFisica(idDoItem) {
+        if (!confirm("Tem certeza que deseja deletar este movimento? O estoque do produto será revertido automaticamente no servidor.")) {
+            return;
+        }
+
+        const tokenAtivo = localStorage.getItem("token");
+
+        try {
+            const resposta = await fetch(`${API_URL}/${idDoItem}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${tokenAtivo}`
+                }
+            });
+
+            if (resposta.ok) {
+                alert("Movimentação removida e estoque recalculado!");
+                obterMovimentacoesDoServidor();
+            } else {
+                const erroServidor = await resposta.text();
+                alert(`Erro retornado pelo servidor: ${erroServidor}`);
+            }
+        } catch (erro) {
+            console.error(erro);
+            alert("Não foi possível conectar à API para excluir o item.");
+        }
+    }
+</script>
 </body>
 </html>
