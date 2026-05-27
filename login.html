@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Kedebideri', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #f5f5f5;
             color: #333;
         }
@@ -116,6 +116,20 @@
             box-shadow: 0 0 0 3px rgba(6, 59, 36, 0.1);
         }
 
+        .input-group input[type="file"] {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .input-group .field-hint {
+            color: #777;
+            font-size: 0.75rem;
+            display: block;
+            margin-top: 4px;
+            padding-left: 4px;
+        }
+
         .btn-submit {
             width: 100%;
             padding: 14px;
@@ -208,6 +222,16 @@
                     <div class="input-group">
                         <input type="password" id="reg-confirmar-senha" placeholder="Confirme sua senha" required>
                     </div>
+                    
+                    <div class="input-group">
+                        <input type="url" id="reg-foto-url" placeholder="Link/URL da foto de perfil (Opcional)">
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="file" id="reg-foto-arquivo" accept="image/*">
+                        <span class="field-hint">Ou selecione um arquivo de imagem do seu dispositivo</span>
+                    </div>
+
                     <button type="submit" class="btn-submit">Registrar</button>
                 </form>
                 <div class="form-footer">
@@ -219,10 +243,9 @@
     </div>
 
     <script>
-        // Configuração base das URLs da sua API C#
         const apiBaseURL = "http://localhost:5187/api/Auth"; 
 
-        // 1. FUNÇÃO DE LOGIN
+        // 1. FUNÇÃO DE LOGIN (Salva os dados de imagem retornados pelo C# no navegador)
         async function handleLogin(event) {
             event.preventDefault(); 
             
@@ -237,12 +260,11 @@
                     },
                     body: JSON.stringify({
                         email: emailInput,
-                        senha: senhaInput // Mapeia perfeitamente para o LoginDto do C#
+                        senha: senhaInput 
                     })
                 });
 
                 if (!resposta.ok) {
-                    // Trata o retorno "Unauthorized" da sua API
                     const erroMsg = await resposta.text();
                     alert(erroMsg || "E-mail ou senha incorretos.");
                     return;
@@ -250,9 +272,18 @@
 
                 const dados = await resposta.json();
 
-                // Armazena o JWT retornado por GerarTokenJwt()
                 if (dados.token) {
                     localStorage.setItem('token', dados.token);
+                    
+                    // Prioriza urlFoto recebida, senhas usa fotoBase64 se houver
+                    if (dados.urlFoto && dados.urlFoto !== "null") {
+                        localStorage.setItem('urlFoto', dados.urlFoto);
+                    } else if (dados.fotoBase64 && dados.fotoBase64 !== "null") {
+                        localStorage.setItem('urlFoto', dados.fotoBase64);
+                    } else {
+                        localStorage.removeItem('urlFoto'); 
+                    }
+
                     window.location.href = "dashboard.html";
                 } else {
                     alert("Erro no servidor: Token não encontrado na resposta.");
@@ -264,7 +295,7 @@
             }
         }
 
-        // 2. FUNÇÃO DE CADASTRO (REGISTRO)
+        // 2. FUNÇÃO DE CADASTRO CORRIGIDA (Formata o Base64 corretamente antes do envio)
         async function handleRegister(event) {
             event.preventDefault();
 
@@ -272,11 +303,25 @@
             const emailInput = document.getElementById('reg-email').value;
             const senhaInput = document.getElementById('reg-senha').value;
             const confirmarSenhaInput = document.getElementById('reg-confirmar-senha').value;
+            
+            const fotoUrlInput = document.getElementById('reg-foto-url').value;
+            const fotoArquivoInput = document.getElementById('reg-foto-arquivo').files[0];
 
-            // Validação básica no front-end antes de mandar pro back-end
             if (senhaInput !== confirmarSenhaInput) {
                 alert("As senhas informadas não coincidem!");
                 return;
+            }
+
+            let imagemBase64Raw = "";
+            if (fotoArquivoInput) {
+                try {
+                    const base64Completo = await converterParaBase64(fotoArquivoInput);
+                    // CORREÇÃO: Remove o cabeçalho "data:image/...;base64," deixando apenas os dados puros para o C#
+                    imagemBase64Raw = base64Completo.split(',')[1];
+                } catch (err) {
+                    alert("Erro ao processar a imagem selecionada.");
+                    return;
+                }
             }
 
             try {
@@ -288,12 +333,13 @@
                     body: JSON.stringify({
                         nome: nomeInput,
                         email: emailInput,
-                        senha: senhaInput // Mapeia para o RegistroDto do C#
+                        senha: senhaInput,
+                        fotoUrl: fotoUrlInput || null,
+                        fotoBase64: imagemBase64Raw || null // Envia a string limpa ou null
                     })
                 });
 
                 if (!resposta.ok) {
-                    // Captura mensagens como "E-mail já cadastrado." vindas do BadRequest da API
                     const erroMsg = await resposta.text();
                     alert(erroMsg || "Falha ao registrar usuário.");
                     return;
@@ -302,7 +348,6 @@
                 const dados = await resposta.json();
                 alert(dados.message || "Usuário criado com sucesso!");
                 
-                // Reseta o formulário e joga o usuário de volta para a tela de login
                 document.getElementById('form-registro').reset();
                 toggleForms();
 
@@ -310,6 +355,16 @@
                 console.error("Falha ao comunicar com a API de registro:", error);
                 alert("Erro ao conectar com o servidor.");
             }
+        }
+
+        // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64 completa
+        function converterParaBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
         }
 
         // 3. ALTERNADOR DE TELAS (LOGIN / REGISTRO)
@@ -326,6 +381,5 @@
             }
         }
     </script>
-
 </body>
 </html>
