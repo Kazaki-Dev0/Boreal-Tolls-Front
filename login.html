@@ -244,7 +244,6 @@
     </div>
 
     <script>
-        // Configuração base das URLs da sua API C#
         const apiBaseURL = "http://localhost:5187/api/Auth"; 
 
         // 1. FUNÇÃO DE LOGIN
@@ -252,7 +251,7 @@
             event.preventDefault(); 
             
             const emailInput = document.getElementById('login-email').value;
-            const senhaInput = document.getElementById('login-senha').value;
+            const staticSenhaInput = document.getElementById('login-senha').value;
 
             try {
                 const resposta = await fetch(`${apiBaseURL}/login`, {
@@ -262,7 +261,7 @@
                     },
                     body: JSON.stringify({
                         email: emailInput,
-                        senha: senhaInput 
+                        senha: staticSenhaInput 
                     })
                 });
 
@@ -275,7 +274,11 @@
                 const dados = await resposta.json();
 
                 if (dados.token) {
+                    // CORREÇÃO: Armazena o Token, Nome e Foto retornados pelo Backend para usar no Dashboard
                     localStorage.setItem('token', dados.token);
+                    localStorage.setItem('usuarioNome', dados.nome || '');
+                    localStorage.setItem('usuarioFoto', dados.urlFoto || '');
+                    
                     window.location.href = "dashboard.html";
                 } else {
                     alert("Erro no servidor: Token não encontrado na resposta.");
@@ -295,8 +298,6 @@
             const emailInput = document.getElementById('reg-email').value;
             const senhaInput = document.getElementById('reg-senha').value;
             const confirmarSenhaInput = document.getElementById('reg-confirmar-senha').value;
-            
-            // Captura dos novos inputs opcionais de imagem
             const fotoUrlInput = document.getElementById('reg-foto-url').value;
             const fotoArquivoInput = document.getElementById('reg-foto-arquivo').files[0];
 
@@ -306,7 +307,6 @@
             }
 
             let imagemBase64 = "";
-            // Se o usuário selecionou um arquivo local, converte para Base64 antes de enviar
             if (fotoArquivoInput) {
                 try {
                     imagemBase64 = await converterParaBase64(fotoArquivoInput);
@@ -326,8 +326,8 @@
                         nome: nomeInput,
                         email: emailInput,
                         senha: senhaInput,
-                        // Novas propriedades enviadas no JSON para o RegistroDto do seu C#
-                        fotoUrl: fotoUrlInput || null,
+                        // CORREÇÃO: Alterado de 'fotoUrl' para 'urlFoto' para mapear corretamente com o C# (camelCase)
+                        urlFoto: fotoUrlInput || null,
                         fotoBase64: imagemBase64 || null
                     })
                 });
@@ -350,7 +350,7 @@
             }
         }
 
-        // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64 compatível com JSON
+        // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64
         function converterParaBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
