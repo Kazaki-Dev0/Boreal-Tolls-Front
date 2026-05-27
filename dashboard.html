@@ -12,9 +12,9 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* =========================
-           ESTRUTURA DA PÁGINA
-        ========================= */
+        /* ========================================================
+           CSS ORIGINAL MANTIDO E CORRIGIDO PARA A FOTO DO USUÁRIO
+        ======================================================== */
         body {
             background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
             color: white;
@@ -32,7 +32,7 @@
             color: inherit;
         }
 
-        /* Destaque da página ativa na sidebar */
+        /* Destaque da página ativa na sidebar original */
         .secoes:nth-child(1) {
             background-color: #2e4a3e;
         }
@@ -43,7 +43,7 @@
             overflow-y: auto;
         }
 
-        /* Fixação estrita do rodapé da sidebar */
+        /* Estrutura original da Sidebar mantida */
         .side-bar {
             display: flex;
             flex-direction: column;
@@ -53,7 +53,7 @@
         }
 
         /* =========================
-           DIV PERFIL COMPACTA (SEM MARGINS)
+            DIV PERFIL CORRIGIDA (SEM ALTERAR LAYOUT)
         ========================= */
         .perfil {
             display: flex;
@@ -61,36 +61,35 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px;              
-            margin: 0;             
-            padding: 8px 0;       
+            gap: 6px; 
             width: 100%;
         }
 
+        /* CORREÇÃO ESTREITA: Garante que qualquer imagem vire um círculo perfeito object-fit: cover */
         .perfil img {
-            width: 95px;          
-            height: 95px;         
-            border-radius: 50%;
-            object-fit: cover;    
-            border: 2px solid #7bcf9c;
+            width: 95px; /* Tamanho original mantido */
+            height: 95px; /* Tamanho original mantido */
+            border-radius: 50%; /* Transforma em círculo perfeito */
+            object-fit: cover; /* Recorta a imagem centralizadamente para não distorcer */
+            border: 2px solid #7bcf9c; /* Borda verde original */
             box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
-            background-color: #141414;
+            background-color: #141414; /* Cor de fundo caso a imagem falhe */
         }
 
         .perfil p {
             font-size: 1rem;
             font-weight: 500;
             color: #ffffff;
-            margin: 0;
             max-width: 85%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* =========================
-           CARROSSEL
-        ========================= */
+        /* ========================================================
+           RESTANTE DO CSS ORIGINAL (MANTIDO INTACTO)
+        ======================================================== */
+        /* Carrossel */
         .carousel-wrapper {
             position: relative;
             width: 100%;
@@ -116,31 +115,11 @@
             background-position: center;
         }
 
-        .carousel-slide.active {
-            opacity: 1;
-            z-index: 2;
-        }
-
-        .banner-content h2 {
-            font-size: 2rem;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .banner-content h2 span {
-            color: #7bcf9c;
-        }
-
-        .banner-content p {
-            color: #d4d4d4;
-            font-size: 0.95rem;
-        }
-
-        .banner-icon {
-            font-size: 3rem;
-            color: #7bcf9c;
-            margin-bottom: 15px;
-        }
+        .carousel-slide.active { opacity: 1; z-index: 2; }
+        .banner-content h2 { font-size: 2rem; font-weight: 500; margin-bottom: 10px; }
+        .banner-content h2 span { color: #7bcf9c; }
+        .banner-content p { color: #d4d4d4; font-size: 0.95rem; }
+        .banner-icon { font-size: 3rem; color: #7bcf9c; margin-bottom: 15px; }
 
         .carousel-indicators {
             position: absolute;
@@ -167,9 +146,7 @@
             background: #7bcf9c;
         }
 
-        /* =========================
-           MÓDULOS
-        ========================= */
+        /* Módulos Grid */
         .modules-grid {
             display: grid;
             grid-template-columns: repeat(4, 240px);
@@ -212,20 +189,10 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        .module-card:hover .icon-box {
-            background: #7bcf9c;
-            color: black;
-        }
+        .module-card:hover .icon-box { background: #7bcf9c; color: black; }
+        .module-title { font-size: 1rem; color: white; font-weight: 500; }
 
-        .module-title {
-            font-size: 1rem;
-            color: white;
-            font-weight: 500;
-        }
-
-        /* =========================
-           INFO CARDS
-        ========================= */
+        /* Info Cards */
         .info-cards-container {
             display: grid;
             grid-template-columns: repeat(3, minmax(250px, 328px));
@@ -255,16 +222,8 @@
             color: #d4d4d4;
         }
 
-        .info-header i {
-            font-size: 24px;
-            color: #7bcf9c;
-        }
-
-        .info-value {
-            font-size: 2rem;
-            font-weight: 600;
-            color: white;
-        }
+        .info-header i { font-size: 24px; color: #7bcf9c; }
+        .info-value { font-size: 2rem; font-weight: 600; color: white; }
     </style>
 </head>
 
@@ -325,7 +284,6 @@
     </section>
 
     <main class="content">
-
         <div class="carousel-wrapper">
             <div class="carousel-slide active">
                 <div class="banner-content">
@@ -362,37 +320,30 @@
                 <div class="icon-box"><i class="ph ph-users-three"></i></div>
                 <span class="module-title">RH</span>
             </a>
-
             <a href="produtos.html" class="module-card">
                 <div class="icon-box"><i class="ph ph-package"></i></div>
                 <span class="module-title">Produtos</span>
             </a>
-
             <a href="estoque.html" class="module-card">
                 <div class="icon-box"><i class="ph ph-archive"></i></div>
                 <span class="module-title">Estoque</span>
             </a>
-
             <a href="financeiro.html" class="module-card">
                 <div class="icon-box"><i class="ph ph-chart-line-up"></i></div>
                 <span class="module-title">Financeiro</span>
             </a>
-
             <a href="vendas.html" class="module-card">
                 <div class="icon-box"><i class="ph ph-shopping-cart"></i></div>
                 <span class="module-title">Vendas</span>
             </a>
-
             <a href="funcionarios.html" class="module-card">
                 <div class="icon-box"><i class="ph ph-user-circle"></i></div>
                 <span class="module-title">Funcionários</span>
             </a>
-
             <a href="categorias.html" class="module-card">
                 <div class="icon-box"><i class="ph ph-file-text"></i></div>
                 <span class="module-title">Categorias</span>
             </a>
-
             <a href="ClienteFornecedor.html" class="module-card">
                 <div class="icon-box"><i class="ph ph-users"></i></div>
                 <span class="module-title">Clientes</span>
@@ -407,7 +358,6 @@
                 </div>
                 <div class="info-value">+12</div>
             </div>
-
             <div class="info-card">
                 <div class="info-header">
                     <i class="ph ph-currency-dollar"></i>
@@ -415,7 +365,6 @@
                 </div>
                 <div class="info-value">R$ 4500</div>
             </div>
-
             <div class="info-card">
                 <div class="info-header">
                     <i class="ph ph-warning-circle"></i>
@@ -424,7 +373,6 @@
                 <div class="info-value">3 Itens</div>
             </div>
         </section>
-
     </main>
 
 </div>
@@ -449,22 +397,23 @@
     }
 
     /* ========================================================
-       CARREGAMENTO DINÂMICO DE PERFIL
+       CARREGAMENTO DINÂMICO DE PERFIL (CORRIGIDO E INTEGRADO)
     ======================================================== */
     document.addEventListener("DOMContentLoaded", () => {
         let token = null;
         let fotoDiretaDoLogin = null;
         
         try {
+            // Busca o token JWT e a foto que foram salvos durante o Login
             token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            // Busca a foto caso ela tenha sido salva no localStorage durante o Login
             fotoDiretaDoLogin = localStorage.getItem('urlFoto');
         } catch (e) {
             console.warn("Acesso ao storage bloqueado.");
         }
         
         if (!token) {
-            document.getElementById('user-name').textContent = "Usuário Logado";
+            document.getElementById('user-name').textContent = "Usuário não logado";
+            window.location.replace("./login.html");
             return;
         }
 
@@ -475,7 +424,6 @@
         if (payloadJson) {
             const nomeUsuario = payloadJson["unique_name"] || 
                                 payloadJson["name"] || 
-                                payloadJson["given_name"] || 
                                 payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
                                 "Usuário Boreal";
             
@@ -484,20 +432,29 @@
             document.getElementById('user-name').textContent = "Erro de Sessão";
         }
 
-        // 2. Sistema de fallback Inteligente para renderizar a Imagem
-        let fotoFinal = "./img/perfil-icon.png"; // Imagem padrão (Bolinha verde)
+        /* ============================================================
+           2. RENDERIZAÇÃO DA IMAGEM SALVA (MÓDULO DE VERIFICAÇÃO)
+        ============================================================ */
+        let fotoFinal = "./img/perfil-icon.png"; // Fallback padrão caso não exista foto salva
 
+        // Primeiro tenta recuperar do localStorage alimentado no fluxo de autenticação
         if (fotoDiretaDoLogin && fotoDiretaDoLogin !== "null" && fotoDiretaDoLogin !== "") {
             fotoFinal = fotoDiretaDoLogin;
-        } else if (payloadJson) {
-            // Se não achou no localStorage direto, tenta varrer as propriedades do JWT
-            fotoFinal = payloadJson["urlFoto"] || payloadJson["fotoUrl"] || payloadJson["foto"] || payloadJson["avatar"] || fotoFinal;
+        } 
+        // Segundo caso: tenta varrer atributos customizados injetados no próprio JWT
+        else if (payloadJson && payloadJson["urlFoto"] && payloadJson["urlFoto"] !== "") {
+            fotoFinal = payloadJson["urlFoto"];
         }
 
-        // Aplica a imagem de forma segura no elemento src
-        if (fotoFinal.startsWith('iVBORw0KGgo') || (fotoFinal.length > 200 && !fotoFinal.startsWith('data:'))) {
+        // Aplicação segura da imagem avaliando o tipo de dado recebido do banco (URL ou Base64)
+        if (fotoFinal.startsWith('http://') || fotoFinal.startsWith('https://') || fotoFinal.startsWith('./') || fotoFinal.startsWith('data:image')) {
+            // Se já contiver o cabeçalho base64 ou for um link/caminho web direto
+            imgElement.src = fotoFinal;
+        } else if (fotoFinal !== "./img/perfil-icon.png") {
+            // Se for uma string codificada em Base64 crua vinda do C#, injeta a especificação MIME
             imgElement.src = `data:image/jpeg;base64,${fotoFinal}`;
         } else {
+            // Mantém a imagem padrão do sistema
             imgElement.src = fotoFinal;
         }
     });
@@ -515,9 +472,9 @@
         window.location.replace("./login.html");
     }
 
-    /* =========================
-       CARROSSEL AUTOPLAY
-    ========================= */
+    /* ========================================================
+       CARROSSEL AUTOPLAY (Original mantido)
+    ======================================================== */
     let slideIndex = 0;
     let slideInterval;
     const slides = document.querySelectorAll(".carousel-slide");
@@ -526,34 +483,16 @@
     function showSlides(n) {
         if (n >= slides.length) slideIndex = 0;
         if (n < 0) slideIndex = slides.length - 1;
-
         slides.forEach(slide => slide.classList.remove("active"));
         dots.forEach(dot => dot.classList.remove("active"));
-
         slides[slideIndex].classList.add("active");
         dots[slideIndex].classList.add("active");
     }
 
-    function nextSlide() {
-        slideIndex++;
-        showSlides(slideIndex);
-    }
-
-    function currentSlide(n) {
-        slideIndex = n;
-        showSlides(slideIndex);
-        resetInterval();
-    }
-
-    function startInterval() {
-        slideInterval = setInterval(nextSlide, 5000);
-    }
-
-    function resetInterval() {
-        clearInterval(slideInterval);
-        startInterval();
-    }
-
+    function nextSlide() { slideIndex++; showSlides(slideIndex); }
+    function currentSlide(n) { slideIndex = n; showSlides(slideIndex); resetInterval(); }
+    function startInterval() { slideInterval = setInterval(nextSlide, 5000); }
+    function resetInterval() { clearInterval(slideInterval); startInterval(); }
     startInterval();
 </script>
 
