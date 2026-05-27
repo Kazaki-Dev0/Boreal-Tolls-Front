@@ -1,332 +1,315 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Controle Financeiro</title>
-    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="sidebar.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        /* VARIÁVEIS DE COR ORIGINAIS */
-        :root {
-            --bg-main: #0a0a0a;
-            --bg-sidebar: #06100b;
-            --bg-panel: #131715;
-            --bg-topbar: #111111;
-            --text-primary: #ffffff;
-            --text-secondary: #9aa09d;
-            --neon-green: #87ffb9;
-            --neon-green-glow: rgba(135, 255, 185, 0.4);
-            --dark-green: #1a3a29;
-            --border-color: #242e29;
-            --white-glow: rgba(255, 255, 255, 0.3);
-            --danger-color: #ff6b6b;
-            --danger-glow: rgba(255, 107, 107, 0.2);
-        }
+<title>Boreal Tools - Financeiro</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<link rel="stylesheet" href="sidebar.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        } 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        .main-wrapper {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
+<style>
 
-        a {
-    color: inherit;
-    text-decoration: none;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Destaque para a página atual  */
-.secoes:nth-child(4) {
-    background-color: #2e4a3e; /* Verde escuro */
+body{
+    background:linear-gradient(109deg,#090909 32.55%,#002c18 79.54%,#003019 88.95%);
+    color:white;
+    display:grid;
+    grid-template-columns:400px 1fr;
+    min-height:100vh;
 }
 
-        /* =========================================
-           CONTEÚDO PRINCIPAL (FINANCEIRO)
-           ========================================= */
-        .content {
-            flex: 1;
-            padding: 2.5rem;
-            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
-            overflow-y: auto;
-        }
+a{
+    text-decoration:none;
+    color:inherit;
+}
 
-        /* Container Principal com o glow igual ao protótipo */
-        .panel-container {
-            background-color: var(--bg-panel);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-        }
+/* PAGINA ATIVA */
+.secoes:nth-child(4){
+    background-color:#2e4a3e;
+}
 
-        /* Borda brilhante sutil em volta do painel */
-        .panel-container::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: -1px; right: -1px; bottom: -1px;
-            border-radius: 13px;
-            background: linear-gradient(135deg, rgba(135, 255, 185, 0.15), transparent 40%);
-            z-index: -1;
-        }
+/* MAIN PADRÃO */
+main{
+    padding:25px;
+    overflow-y:auto;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+}
 
-        /* Cabeçalho do Painel */
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 2rem;
-        }
+/* PAINEL PADRÃO */
+.product-panel{
+    width:95%;
+    max-width:1250px;
+    border-radius:20px;
+    padding:40px;
+    margin:20px auto;
+    background:rgba(20,20,20,0.7);
+    border:1px solid #2e4a3e;
+    box-shadow:0 0 25px rgba(0,255,120,0.08);
+}
 
-        .title-section {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+/* HEADER PADRÃO */
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:30px;
+}
 
-        .panel-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
+.panel-title h2{
+    font-size:2rem;
+    font-weight:500;
+    margin-bottom:10px;
+}
 
-        .panel-title i {
-            font-size: 2rem;
-            color: var(--neon-green);
-        }
+.breadcrumb{
+    color:#7bcf9c;
+    font-size:0.95rem;
+}
 
-        .panel-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
+.breadcrumb span{
+    color:#aaa;
+}
 
-        /* Abas de Filtro */
-        .tabs {
-            display: flex;
-            gap: 20px;
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
+.panel-icon{
+    width:50px;
+    height:50px;
+    border-radius:10px;
+    background:#163125;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#7bcf9c;
+    font-size:28px;
+}
 
-        .tab {
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: 0.3s;
-        }
+/* GRÁFICO */
+.chart-box{
+    width:100%;
+    height:260px;
+    margin-bottom:25px;
+    background:#111;
+    border:1px solid #2e4a3e;
+    border-radius:15px;
+    padding:15px;
+}
 
-        .tab:hover { color: var(--text-primary); }
-        
-        .tab-active { color: var(--text-primary); font-weight: 500; }
-        .tab-green { color: var(--neon-green); }
-        .tab-red { color: var(--danger-color); }
+/* TOOLBAR PADRÃO */
+.table-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
 
-        /* Botão Lançamento */
-        .btn-primary {
-            background-color: #1a1a1a;
-            border: 1px solid var(--neon-green);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 20px; /* Bordas bem arredondadas como na imagem */
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(135, 255, 185, 0.1);
-        }
+.search-box{
+    width:320px;
+    display:flex;
+    align-items:center;
+    border:1px solid #3a4a43;
+    border-radius:30px;
+    padding:10px 18px;
+    background:transparent;
+}
 
-        .btn-primary i {
-            font-size: 1.2rem;
-            color: var(--neon-green);
-            transition: 0.3s;
-        }
+.search-box input{
+    width:100%;
+    background:none;
+    border:none;
+    outline:none;
+    color:white;
+    font-size:0.95rem;
+}
 
-        .btn-primary:hover {
-            background-color: var(--neon-green);
-            color: #000;
-            box-shadow: 0 0 15px var(--neon-green-glow);
-        }
-        
-        .btn-primary:hover i { color: #000; }
+.search-box i{
+    color:#777;
+}
 
-        /* Tabela Financeira */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            border-radius: 8px;
-            background-color: #161a18;
-        }
+/* BOTÃO PADRÃO */
+.btn-add{
+    background:#9cc8aa;
+    color:black;
+    padding:12px 24px;
+    border-radius:10px;
+    font-weight:600;
+}
 
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
+/* TABELA PADRÃO */
+.product-table{
+    width:100%;
+    border-collapse:collapse;
+}
 
-        .custom-table th {
-            color: var(--text-primary);
-            font-weight: 500;
-            padding: 15px 20px;
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--border-color);
-            white-space: nowrap;
-        }
+.product-table th{
+    text-align:left;
+    padding:18px 15px;
+    color:white;
+    font-size:0.95rem;
+    font-weight:500;
+    border-bottom:1px solid #2b2b2b;
+}
 
-        .custom-table td {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            vertical-align: middle;
-        }
+.product-table td{
+    padding:22px 15px;
+    color:#cfcfcf;
+    border-bottom:1px solid #2b2b2b;
+}
 
-        .custom-table tbody tr {
-            transition: 0.3s;
-        }
+.product-table tbody tr:hover{
+    background:rgba(255,255,255,0.02);
+}
 
-        .custom-table tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.03);
-        }
+/* CORES */
+.text-green{color:#7bcf9c;}
+.text-red{color:#ff6b6b;}
 
-        /* Cores de Texto para Valores e Status */
-        .text-green { color: var(--neon-green); font-weight: 500; }
-        .text-red { color: var(--danger-color); font-weight: 500; }
-        
-    </style>
+</style>
 </head>
+
 <body>
 
-    <div class="main-wrapper">
+<section class="side-bar">
 
-        <section class="side-bar">
-        <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
-        
-        <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="produtos.html">Produtos</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="vendas.html">Vendas</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-        </nav>
-
-        <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
-        </div>
-    </section>
-
-        <main class="content">
-            <div class="panel-container">
-                
-                <div class="panel-header">
-                    <div class="title-section">
-                        <div class="panel-title">
-                            <i class="ph ph-currency-dollar"></i>
-                            Controle Financeiro
-                        </div>
-                        <p class="panel-subtitle">Gerencie pagamentos, recebimentos e fluxo de caixa da empresa.</p>
-                        
-                        <div class="tabs">
-                            <span class="tab tab-active">Todas as transações</span>
-                            <span class="tab tab-green">Recebimentos</span>
-                            <span class="tab tab-red">Pagamentos</span>
-                        </div>
-                    </div>
-
-                    <div class="panel-actions">
-                        <button class="btn-primary" onclick="window.location.href='novo-lancamento.html'">
-                            <i class="ph ph-plus"></i> Lançamento
-                        </button>
-                    </div>
-                </div>
-
-                <div class="table-wrapper">
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Data Venc/Rec</th>
-                                <th>Tipo movimento</th>
-                                <th>Descrição</th>
-                                <th>Status</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>29/02/2024</td>
-                                <td><span class="text-green">Entrada</span></td>
-                                <td>VendaX</td>
-                                <td>Pendente</td>
-                                <td><span class="text-green">+R$350</span></td>
-                            </tr>
-                            <tr>
-                                <td>04/03/2024</td>
-                                <td><span class="text-red">saída</span></td>
-                                <td>ManutençãoY</td>
-                                <td>Pago em 04/03/2024</td>
-                                <td><span class="text-red">-R$200</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-        </main>
+    <div class="sidebar-header">
+        <img src="./img/LogoBorealTools.png" class="logo">
     </div>
+
+    <div class="perfil">
+        <img src="./img/perfil-icon.png">
+        <p>Fulano de Tal</p>
+    </div>
+
+    <nav class="nav-side-bar">
+
+        <div class="secoes"><img src="./img/inicio.sidebar.png"><a href="dashboard.html">Início</a></div>
+        <div class="secoes"><img src="./img/produtos.png"><a href="produtos.html">Produtos</a></div>
+        <div class="secoes"><img src="./img/estoque.png"><a href="estoque.html">Estoques</a></div>
+        <div class="secoes active"><img src="./img/financeiro.png"><a href="financeiro.html">Financeiro</a></div>
+        <div class="secoes"><img src="./img/vendas.png"><a href="vendas.html">Vendas</a></div>
+        <div class="secoes"><img src="./img/funcionarios.png"><a href="funcionarios.html">Funcionários</a></div>
+        <div class="secoes"><img src="./img/clientes.png"><a href="clientes.html">Clientes</a></div>
+        <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
+
+    </nav>
+
+    <div class="logout-link">
+        <a href="login.html">← Deslogar</a>
+    </div>
+
+</section>
+
+<main>
+
+<div class="product-panel">
+
+    <!-- HEADER -->
+    <div class="panel-header">
+
+        <div class="panel-title">
+            <h2>Controle Financeiro</h2>
+            <div class="breadcrumb">Financeiro > <span>Fluxo de caixa</span></div>
+        </div>
+
+        <div class="panel-icon">
+            <i class="ph ph-currency-dollar"></i>
+        </div>
+
+    </div>
+
+    <!-- GRÁFICO -->
+    <div class="chart-box">
+        <canvas id="graficoFinanceiro"></canvas>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="table-toolbar">
+
+        <div class="search-box">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar transação...">
+        </div>
+
+        <a class="btn-add" href="novo-lancamento.html">+ Lançamento</a>
+
+    </div>
+
+    <!-- TABELA -->
+    <table class="product-table">
+
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>10/05/2024</td>
+                <td><span class="text-green">Entrada</span></td>
+                <td>Venda Produto X</td>
+                <td>Pago</td>
+                <td class="text-green">+R$ 1.200</td>
+            </tr>
+
+            <tr>
+                <td>11/05/2024</td>
+                <td><span class="text-red">Saída</span></td>
+                <td>Fornecedor Y</td>
+                <td>Pendente</td>
+                <td class="text-red">-R$ 400</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</main>
+
+<script>
+const ctx = document.getElementById('graficoFinanceiro');
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan','Fev','Mar','Abr','Mai','Jun'],
+        datasets: [{
+            label: 'Fluxo de Caixa',
+            data: [1200, 1900, 3000, 2500, 3200, 2800],
+            borderColor: '#7bcf9c',
+            backgroundColor: 'rgba(123,207,156,0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        plugins:{legend:{display:false}},
+        scales:{
+            x:{ticks:{color:'#fff'}},
+            y:{ticks:{color:'#fff'}}
+        }
+    }
+});
+</script>
 
 </body>
 </html>
