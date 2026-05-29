@@ -457,6 +457,8 @@
                 <p style="color: #aaa;">Carregando dados dos registros...</p>
             </div>
         </div>
+    </section>
+</div>
 
         <div class="panel-icon">
             <i class="fa-solid fa-user"></i>
@@ -482,34 +484,180 @@
     </div>
 </div>
 
+<script>
+    // URL CONFIGURADA PARA O NOVO ENDPOINT DE PRODUÇÃO NO AZURE
+    const API_URL = "https://api-time7.azurewebsites.net/api/Clientes"; 
 
-    <table class="clients-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>CPF/CNPJ</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-                <th></th>
-            </tr>
-        </thead>
-        
-        <tbody id="tabelaClientesBody"></tbody>
-    </table>
+    let registrosGlobais = [];
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 
-</div> 
-</main> 
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            return null;
+        }
+    }
 
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!token) {
+            window.location.replace("./login.html");
+            return;
+        }
 
-<div id="modalDetalhes" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
-            <div style="background-color: #222; border: 1px solid #444; border-radius: 10px; padding: 25px; width: 600px; max-width: 90%; position: relative;">
-                <div id="modalConteudo">
+        // CARREGAMENTO DO NOME DO USUÁRIO INTEGRADO COM CLAIMS DA API DO AZURE
+        const payloadJson = parseJwt(token);
+        if (payloadJson) {
+            document.getElementById("nomeUsuarioSidebar").innerText = 
+                payloadJson["unique_name"] || 
+                payloadJson["name"] || 
+                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                "Usuário Boreal";
+        }
+
+        carregarRegistros();
+
+        // Configuração do filtro de pesquisa em tempo real
+        document.getElementById('input-search').addEventListener('input', (e) => {
+            const busca = e.target.value.toLowerCase().trim();
+            const filtrados = registrosGlobais.filter(reg => {
+                const nome = (reg.nome || reg.razaoSocial || "").toLowerCase();
+                const doc = (reg.cpf || reg.cnpj || "").toLowerCase();
+                const tipo = (reg.tipoVinculo || "").toLowerCase();
+                return nome.includes(busca) || doc.includes(busca) || tipo.includes(busca);
+            });
+            renderizarCards(filtrados);
+        });
+    });
+
+    async function carregarRegistros() {
+        const grid = document.getElementById('client-grid');
+        try {
+            const response = await fetch(API_URL, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) throw new Error("Erro na comunicação com a API.");
+
+            registrosGlobais = await response.json();
+            renderizarCards(registrosGlobais);
+
+        } catch (error) {
+            console.error("Erro ao obter dados de Clientes/Fornecedores:", error);
+            grid.innerHTML = `<p style="color: #e57373;">Não foi possível recuperar os dados da nuvem.</p>`;
+        }
+    }
+
+    function renderizarCards(lista) {
+        const grid = document.getElementById('client-grid');
+        if (lista.length === 0) {
+            grid.innerHTML = `<p style="color: #aaa;">Nenhum registro encontrado.</p>`;
+            return;
+        }
+
+        grid.innerHTML = "";
+        lista.forEach(reg => {
+            const id = reg.id;
+            const nomeExibicao = reg.nome || reg.razaoSocial || "Sem Nome Definido";
+            const documento = reg.cpf || reg.cnpj || "Não Informado";
+            const tipo = reg.tipoVinculo || "Cliente";
+
+            const card = `
+                <div class="client-card">
+                    <div>
+                        <div class="client-top">
+                            <div class="client-info">
+                                <div class="client-photo"><i class="fa-solid fa-address-card"></i></div>
+                                <div class="client-name">
+                                    <h4>${nomeExibicao}</h4>
+                                    <p>${tipo.toUpperCase()}</p>
+                                </div>
+                            </div>
+                            <span class="client-id">#${id}</span>
+                        </div>
+                        <table class="client-table">
+                            <tr>
+                                <td>Documento</td>
+                                <td>${documento}</td>
+                            </tr>
+                            <tr>
+                                <td>Telefone</td>
+                                <td>${reg.telefone || "Não Informado"}</td>
+                            </tr>
+                        </table>
                     </div>
-            </div>
-        </div>
+                    <div class="card-actions">
+                        <button class="btn-detalhes" onclick="abrirDetalhes(${id})">Visualizar</button>
+                        <button class="btn-delete" onclick="deletarRegistro(${id})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+            grid.insertAdjacentHTML('beforeend', card);
+        });
+    }
 
-        <script src="listarClientes.js"></script> 
-        <script src="ClienteFonecedorDetalhes.js"></script> 
-    </body>
+    function abrirDetalhes(id) {
+        const reg = registrosGlobais.find(r => r.id === id);
+        if (!reg) return;
+
+        document.getElementById('modal-client-name').innerText = reg.nome || reg.razaoSocial || "Detalhes do Registro";
+        
+        const content = document.getElementById('modalContent');
+        content.innerHTML = `
+            <div class="info-box"><strong>ID</strong><span>#${reg.id}</span></div>
+            <div class="info-box"><strong>Tipo de Vínculo</strong><span>${reg.tipoVinculo || "Cliente"}</span></div>
+            <div class="info-box"><strong>CPF / CNPJ</strong><span>${reg.cpf || reg.cnpj || "Não cadastrado"}</span></div>
+            <div class="info-box"><strong>Inscrição Estadual</strong><span>${reg.inscricaoEstadual || "Isento/Não informado"}</span></div>
+            <div class="info-box"><strong>E-mail</strong><span>${reg.email || "Sem e-mail cadastrado"}</span></div>
+            <div class="info-box"><strong>Telefone</strong><span>${reg.telefone || "Sem telefone cadastrado"}</span></div>
+            <div class="info-box" style="grid-column: span 2;"><strong>Endereço Completo</strong><span>${reg.endereco || "Não informado"}</span></div>
+        `;
+
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    async function deletarRegistro(id) {
+        if (!confirm("Deseja realmente remover este registro permanentemente?")) return;
+
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                alert("Registro deletado com sucesso!");
+                carregarRegistros();
+            } else {
+                alert("Ocorreu um erro ao tentar excluir do servidor.");
+            }
+        } catch (error) {
+            console.error("Erro na requisição DELETE:", error);
+            alert("Erro de conexão ao remover.");
+        }
+    }
+
+    function efetuarLogout() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("./login.html");
+    }
+</script>
+</body>
 </html>
