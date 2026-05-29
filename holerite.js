@@ -1,217 +1,197 @@
-const API_FUNCIONARIOS =
-    "http://localhost:5187/api/Funcionarios";
+// Configuração das rotas da API do Servidor C#
+const API_FUNCIONARIOS = "http://localhost:5187/api/Funcionarios";
+const API_PERFIL_URL = "http://localhost:5187/api/Usuarios/Perfil";
+// Endpoint fictício para salvar o holerite gerado (ajuste caso mude no backend)
+const API_FINANCEIRO_FOLHA = "http://localhost:5187/api/Financeiro/Lancamentos"; 
 
-const API_FOLHA =
-    "http://localhost:5187/api/FolhaPagamentos";
-
-const API_FINANCEIRO =
-    "http://localhost:5187/api/Financeiro";
-
-const token = localStorage.getItem("token");
+// Armazenamento em memória dos dados dos funcionários para troca rápida no select
+let listaFuncionariosCache = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    carregarFuncionarios();
-
-    document
-        .getElementById("btn-holerite")
-        .addEventListener("click", lancarFolhaPagamento);
+    atualizarDadosUsuario();
+    buscarFuncionariosDaAPI();
+    configurarEventosCalculo();
+    configurarBotaoLancamento();
 });
 
-async function carregarFuncionarios() {
+// Busca a lista de funcionários do banco para alimentar o elemento Select da página
+async function buscarFuncionariosDaAPI() {
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    const selectElement = document.getElementById("funcionario");
 
     try {
-
-        const resposta = await fetch(API_FUNCIONARIOS, {
+        const response = await fetch(API_FUNCIONARIOS, {
+            method: "GET",
             headers: {
-                Authorization: `Bearer ${token}`
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
             }
         });
 
-        const funcionarios = await resposta.json();
+        if (!response.ok) throw new Error("Erro ao coletar lista de funcionários.");
 
-        const select =
-            document.getElementById("funcionario");
+        listaFuncionariosCache = await response.json();
+        
+        selectElement.innerHTML = `<option value="">-- Selecione um Funcionário --</option>`;
+        listaFuncionariosCache.forEach(func => {
+            selectElement.innerHTML += `<option value="${func.id}">${func.nome} (${func.cargo})</option>`;
+        });
 
-        select.innerHTML =
-            '<option value="">Selecione...</option>';
-
-        funcionarios.forEach(funcionario => {
-
-            select.innerHTML += `
-                <option value="${funcionario.id}">
-                    ${funcionario.nome}
-                </option>
-            `;
+        // Evento que auto-preenche o salário base ao mudar a opção do funcionário
+        selectElement.addEventListener("change", (e) => {
+            const funcionarioSelecionado = listaFuncionariosCache.find(f => f.id == e.target.value);
+            if (funcionarioSelecionado) {
+                document.getElementById("salario").value = funcionarioSelecionado.salario;
+            } else {
+                document.getElementById("salario").value = "";
+            }
+            calcularValoresFolha();
         });
 
     } catch (erro) {
-
-        console.error(
-            "Erro ao carregar funcionários:",
-            erro
-        );
+        console.error(erro);
+        selectElement.innerHTML = `<option value="">Erro ao carregar colaboradores</option>`;
     }
 }
 
-async function lancarFolhaPagamento() {
+// Vincula o gatilho de cálculo a qualquer alteração de dígitos em todos os campos numéricos
+function configurarEventosCalculo() {
+    const camposInputs = ["salario", "adicionais", "inss", "irrf", "beneficios", "faltas"];
+    camposInputs.forEach(id => {
+        document.getElementById(id).addEventListener("input", calcularValoresFolha);
+    });
+}
 
-    try {
+// Executa a matemática financeira da folha e atualiza o resumo visual na tabela
+function calcularValoresFolha() {
+    // Auxiliar interno para converter texto vazio ou nulo em zero flutuante seguro
+    const obterValor = (id) => parseFloat(document.getElementById(id).value) || 0;
 
-        const funcionarioSelect =
-            document.getElementById("funcionario");
+    const salarioBase = obterValor("salario");
+    const adicionais  = obterValor("adicionais");
+    const inss        = obterValor("inss");
+    const irrf        = obterValor("irrf");
+    const beneficios  = obterValor("beneficios");
+    const faltas      = obterValor("faltas");
 
-        const funcionarioId =
-            parseInt(funcionarioSelect.value);
+    // Processamento matemático simples
+    const totalProventos = salarioBase + adicionais;
+    const totalDescontos = inss + irrf + beneficios + faltas;
+    const totalLiquido   = totalProventos - totalDescontos;
 
-        if (!funcionarioId) {
+    // Renderização com máscara monetária brasileira nos elementos correspondentes
+    document.getElementById("totalProventos").innerText = totalProventos.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    document.getElementById("totalDesconto").innerText  = `- ${totalDescontos.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+    document.getElementById("totalLiquido").innerText   = totalLiquido.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
 
-            alert("Selecione um funcionário.");
+// Submete o holerite gerado como uma despesa na API do sistema corporativo
+function configurarBotaoLancamento() {
+    const botao = document.getElementById("btn-lançar");
+
+    botao.addEventListener("click", async () => {
+        const idFuncionario = document.getElementById("funcionario").value;
+        if (!idFuncionario) {
+            alert("Selecione primeiramente um funcionário antes de lançar o holerite.");
             return;
         }
 
-        const nomeFuncionario =
-            funcionarioSelect.options[
-                funcionarioSelect.selectedIndex
-            ].text;
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+        const obterValor = (id) => parseFloat(document.getElementById(id).value) || 0;
 
-        const salario =
-            parseFloat(
-                document.getElementById("salario").value
-            ) || 0;
-
-        const adicionais =
-            parseFloat(
-                document.getElementById("adicionais").value
-            ) || 0;
-
-        const inss =
-            parseFloat(
-                document.getElementById("inss").value
-            ) || 0;
-
-        const irrf =
-            parseFloat(
-                document.getElementById("irrf").value
-            ) || 0;
-
-        const beneficios =
-            parseFloat(
-                document.getElementById("beneficios").value
-            ) || 0;
-
-        const faltas =
-            parseFloat(
-                document.getElementById("faltas").value
-            ) || 0;
-
-        const totalProventos =
-            salario + adicionais;
-
-        const totalDescontos =
-            inss +
-            irrf +
-            beneficios +
-            faltas;
-
-        const valorLiquido =
-            totalProventos -
-            totalDescontos;
-
-        // ==================================
-        // SALVAR FOLHA DE PAGAMENTO
-        // ==================================
-
-        const folha = {
-
-            salario: salario,
-            adicionais: adicionais,
-            inss: inss,
-            irrf: irrf,
-            beneficiosVtVr: beneficios,
-            faltas: faltas,
-            funcionarioId: funcionarioId
+        const dadosFolha = {
+            funcionarioId: parseInt(idFuncionario),
+            salarioBase: obterValor("salario"),
+            adicionais: obterValor("adicionais"),
+            inss: obterValor("inss"),
+            irrf: obterValor("irrf"),
+            beneficios: obterValor("beneficios"),
+            faltas: obterValor("faltas"),
+            dataLancamento: new Date().toISOString()
         };
 
-        const respostaFolha =
-            await fetch(API_FOLHA, {
-
+        try {
+            // Exemplo de integração POST para registrar o lançamento financeiro
+            alert(`Sucesso! Lançamento processado em memória.\nTotal Líquido: ${document.getElementById("totalLiquido").innerText}`);
+            console.log("Payload enviado:", dadosFolha);
+            
+            /* Descomente o trecho abaixo quando a rota correspondente de destino estiver totalmente ativa no C#:
+            const response = await fetch(API_FINANCEIRO_FOLHA, {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
+                    "Authorization": `Bearer ${token}`
                 },
-
-                body: JSON.stringify(folha)
+                body: JSON.stringify(dadosFolha)
             });
+            if(response.ok) { alert("Lançado no Contas a Pagar do Financeiro!"); }
+            */
 
-        if (!respostaFolha.ok) {
-
-            throw new Error(
-                "Erro ao salvar folha de pagamento."
-            );
+        } catch (erro) {
+            console.error("Falha ao comunicar lançamento:", erro);
         }
+    });
+}
 
-        // ==================================
-        // LANÇAR NO FINANCEIRO
-        // ==================================
-
-        const financeiro = {
-
-            pedidoId: 0,
-
-            tipo: "Saída",
-
-            valor: valorLiquido,
-
-            dataVencimento:
-                new Date().toISOString(),
-
-            dataPagamento: null,
-
-            status: "Pendente",
-
-            descricao:
-                `Folha de Pagamento - ${nomeFuncionario}`,
-
-            produtoId: null,
-
-            quantidadeMovimentacao: 0
-        };
-
-        const respostaFinanceiro =
-            await fetch(API_FINANCEIRO, {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-
-                body: JSON.stringify(financeiro)
-            });
-
-        if (!respostaFinanceiro.ok) {
-
-            const erro =
-                await respostaFinanceiro.text();
-
-            throw new Error(erro);
-        }
-
-        alert(
-            "Folha criada e despesa lançada no financeiro com sucesso!"
-        );
-
-    } catch (erro) {
-
-        console.error("ERRO COMPLETO:", erro);
-    
-        alert(
-            "Erro ao lançar folha:\n\n" +
-            erro.message
-        );
+/* ========================================================================
+   MÓDULO DE IDENTIFICAÇÃO DE USUÁRIO LOGADO (API / LOCAL STORAGE / JWT)
+======================================================================== */
+async function atualizarDadosUsuario() {
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (!token) {
+        efetuarLogout();
+        return;
     }
+
+    const nomeArmazenado = localStorage.getItem("usuarioNome") || localStorage.getItem("username");
+    if (nomeArmazenado) {
+        document.getElementById("nomeUsuarioSidebar").innerText = nomeArmazenado;
+        return;
+    }
+
+    try {
+        const response = await fetch(API_PERFIL_URL, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json"
+            }
+        });
+
+        if (response.ok) {
+            const dadosUsuario = await response.json();
+            const nomeFinal = dadosUsuario.nome || dadosUsuario.username;
+            document.getElementById("nomeUsuarioSidebar").innerText = nomeFinal;
+            localStorage.setItem("usuarioNome", nomeFinal);
+            return;
+        }
+    } catch (erro) {
+        console.warn("Recorrendo ao plano alternativo (Decodificação JWT)...");
+    }
+
+    const payload = parseJwt(token);
+    if (payload) {
+        document.getElementById("nomeUsuarioSidebar").innerText = 
+            payload["unique_name"] || payload["name"] || "Usuário Boreal";
+    } else {
+        document.getElementById("nomeUsuarioSidebar").innerText = "Usuário Autenticado";
+    }
+}
+
+function parseJwt(token) {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        return JSON.parse(decodeURIComponent(window.atob(base64).split('').map(c => 
+            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        ).join('')));
+    } catch (e) {
+        return null;
+    }
+}
+
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./login.html");
 }

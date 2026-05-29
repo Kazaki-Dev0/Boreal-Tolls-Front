@@ -1,315 +1,507 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Controle Financeiro</title>
+    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="sidebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<title>Boreal Tools - Financeiro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<link rel="stylesheet" href="sidebar.css">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+        body {
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden; /* Evita scroll na página principal */
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100vw;
+        }
 
-<style>
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+        /* Padronização do Sidebar conforme referências */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px;
+            flex-shrink: 0;
+        }
 
-body{
-    background:linear-gradient(109deg,#090909 32.55%,#002c18 79.54%,#003019 88.95%);
-    color:white;
-    display:grid;
-    grid-template-columns:400px 1fr;
-    min-height:100vh;
-}
+        .secoes:nth-child(4) {
+            background-color: #2e4a3e; /* Aba de Financeiro Ativa */
+        }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px; 
+            width: 100%;
+        }
 
-/* PAGINA ATIVA */
-.secoes:nth-child(4){
-    background-color:#2e4a3e;
-}
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
 
-/* MAIN PADRÃO */
-main{
-    padding:25px;
-    overflow-y:auto;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-}
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-/* PAINEL PADRÃO */
-.product-panel{
-    width:95%;
-    max-width:1250px;
-    border-radius:20px;
-    padding:40px;
-    margin:20px auto;
-    background:rgba(20,20,20,0.7);
-    border:1px solid #2e4a3e;
-    box-shadow:0 0 25px rgba(0,255,120,0.08);
-}
+        /* Área de Conteúdo Anti-Scroll Lateral */
+        main {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto; /* Rolagem apenas vertical no conteúdo */
+            max-width: calc(100vw - 260px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-/* HEADER PADRÃO */
-.panel-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:30px;
-}
+        /* =========================================
+           PAINEL FINANCEIRO
+        ========================================= */
+        .stock-panel {
+            width: 100%;
+            max-width: 1250px;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 20px auto;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
+        }
 
-.panel-title h2{
-    font-size:2rem;
-    font-weight:500;
-    margin-bottom:10px;
-}
+        /* HEADER */
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
 
-.breadcrumb{
-    color:#7bcf9c;
-    font-size:0.95rem;
-}
+        .panel-title h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
 
-.breadcrumb span{
-    color:#aaa;
-}
+        <div class="panel-title">
+            <h2>Controle Financeiro</h2>
+            <div class="breadcrumb">
+                <span>Gerencie pagamentos, recebimentos e fluxo de caixa da empresa.</span>
+            </div>
+        </div>
 
-.panel-icon{
-    width:50px;
-    height:50px;
-    border-radius:10px;
-    background:#163125;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#7bcf9c;
-    font-size:28px;
-}
+        .panel-icon {
+            background: rgba(135, 255, 185, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            color: #7bcf9c;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* GRÁFICO */
-.chart-box{
-    width:100%;
-    height:260px;
-    margin-bottom:25px;
-    background:#111;
-    border:1px solid #2e4a3e;
-    border-radius:15px;
-    padding:15px;
-}
+        /* GRÁFICO INTEGRADO */
+        .chart-container {
+            width: 100%;
+            background: rgba(15, 15, 15, 0.6);
+            border: 1px solid #2e4a3e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            height: 280px;
+        }
 
-/* TOOLBAR PADRÃO */
-.table-toolbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:40px;
-}
+        /* TOOLBAR */
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            gap: 20px;
+        }
 
-.search-box{
-    width:320px;
-    display:flex;
-    align-items:center;
-    border:1px solid #3a4a43;
-    border-radius:30px;
-    padding:10px 18px;
-    background:transparent;
-}
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border: 1px solid #4a5a50;
+            border-radius: 20px;
+            padding: 8px 16px;
+            width: 320px;
+        }
 
-.search-box input{
-    width:100%;
-    background:none;
-    border:none;
-    outline:none;
-    color:white;
-    font-size:0.95rem;
-}
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            outline: none;
+            width: 100%;
+            font-size: 0.85rem;
+        }
 
-.search-box i{
-    color:#777;
-}
+        .search-box input::placeholder {
+            color: #666;
+        }
 
-/* BOTÃO PADRÃO */
-.btn-add{
-    background:#9cc8aa;
-    color:black;
-    padding:12px 24px;
-    border-radius:10px;
-    font-weight:600;
-}
+        .search-box i {
+            color: #666;
+            font-size: 1.1rem;
+            margin-left: 8px;
+        }
 
-/* TABELA PADRÃO */
-.product-table{
-    width:100%;
-    border-collapse:collapse;
-}
+        /* BOTÃO */
+        .btn-add {
+            background-color: #80B297;
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
 
-.product-table th{
-    text-align:left;
-    padding:18px 15px;
-    color:white;
-    font-size:0.95rem;
-    font-weight:500;
-    border-bottom:1px solid #2b2b2b;
-}
+        .btn-add:hover {
+            background-color: #81c784;
+        }
 
-.product-table td{
-    padding:22px 15px;
-    color:#cfcfcf;
-    border-bottom:1px solid #2b2b2b;
-}
+        /* TABELA */
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-.product-table tbody tr:hover{
-    background:rgba(255,255,255,0.02);
-}
+        .stock-table th {
+            text-align: left;
+            padding: 12px 15px;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 400;
+            border-bottom: 1px solid #333;
+        }
 
-/* CORES */
-.text-green{color:#7bcf9c;}
-.text-red{color:#ff6b6b;}
+        .stock-table td {
+            padding: 16px 15px;
+            color: #b0b0b0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #333;
+            vertical-align: middle;
+        }
 
-</style>
+        .stock-table tbody tr {
+            transition: background 0.2s;
+        }
+
+        .stock-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* BADGES / ESTILOS FLUXO */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-entrada {
+            background: rgba(76, 175, 80, 0.15);
+            color: #81c784;
+        }
+
+        .badge-saida {
+            background: rgba(244, 67, 54, 0.15);
+            color: #ff7b7b;
+        }
+
+        .value-entrada {
+            color: #81c784;
+            font-weight: 600;
+        }
+
+        .value-saida {
+            color: #ff7b7b;
+            font-weight: 600;
+        }
+
+        /* RESPONSIVO */
+        @media(max-width: 1200px) {
+            .table-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<section class="side-bar">
+<div class="main-wrapper">
+    <section class="side-bar">
+        <div>
+            <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+            </div>
 
-    <div class="sidebar-header">
-        <img src="./img/LogoBorealTools.png" class="logo">
-    </div>
+            <div class="perfil">
+                <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
+                <p id="nomeUsuarioSidebar">Carregando...</p>
+            </div>
 
-    <div class="perfil">
-        <img src="./img/perfil-icon.png">
-        <p>Fulano de Tal</p>
-    </div>
+            <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/inicio.sidebar.png" class="secao-icon">
+                    <a href="dashboard.html">Início</a>
+                </div>
 
-    <nav class="nav-side-bar">
+                <div class="secoes">
+                    <img src="./img/produtos.png" class="secao-icon">
+                    <a href="produtos.html">Produtos</a>
+                </div>
 
-        <div class="secoes"><img src="./img/inicio.sidebar.png"><a href="dashboard.html">Início</a></div>
-        <div class="secoes"><img src="./img/produtos.png"><a href="produtos.html">Produtos</a></div>
-        <div class="secoes"><img src="./img/estoque.png"><a href="estoque.html">Estoques</a></div>
-        <div class="secoes active"><img src="./img/financeiro.png"><a href="financeiro.html">Financeiro</a></div>
-        <div class="secoes"><img src="./img/vendas.png"><a href="vendas.html">Vendas</a></div>
-        <div class="secoes"><img src="./img/funcionarios.png"><a href="funcionarios.html">Funcionários</a></div>
-        <div class="secoes"><img src="./img/clientes.png"><a href="clientes.html">Clientes</a></div>
-        <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
+                <div class="secoes">
+                    <img src="./img/estoque.png" class="secao-icon">
+                    <a href="estoque.html">Estoques</a>
+                </div>
 
-    </nav>
+                <div class="secoes">
+                    <img src="./img/financeiro.png" class="secao-icon">
+                    <a href="#">Financeiro</a>
+                </div>
 
-    <div class="logout-link">
-        <a href="login.html">← Deslogar</a>
-    </div>
+                <div class="secoes">
+                    <img src="./img/vendas.png" class="secao-icon">
+                    <a href="vendas.html">Vendas</a>
+                </div>
 
-</section>
+                <div class="secoes">
+                    <img src="./img/funcionarios.png" class="secao-icon">
+                    <a href="./funcionarios.html">Funcionários</a>
+                </div>
 
-<main>
+                <div class="secoes">
+                    <img src="./img/clientes.png" class="secao-icon">
+                    <a href="./ClienteFornecedor.html">Clientes</a>
+                </div>
 
-<div class="product-panel">
-
-    <!-- HEADER -->
-    <div class="panel-header">
-
-        <div class="panel-title">
-            <h2>Controle Financeiro</h2>
-            <div class="breadcrumb">Financeiro > <span>Fluxo de caixa</span></div>
+                <div class="secoes">
+                    <img src="./img/relatorios.png" class="secao-icon">
+                    <a href="./categorias.html">Categorias</a>
+                </div>
+            </nav>
         </div>
 
-        <div class="panel-icon">
-            <i class="ph ph-currency-dollar"></i>
+        <div class="logout-link">
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
         </div>
+    </section>
 
-    </div>
+    <main>
+        <div class="stock-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <h2>Controle Financeiro</h2>
+                    <div class="panel-subtitle">
+                        Financeiro > <span>Gerenciamento de fluxo de caixa</span>
+                    </div>
+                </div>
+                <div class="panel-icon">
+                    <i class="ph ph-currency-dollar"></i>
+                </div>
+            </div>
 
-    <!-- GRÁFICO -->
-    <div class="chart-box">
-        <canvas id="graficoFinanceiro"></canvas>
-    </div>
+            <div class="chart-container">
+                <canvas id="graficoFinanceiro"></canvas>
+            </div>
 
-    <!-- TOOLBAR -->
-    <div class="table-toolbar">
+            <div class="table-toolbar">
+                <div class="search-box">
+                    <input type="text" id="txtPesquisaFinanceira" placeholder="Buscar por descrição ou status...">
+                    <i class="ph ph-magnifying-glass"></i>
+                </div>
+                <a href="novo-lancamento.html" class="btn-add">+ Novo Lançamento</a>
+            </div>
 
-        <div class="search-box">
-            <i class="ph ph-magnifying-glass"></i>
-            <input type="text" placeholder="Buscar transação...">
+            <table class="stock-table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="listaFinanceira">
+                    <tr>
+                        <td>10/05/2026</td>
+                        <td><span class="badge badge-entrada">Entrada</span></td>
+                        <td style="color:white; font-weight:500;">Venda Produto X</td>
+                        <td><span style="color: #81c784;">Pago</span></td>
+                        <td class="value-entrada">+ R$ 1.200,00</td>
+                    </tr>
+                    <tr>
+                        <td>11/05/2026</td>
+                        <td><span class="badge badge-saida">Saída</span></td>
+                        <td style="color:white; font-weight:500;">Fornecedor Y</td>
+                        <td><span style="color: #e5a93c;">Pendente</span></td>
+                        <td class="value-saida">- R$ 400,00</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <a class="btn-add" href="novo-lancamento.html">+ Lançamento</a>
-
-    </div>
-
-    <!-- TABELA -->
-    <table class="product-table">
-
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Tipo</th>
-                <th>Descrição</th>
-                <th>Status</th>
-                <th>Valor</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            <tr>
-                <td>10/05/2024</td>
-                <td><span class="text-green">Entrada</span></td>
-                <td>Venda Produto X</td>
-                <td>Pago</td>
-                <td class="text-green">+R$ 1.200</td>
-            </tr>
-
-            <tr>
-                <td>11/05/2024</td>
-                <td><span class="text-red">Saída</span></td>
-                <td>Fornecedor Y</td>
-                <td>Pendente</td>
-                <td class="text-red">-R$ 400</td>
-            </tr>
-
-        </tbody>
-
-    </table>
-
+    </main>
 </div>
 
-</main>
-
 <script>
-const ctx = document.getElementById('graficoFinanceiro');
+    /* ========================================================
+       FUNÇÃO AUXILIAR DE DECODIFICAÇÃO JWT
+    ======================================================== */
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Jan','Fev','Mar','Abr','Mai','Jun'],
-        datasets: [{
-            label: 'Fluxo de Caixa',
-            data: [1200, 1900, 3000, 2500, 3200, 2800],
-            borderColor: '#7bcf9c',
-            backgroundColor: 'rgba(123,207,156,0.2)',
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        plugins:{legend:{display:false}},
-        scales:{
-            x:{ticks:{color:'#fff'}},
-            y:{ticks:{color:'#fff'}}
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            console.error("Falha ao decodificar token:", e);
+            return null;
         }
     }
-});
-</script>
 
+    function obterToken() {
+        return localStorage.getItem("token") || sessionStorage.getItem("token");
+    }
+
+    /* ========================================================
+       CARREGAMENTO DE SESSÃO E DE NOME DINÂMICO
+    ======================================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+        const tokenAtivo = obterToken();
+        
+        if (!tokenAtivo) {
+            document.getElementById('nomeUsuarioSidebar').textContent = "Usuário não logado";
+            window.location.replace("./login.html");
+            return;
+        }
+
+        const payloadJson = parseJwt(tokenAtivo);
+
+        if (payloadJson) {
+            const nomeUsuario = payloadJson["unique_name"] || 
+                                payloadJson["name"] || 
+                                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                                "Usuário Boreal";
+            
+            document.getElementById("nomeUsuarioSidebar").innerText = nomeUsuario;
+        } else {
+            document.getElementById("nomeUsuarioSidebar").innerText = "Erro de Sessão";
+        }
+
+        inicializarGrafico();
+    });
+
+    /* ========================================================
+       LOGOUT
+    ======================================================== */
+    function efetuarLogout() {
+        try {
+            localStorage.clear();
+            sessionStorage.clear();
+        } catch (e) {
+            console.error("Erro ao efetuar limpeza:", e);
+        }
+        window.location.replace("./login.html");
+    }
+
+    /* ========================================================
+       INICIALIZAÇÃO DO GRÁFICO (Chart.js Padronizado)
+    ======================================================== */
+    function inicializarGrafico() {
+        const ctx = document.getElementById('graficoFinanceiro');
+        if (!ctx) return;
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [{
+                    label: 'Fluxo de Caixa',
+                    data: [1200, 1900, 3000, 2500, 3200, 2800],
+                    borderColor: '#7bcf9c',
+                    backgroundColor: 'rgba(123, 207, 156, 0.08)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointBackgroundColor: '#7bcf9c'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#888', font: { size: 11 } }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#888', font: { size: 11 } }
+                    }
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>
