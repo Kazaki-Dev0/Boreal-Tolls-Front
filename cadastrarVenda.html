@@ -1,311 +1,592 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Venda</title>
+    <title>Boreal Tools - Nova Venda</title>
+    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="sidebar.css">
+
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-body {
-    background-color: #0a0a0a; 
-    background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-    color: white;
-    display: grid;
-    grid-template-columns: 400px 1fr;
-    height: 100%;
-}
+        body {
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden; /* Garante que o scroll aconteça apenas no painel principal */
+        }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100vw;
+        }
 
-.secoes:nth-child(5) {background-color: #2e4a3e;}
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-main {
-    background: rgba(255, 255, 255, 0.02);
-    box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
-    border: 1px solid #2e4a3e;
-    border-radius: 20px;
-    width: fit-content;
-    padding: 4%;
-    margin: 10%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+        /* Padronização do Sidebar Boreal */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px;
+            flex-shrink: 0;
+        }
 
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .secoes:nth-child(5) {
+            background-color: #2e4a3e; /* Destaque da aba Vendas ativa */
+        }
 
-.titulo h2 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-}
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px; 
+            width: 100%;
+        }
 
-.titulo p {
-    color: #888;
-    margin-bottom: 25px;
-}
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
 
-.atalhos-main {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-bottom: 30px;
-}
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.atalhos-main button {
-    background-color: #5e5e5e;
-    color: whitesmoke;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        /* Container do Conteúdo Principal */
+        main {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            max-width: calc(100vw - 260px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-.atalhos-main button:hover {background-color: #333;}
+        /* Painel de Vendas (Adaptado para o Formulário de Cadastro) */
+        .sales-panel {
+            width: 100%;
+            max-width: 1250px;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 20px auto;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
+        }
 
-.venda-container {
-    background-color: #2c2a29;
-    border-radius: 25px;
-    padding: 30px;
-    width: fit-content;
-    color: white;
-    font-family: sans-serif;
-}
+        /* HEADER */
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
 
-.venda-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid #444;
-}
+        .panel-title h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
 
-.input-group label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #a5d6a7;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
+        .panel-subtitle {
+            color: #6da381;
+            font-size: 0.8rem;
+        }
 
-.input-group select, .input-group input {
-    background-color: #d1d1d1;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 50px;
-    width: 100%;
-}
+        .panel-icon {
+            background: rgba(135, 255, 185, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            color: #7bcf9c;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.venda-produtos {padding: 20px 0;}
+        /* FORMULÁRIO COMPONENETES */
+        .venda-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #23332b;
+        }
 
-.venda-produtos h5 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-}
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-h5 img {
-    height: 32px;
-    width: 32px;
-}
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #7bcf9c;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-.add-row {
-    background-color: #383635;
-    padding: 15px;
-    border-radius: 15px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 15px;
-}
+        .input-group select, 
+        .input-group input {
+            background-color: rgba(15, 15, 15, 0.6);
+            border: 1px solid #4a5a50;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
 
-.field { display: flex; flex-direction: column; gap: 5px; }
-.field label { font-size: 0.7rem; font-weight: bold; padding-left: 10px; }
-.field select, .field input { 
-    background-color: #d1d1d1; 
-    border: none; 
-    padding: 8px 15px; 
-    border-radius: 50px; 
-}
+        .input-group select:focus, 
+        .input-group input:focus {
+            border-color: #7bcf9c;
+        }
 
+        /* Customização do input de data nativo para dark mode */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
 
-.btn-add {
-    background-color: #555;
-    color: white;
-    border: none;
-    padding: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
+        /* SEÇÃO ADICIONAR PRODUTOS */
+        .venda-produtos {
+            padding: 30px 0;
+        }
 
-.carrinho-vazio {
-    background-color: #333130;
-    margin-top: 20px;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    color: #888;
-}
+        .venda-produtos h5 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
 
-.carrinho-vazio img { width: 40px; margin-bottom: 10px; opacity: 0.5; }
-.carrinho-vazio p { color: white; font-weight: bold; margin-bottom: 5px; }
+        .venda-produtos h5 i {
+            color: #7bcf9c;
+            font-size: 1.2rem;
+        }
 
-.venda-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #444;
-}
+        .add-row {
+            background: rgba(15, 15, 15, 0.4);
+            border: 1px solid #23332b;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+        }
 
-.total-venda h3 { font-size: 1.8rem; margin-top: 5px; }
+        .field { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            flex: 1;
+        }
 
-.acoes { display: flex; gap: 20px; align-items: center; }
-.btn-cancelar { background: none; border: none; color: white; cursor: pointer; }
-.btn-finalizar {
-    background-color: #80B297;
-    color: whitesmoke;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .field label { 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
+        .field select, 
+        .field input { 
+            background-color: rgba(15, 15, 15, 0.6);
+            border: 1px solid #4a5a50;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+        }
+
+        .field select:focus, 
+        .field input:focus {
+            border-color: #7bcf9c;
+        }
+
+        .field.qty { max-width: 100px; }
+        .field.price { max-width: 140px; }
+
+        /* BOTÃO PADRONIZADO ADICIONAR (+ ADD) */
+        .btn-add-product {
+            background: transparent;
+            color: #7bcf9c;
+            border: 1px solid #2e4a3e;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-add-product:hover {
+            background: rgba(123, 207, 156, 0.1);
+            border-color: #7bcf9c;
+        }
+
+        /* CARRINHO STATUS VAZIO */
+        .carrinho-vazio {
+            background: rgba(15, 15, 15, 0.3);
+            border: 1px dashed #23332b;
+            margin-top: 20px;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            color: #666;
+        }
+
+        .carrinho-vazio i { 
+            font-size: 2rem; 
+            margin-bottom: 10px; 
+            color: #4a5a50;
+        }
+
+        .carrinho-vazio p { 
+            color: white; 
+            font-weight: 500; 
+            font-size: 0.9rem;
+            margin-bottom: 4px; 
+        }
+
+        .carrinho-vazio span {
+            font-size: 0.8rem;
+        }
+
+        /* FOOTER DE ACOES */
+        .venda-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #23332b;
+        }
+
+        .total-venda span {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .total-venda h3 { 
+            font-size: 1.8rem; 
+            font-weight: 600; 
+            color: #7bcf9c;
+            margin-top: 2px;
+        }
+
+        .acoes { 
+            display: flex; 
+            gap: 20px; 
+            align-items: center; 
+        }
+
+        .btn-cancelar { 
+            background: none; 
+            border: none; 
+            color: #666; 
+            cursor: pointer; 
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .btn-cancelar:hover {
+            color: #ff6b6b;
+        }
+
+        /* BOTÃO PADRONIZADO BOREAL GREEN */
+        .btn-finalizar {
+            background-color: #80B297;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-finalizar:hover {
+            background-color: #81c784;
+        }
     </style>
 </head>
+
 <body>
+
+<div class="main-wrapper">
     <section class="side-bar">
-        <div class="sidebar-header">
+        <div>
+            <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
-        
-        <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
+            </div>
+
+            <div class="perfil">
+                <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
+                <p id="nomeUsuarioSidebar">Carregando...</p>
+            </div>
+
+            <nav class="nav-side-bar">
                 <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                    <img src="./img/inicio.sidebar.png" class="secao-icon">
                     <a href="dashboard.html">Início</a>
                 </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
+
+                <div class="secoes">
+                    <img src="./img/produtos.png" class="secao-icon">
                     <a href="produtos.html">Produtos</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
+                    <img src="./img/estoque.png" class="secao-icon">
                     <a href="./estoque.html">Estoques</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
+                    <img src="./img/financeiro.png" class="secao-icon">
                     <a href="./financeiro.html">Financeiro</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
+                    <img src="./img/vendas.png" class="secao-icon">
                     <a href="vendas.html">Vendas</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                    <img src="./img/funcionarios.png" class="secao-icon">
                     <a href="./funcionarios.html">Funcionários</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
+                    <img src="./img/clientes.png" class="secao-icon">
                     <a href="./ClienteFornecedor.html">Clientes</a>
                 </div>
+
                 <div class="secoes">
                     <img src="./img/relatorios.png" class="secao-icon">
                     <a href="./categorias.html">Categorias</a>
                 </div>
-        </nav>
+            </nav>
+        </div>
 
         <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
         </div>
     </section>
 
     <main>
-        <div class="main-header">
-            <div class="titulo">
-                <h2><img src="./img/vendas-grande.png" alt=""> Nova Venda</h2>
-                <p>Acompanhe pedidos, itens vendidos e faturamento.</p>
-            </div>
-            <div class="atalhos-main">
-                <a href="vendas.html"><button>← Voltar aos Pedidos</button></a>
-            </div>
-        </div>
-        <section class="venda-container">
-            <div class="venda-header">
-                <div class="input-group">
-                    <label><img src="./img/inf-pessoais-cad-func.png"> Selecionar Cliente</label>
-                    <select><option>Selecione...</option></select>
+        <div class="sales-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <h2>Registrar Nova Venda</h2>
+                    <div class="panel-subtitle">
+                        Preencha as informações do cliente e monte o carrinho do novo pedido.
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label><img src="./img/data-cad-func.png"> Data da Venda</label>
-                    <input type="date">
+                <div class="panel-icon">
+                    <i class="ph ph-shopping-cart"></i>
                 </div>
             </div>
 
-            <div class="venda-produtos">
-                <h5><img src="img/produtos.png"> Adicionar Produtos</h5>
-                
-                <div class="add-row">
-                    <div class="field">
-                        <label>PRODUTO</label>
+            <section class="venda-form-container">
+                <div class="venda-header">
+                    <div class="input-group">
+                        <label><i class="ph ph-user"></i> Selecionar Cliente</label>
                         <select><option>Selecione...</option></select>
                     </div>
-                    <div class="field qty">
-                        <label>QTD.</label>
-                        <input type="number" value="1">
+                    <div class="input-group">
+                        <label><i class="ph ph-calendar-blank"></i> Data da Venda</label>
+                        <input type="date">
                     </div>
-                    <div class="field price">
-                        <label>PREÇO UN.</label>
-                        <input type="text" placeholder="0.00">
-                    </div>
-                    <button class="btn-add">+ Add</button>
                 </div>
 
-                <div class="carrinho-vazio">
-                    <img src="./img/vendas.png" alt="Carrinho">
-                    <p>Nenhum produto adicionado ao carrinho.</p>
-                    <span>Selecione e clique em "Add" acima.</span>
-                </div>
-            </div>
+                <div class="venda-produtos">
+                    <h5><i class="ph ph-package"></i> Adicionar Produtos</h5>
+                    
+                    <div class="add-row">
+                        <div class="field">
+                            <label>Produto</label>
+                            <select><option>Selecione...</option></select>
+                        </div>
+                        <div class="field qty">
+                            <label>Qtd.</label>
+                            <input type="number" value="1" min="1">
+                        </div>
+                        <div class="field price">
+                            <label>Preço Un.</label>
+                            <input type="text" placeholder="R$ 0,00">
+                        </div>
+                        <button class="btn-add-product">+ Add</button>
+                    </div>
 
-            <div class="venda-footer">
-                <div class="total-venda">
-                    <span>Total:</span>
-                    <h3>R$ 0,00</h3>
+                    <div class="carrinho-vazio">
+                        <i class="ph ph-shopping-bag-open"></i>
+                        <p>Nenhum produto adicionado ao carrinho.</p>
+                        <span>Selecione um item e clique em "+ Add" acima.</span>
+                    </div>
                 </div>
-                <div class="acoes">
-                    <button class="btn-cancelar">Cancelar</button>
-                    <button class="btn-finalizar">Finalizar Venda</button>
+
+                <div class="venda-footer">
+                    <div class="total-venda">
+                        <span>Total Geral:</span>
+                        <h3>R$ 0,00</h3>
+                    </div>
+                    <div class="acoes">
+                        <a href="vendas.html" class="btn-cancelar">Cancelar</a>
+                        <button class="btn-finalizar">Finalizar Venda</button>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
+</div>
+
+<script>
+    /* ========================================================
+       SISTEMA DE AUTENTICAÇÃO JWT E CONTROLE DE SESSÃO
+    ======================================================== */
+    const API_URL = "https://api-time7.azurewebsites.net/api";
+
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join('')); // <-- CORRIGIDO: Parêntese fechado corretamente aqui
+
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            console.error("Falha ao descriptografar token de segurança:", e);
+            return null;
+        }
+    }
+
+    function obterToken() {
+        return localStorage.getItem("token") || sessionStorage.getItem("token");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const tokenAtivo = obterToken();
+        
+        if (!tokenAtivo) {
+            window.location.replace("./login.html");
+            return;
+        }
+
+        const payloadJson = parseJwt(tokenAtivo);
+
+        if (payloadJson) {
+            const nomeUsuario = payloadJson["unique_name"] || 
+                                payloadJson["name"] || 
+                                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                                "Usuário Boreal";
+            
+            document.getElementById("nomeUsuarioSidebar").innerText = nomeUsuario;
+        } else {
+            document.getElementById("nomeUsuarioSidebar").innerText = "Erro de Sessão";
+        }
+
+        // Inicializa a busca de dados na nova API do servidor
+        carregarClientes();
+        carregarProdutos();
+    });
+
+    function efetuarLogout() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("./login.html");
+    }
+
+    /* ========================================================
+       REQUISIÇÕES DINÂMICAS - NOVA URL DO SERVIDOR
+    ======================================================== */
+    async function carregarClientes() {
+        const selectCliente = document.querySelector(".venda-header .input-group select");
+        try {
+            const response = await fetch(`${API_URL}/Clientes`, {
+                headers: { 'Authorization': `Bearer ${obterToken()}` }
+            });
+            if (response.ok) {
+                const clientes = await response.json();
+                selectCliente.innerHTML = '<option value="">Selecione...</option>';
+                clientes.forEach(cliente => {
+                    selectCliente.innerHTML += `<option value="${cliente.id}">${cliente.nome}</option>`;
+                });
+            }
+        } catch (error) {
+            console.error("Erro ao buscar clientes da API Boreal:", error);
+        }
+    }
+
+    async function carregarProdutos() {
+        const selectProduto = document.querySelector(".add-row .field select");
+        try {
+            const response = await fetch(`${API_URL}/Produtos`, {
+                headers: { 'Authorization': `Bearer ${obterToken()}` }
+            });
+            if (response.ok) {
+                const produtos = await response.json();
+                selectProduto.innerHTML = '<option value="">Selecione...</option>';
+                produtos.forEach(produto => {
+                    selectProduto.innerHTML += `<option value="${produto.id}" data-preco="${produto.preco}">${produto.nome}</option>`;
+                });
+            }
+        } catch (error) {
+            console.error("Erro ao buscar produtos da API Boreal:", error);
+        }
+    }
+</script>
 </body>
 </html>
