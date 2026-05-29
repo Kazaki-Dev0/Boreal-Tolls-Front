@@ -429,6 +429,7 @@ main{
 
     </div>
 
+
     <table class="clients-table">
         <thead>
             <tr>
@@ -444,134 +445,13 @@ main{
         <tbody id="tabelaClientesBody"></tbody>
     </table>
 
-</div> </main> <script src="listarClientes.js"></script>
+</div> 
+</main> 
+
+<script src="listarClientes.js"></script>
 </body>
 </html>
 
-<script>
-    const API_BASE_URL = 'https://localhost:7142/api'; // Ajuste para a porta da sua API
-
-// Array global para armazenar os clientes localmente e permitir a busca rápida
-let todosClientes = []; 
-
-document.addEventListener('DOMContentLoaded', () => {
-    const tabelaBody = document.getElementById('tabelaClientesBody');
-    const inputBusca = document.getElementById('inputBusca');
-    const token = localStorage.getItem('token');
-
-    // Verifica se o usuário está autenticado ([Authorize] no C#)
-    if (!token) {
-        alert('Sessão expirada ou não encontrada. Faça login novamente.');
-        window.location.href = 'login.html';
-        return;
-    }
-
-    // ==========================================
-    // 1. FUNÇÃO PARA CARREGAR DADOS DA API
-    // ==========================================
-    async function carregarClientes() {
-        try {
-            const response = await fetch(`${API_BASE_URL}/clientes`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                todosClientes = await response.json();
-                renderizarTabela(todosClientes);
-            } else if (response.status === 401) {
-                alert('Não autorizado. Por favor, refaça o login.');
-                window.location.href = 'login.html';
-            } else {
-                console.error('Erro ao buscar clientes:', response.statusText);
-                tabelaBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: #ff6b6b;">Erro ao carregar os dados.</td></tr>`;
-            }
-        } catch (error) {
-            console.error('Erro de conexão:', error);
-            tabelaBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: #ff6b6b;">Não foi possível conectar ao servidor.</td></tr>`;
-        }
-    }
-
-    // ==========================================
-    // 2. FUNÇÃO PARA RENDERIZAR AS LINHAS DA TABELA
-    // ==========================================
-    function renderizarTabela(lista) {
-        tabelaBody.innerHTML = ''; // Limpa a tabela antes de renderizar
-
-        if (lista.length === 0) {
-            tabelaBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: #888;">Nenhum registro encontrado.</td></tr>`;
-            return;
-        }
-
-        lista.forEach(cliente => {
-            // Verifica se exibe CPF ou CNPJ (o que estiver preenchido)
-            const documento = cliente.cpf || cliente.cnpj || 'Não informado';
-            
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>#${cliente.id}</td>
-                <td><strong>${cliente.nome}</strong></td>
-                <td>${documento}</td>
-                <td>${cliente.email || '-'}</td>
-                <td>${cliente.telefone || '-'}</td>
-                <td>
-                    <button class="btn-detail" data-id="${cliente.id}">
-                        <i class="fa-solid fa-eye"></i> Detalhes
-                    </button>
-                </td>
-            `;
-            tabelaBody.appendChild(tr);
-        });
-
-        // Adiciona evento de clique nos botões "Detalhes"
-        configurarBotoesDetalhes();
-    }
-
-    // ==========================================
-    // 3. FILTRO DE BUSCA EM TEMPO REAL
-    // ==========================================
-    if (inputBusca) {
-        inputBusca.addEventListener('input', (e) => {
-            const termoBusca = e.target.value.toLowerCase().trim();
-
-            // Filtra por ID, Nome, CPF ou CNPJ
-            const clientesFiltrados = todosClientes.filter(cliente => {
-                const idString = cliente.id.toString();
-                const nome = cliente.nome ? cliente.nome.toLowerCase() : '';
-                const cpf = cliente.cpf ? cliente.cpf.toLowerCase() : '';
-                const cnpj = cliente.cnpj ? cliente.cnpj.toLowerCase() : '';
-
-                return idString.includes(termoBusca) || 
-                       nome.includes(termoBusca) || 
-                       cpf.includes(termoBusca) || 
-                       cnpj.includes(termoBusca);
-            });
-
-            renderizarTabela(clientesFiltrados);
-        });
-    }
-
-    // ==========================================
-    // 4. REDIRECIONAMENTO PARA DETALHES/EDIÇÃO
-    // ==========================================
-    function configurarBotoesDetalhes() {
-        const botoes = document.querySelectorAll('.btn-detail');
-        botoes.forEach(botao => {
-            botao.addEventListener('click', () => {
-                const id = botao.getAttribute('data-id');
-                // Redireciona passando o ID via Query String da URL
-                window.location.href = `detalhesCliente.html?id=${id}`;
-            });
-        });
-    }
-
-    // Executa a carga inicial dos dados
-    carregarClientes();
-});
-</script>
     
 
 </body>

@@ -275,22 +275,9 @@
                 if (dados.token) {
                     // CORREÇÃO: Armazena o Token, Nome e Foto retornados pelo Backend para usar no Dashboard
                     localStorage.setItem('token', dados.token);
-<<<<<<< HEAD
                     localStorage.setItem('usuarioNome', dados.nome || '');
                     localStorage.setItem('usuarioFoto', dados.urlFoto || '');
                     
-=======
-                    
-                    // Prioriza urlFoto recebida, senhas usa fotoBase64 se houver
-                    if (dados.urlFoto && dados.urlFoto !== "null") {
-                        localStorage.setItem('urlFoto', dados.urlFoto);
-                    } else if (dados.fotoBase64 && dados.fotoBase64 !== "null") {
-                        localStorage.setItem('urlFoto', dados.fotoBase64);
-                    } else {
-                        localStorage.removeItem('urlFoto'); 
-                    }
-
->>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
                     window.location.href = "dashboard.html";
                 } else {
                     alert("Erro no servidor: Token não encontrado na resposta.");
@@ -310,10 +297,6 @@
             const emailInput = document.getElementById('reg-email').value;
             const senhaInput = document.getElementById('reg-senha').value;
             const confirmarSenhaInput = document.getElementById('reg-confirmar-senha').value;
-<<<<<<< HEAD
-=======
-            
->>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
             const fotoUrlInput = document.getElementById('reg-foto-url').value;
             const fotoArquivoInput = document.getElementById('reg-foto-arquivo').files[0];
 
@@ -322,11 +305,7 @@
                 return;
             }
 
-<<<<<<< HEAD
             let imagemBase64 = "";
-=======
-            let imagemBase64Raw = "";
->>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
             if (fotoArquivoInput) {
                 try {
                     const base64Completo = await converterParaBase64(fotoArquivoInput);
@@ -348,14 +327,9 @@
                         nome: nomeInput,
                         email: emailInput,
                         senha: senhaInput,
-<<<<<<< HEAD
                         // CORREÇÃO: Alterado de 'fotoUrl' para 'urlFoto' para mapear corretamente com o C# (camelCase)
                         urlFoto: fotoUrlInput || null,
                         fotoBase64: imagemBase64 || null
-=======
-                        fotoUrl: fotoUrlInput || null,
-                        fotoBase64: imagemBase64Raw || null // Envia a string limpa ou null
->>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
                     })
                 });
 
@@ -377,11 +351,7 @@
             }
         }
 
-<<<<<<< HEAD
         // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64
-=======
-        // FUNÇÃO AUXILIAR: Transforma arquivo de imagem em String Base64 completa
->>>>>>> 5f4aa0088973ab1acc37f9bb96ec110e607f9699
         function converterParaBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
