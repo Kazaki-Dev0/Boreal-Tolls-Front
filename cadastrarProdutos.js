@@ -1,4 +1,3 @@
-// Busca os dados do produto específico e preenche os inputs
 async function carregarDadosParaEdicao(id) {
     try {
         const token = obterToken();
@@ -17,7 +16,6 @@ async function carregarDadosParaEdicao(id) {
 
         const produto = await resposta.json();
 
-        // Preenche os campos, cobrindo as variações de nomes que a API pode retornar
         document.getElementById("urlImagem").value = produto.urlImg || produto.UrlImg || "";
         document.getElementById("nome").value = produto.nome || produto.Nome || "";
         document.getElementById("marca").value = produto.marca || produto.Marca || "";
@@ -26,7 +24,6 @@ async function carregarDadosParaEdicao(id) {
         document.getElementById("fornecedor").value = produto.fornecedorId || produto.FornecedorId || "";
         document.getElementById("qtd_minima").value = produto.qtdMinimaEstoque || produto.QtdMinimaEstoque || 0;
         
-        // CORREÇÃO AQUI: Garante que vai puxar o estoque atual não importa como o C# mande
         document.getElementById("qtd_atual").value = produto.quantidadeEstoque ?? produto.qtdEstoque ?? produto.QuantidadeEstoque ?? produto.QtdEstoque ?? 0;
         
         document.getElementById("descricao").value = produto.descricao || produto.Descricao || "";
@@ -37,11 +34,9 @@ async function carregarDadosParaEdicao(id) {
     }
 }
 
-// Função Unificada: Cadastra (POST) ou Atualiza (PUT)
 async function salvarProduto(event) {
     event.preventDefault(); 
     
-    // Captura os valores
     const urlImagem = document.getElementById("urlImagem").value; 
     const nome = document.getElementById("nome").value;
     const marca = document.getElementById("marca").value;
@@ -55,7 +50,6 @@ async function salvarProduto(event) {
     try {
         const token = obterToken();
 
-        // Monta o payload enviando as duas variações de estoque para a API C# não zerar
         const payload = {
             UrlImg: urlImagem, 
             nome: nome,
@@ -66,7 +60,7 @@ async function salvarProduto(event) {
             fornecedorId: parseInt(fornecedor) || 1, 
             qtdMinimaEstoque: parseInt(qtdMinima) || 0,
             qtdEstoque: parseInt(qtdAtual) || 0,
-            quantidadeEstoque: parseInt(qtdAtual) || 0 // <-- Adicionado para prevenir que a API zere
+            quantidadeEstoque: parseInt(qtdAtual) || 0 
         };
 
         if (modoEdicao) {

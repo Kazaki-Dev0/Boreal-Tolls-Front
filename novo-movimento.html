@@ -3,30 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Controle de Estoque</title>
+    <title>Boreal Tools - Registrar Movimentação</title>
     <link rel="icon" type="image/png" href="./images/logo-removebg.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="sidebar.css">
 
     <style>
-        /* VARIÁVEIS DE COR */
-        :root {
-            --bg-main: #0a0a0a;
-            --bg-sidebar: #06100b;
-            --bg-panel: #131715;
-            --bg-topbar: #111111;
-            --text-primary: #ffffff;
-            --text-secondary: #9aa09d;
-            --neon-green: #87ffb9;
-            --neon-green-glow: rgba(135, 255, 185, 0.4);
-            --dark-green: #1a3a29;
-            --border-color: #242e29;
-            --white-glow: rgba(255, 255, 255, 0.3);
-            --danger-color: #ff6b6b;
-            --danger-glow: rgba(255, 107, 107, 0.2);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -35,89 +19,163 @@
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden; /* Evita scroll na página principal */
+        }
+
+        .main-wrapper {
             display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        } 
+            min-height: 100vh;
+            width: 100vw;
+        }
 
         a {
-    color: inherit;
-    text-decoration: none;
-}
+            text-decoration: none;
+            color: inherit;
+        }
 
-/* Destaque para a página atual  */
-.secoes:nth-child(3) {
-    background-color: #2e4a3e; /* Verde escuro */
-}
+        /* Padronização do Sidebar conforme referências */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px;
+            flex-shrink: 0;
+        }
 
-        /* --- CONTEÚDO PRINCIPAL (MAIN CORRIGIDO) --- */
-        .content {
+        .secoes:nth-child(3) {
+            background-color: #2e4a3e; /* Aba de Estoques Ativa */
+        }
+
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px; 
+            width: 100%;
+        }
+
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
+
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Área de Conteúdo Alinhada */
+        main {
             flex: 1;
-            padding: 2.5rem;
-            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
+            padding: 25px;
             overflow-y: auto;
+            max-width: calc(100vw - 260px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
-        .form-container {
-            background-color: var(--bg-panel);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 900px;
-            margin: 0 auto;
+        /* =========================================
+           PAINEL DO FORMULÁRIO (Padronizado)
+        ========================================= */
+        .stock-panel {
+            width: 100%;
+            max-width: 850px;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 20px auto;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
         }
 
-        .form-header {
+        /* HEADER */
+        .panel-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+            align-items: flex-start;
+            margin-bottom: 30px;
         }
 
-        .form-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .panel-title h2 {
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 5px;
         }
 
-        .form-title i {
-            color: var(--neon-green);
-            font-size: 2rem;
+        .panel-subtitle {
+            color: #6da381;
+            font-size: 0.8rem;
         }
 
-        .btn-back {
-            color: var(--text-secondary);
+        .panel-subtitle span a:hover {
+            text-decoration: underline;
+            color: #87ffb9;
+        }
+
+        .panel-icon {
+            background: rgba(135, 255, 185, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            color: #7bcf9c;
+            font-size: 1.8rem;
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
+            justify-content: center;
         }
 
+        /* BANNER DE ALERTA INFORMATIVO */
         .alert-banner {
-            background-color: #000;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 15px;
+            background: rgba(135, 255, 185, 0.04);
+            border: 1px solid #2e4a3e;
+            border-radius: 12px;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 30px;
         }
 
-        .alert-banner i { color: #fff; font-size: 1.5rem; }
-        .alert-text h4 { font-size: 1rem; margin-bottom: 2px; }
-        .alert-text p { font-size: 0.85rem; color: var(--text-secondary); }
-        .alert-text b { color: #fff; }
+        .alert-banner i {
+            color: #7bcf9c;
+            font-size: 1.4rem;
+        }
 
+        .alert-text h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .alert-text p {
+            font-size: 0.8rem;
+            color: #6da381;
+        }
+
+        /* ESTRUTURA DO FORMULÁRIO */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 24px;
         }
 
         .input-group {
@@ -126,179 +184,341 @@
             gap: 8px;
         }
 
-        .full-width { grid-column: span 2; }
+        .full-width {
+            grid-column: span 2;
+        }
 
         label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-left: 5px;
+            font-size: 0.8rem;
+            color: #6da381;
+            font-weight: 500;
+            padding-left: 2px;
         }
 
         input, select {
             width: 100%;
-            background-color: #fff;
-            border: 1px solid var(--border-color);
-            padding: 12px 15px;
-            border-radius: 8px;
-            color: #333;
-            font-size: 0.95rem;
+            background: rgba(31, 31, 31, 0.6);
+            border: 1px solid #4a5a50;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 0.9rem;
             outline: none;
-            transition: 0.3s;
+            transition: all 0.3s;
         }
 
-        input:focus {
-            box-shadow: 0 0 10px var(--neon-green-glow);
-            border-color: var(--neon-green);
+        input::placeholder {
+            color: #555;
         }
 
+        input:focus, select:focus {
+            border-color: #7bcf9c;
+            box-shadow: 0 0 12px rgba(123, 207, 156, 0.2);
+            background: rgba(31, 31, 31, 0.9);
+        }
+
+        /* Customização para inputs do tipo date em dark mode */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        /* AÇÕES / BOTÕES */
         .form-actions {
-            margin-top: 35px;
+            margin-top: 15px;
             display: flex;
             justify-content: flex-end;
             gap: 15px;
         }
 
         .btn {
-            padding: 12px 35px;
+            padding: 12px 28px;
             border-radius: 8px;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
             border: none;
-            font-size: 1rem;
         }
 
         .btn-cancel {
             background: transparent;
-            border: 1px solid var(--border-color);
-            color: white;
+            border: 1px solid #4a5a50;
+            color: #ccc;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
         }
 
         .btn-confirm {
-            background-color: #000;
-            color: #fff;
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 5px var(--neon-green-glow);
-        }
-
-        .btn-confirm:hover {
-            background-color: var(--neon-green);
+            background-color: #80B297;
             color: #000;
         }
 
+        .btn-confirm:hover {
+            background-color: #81c784;
+        }
+
+        /* RESPONSIVIDADE */
+        @media(max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-    <div class="main-wrapper">
-
-        <section class="side-bar">
-        <div class="sidebar-header">
+<div class="main-wrapper">
+    <section class="side-bar">
+        <div>
+            <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
-        
-        <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
+            </div>
+
+            <div class="perfil">
+                <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
+                <p id="nomeUsuarioSidebar">Carregando...</p>
+            </div>
+
+            <nav class="nav-side-bar">
                 <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                    <img src="./img/inicio.sidebar.png" class="secao-icon">
                     <a href="dashboard.html">Início</a>
                 </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
+
+                <div class="secoes">
+                    <img src="./img/produtos.png" class="secao-icon">
                     <a href="produtos.html">Produtos</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
+                    <img src="./img/estoque.png" class="secao-icon">
+                    <a href="estoque.html">Estoques</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
+                    <img src="./img/financeiro.png" class="secao-icon">
                     <a href="./financeiro.html">Financeiro</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
+                    <img src="./img/vendas.png" class="secao-icon">
                     <a href="vendas.html">Vendas</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                    <img src="./img/funcionarios.png" class="secao-icon">
                     <a href="./funcionarios.html">Funcionários</a>
                 </div>
+
                 <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
+                    <img src="./img/clientes.png" class="secao-icon">
                     <a href="./ClienteFornecedor.html">Clientes</a>
                 </div>
+
                 <div class="secoes">
                     <img src="./img/relatorios.png" class="secao-icon">
                     <a href="./categorias.html">Categorias</a>
                 </div>
-        </nav>
+            </nav>
+        </div>
 
         <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
         </div>
     </section>
 
-        <main class="content">
-            <div class="form-container">
-                <div class="form-header">
-                    <div class="form-title">
-                        <i class="ph ph-cube-focus"></i>
-                        Registrar Nova Operação
-                    </div>
-                    <a href="estoque.html" class="btn-back">
-                        <i class="ph ph-arrow-left"></i> Voltar ao Estoque
-                    </a>
-                </div>
-
-                <div class="alert-banner">
-                    <i class="ph ph-warning-circle"></i>
-                    <div class="alert-text">
-                        <h4>Atenção ao registrar movimentos</h4>
-                        <p>Certifique-se de que a quantidade não ultrapasse a <b>capacidade máxima</b> do estoque para este item.</p>
+    <main>
+        <div class="stock-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <h2>Registrar Nova Operação</h2>
+                    <div class="panel-subtitle">
+                        Estoque > <span><a href="estoque.html">Voltar ao Estoque</a></span>
                     </div>
                 </div>
-
-                <form class="form-grid">
-                    <div class="input-group">
-                        <label>Tipo de Movimento</label>
-                        <select>
-                            <option value="entrada">Entrada (Adicionar ao Estoque)</option>
-                            <option value="saida">Saída (Remover do Estoque)</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Data de Operação</label>
-                        <input type="date" value="2026-05-13">
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Identificação do Produto (ID ou Nome)</label>
-                        <input type="text" placeholder="Ex: 1024 ou Parafusadeira Titanium">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Quantidade</label>
-                        <input type="number" placeholder="0" min="1">
-                    </div>
-
-                    <div class="input-group">
-                        <label>ID do Fornecedor (Opcional)</label>
-                        <input type="text" placeholder="Deixe em branco se for saída">
-                    </div>
-
-                    <div class="form-actions full-width">
-                        <button type="button" class="btn btn-cancel" onclick="window.location.href='estoque.html'">Cancelar</button>
-                        <button type="submit" class="btn btn-confirm">Confirmar Registro</button>
-                    </div>
-                </form>
+                <div class="panel-icon">
+                    <i class="ph ph-cube-focus"></i>
+                </div>
             </div>
-        </main>
-    </div>
 
+            <div class="alert-banner">
+                <i class="ph ph-warning-circle"></i>
+                <div class="alert-text">
+                    <h4>Atenção ao registrar movimentos</h4>
+                    <p>Certifique-se de que a quantidade inserida está correta antes de realizar a confirmação.</p>
+                </div>
+            </div>
+
+            <form class="form-grid" id="formMovimentacao">
+                <div class="input-group">
+                    <label for="tipoMovimento">Tipo de Movimento</label>
+                    <select id="tipoMovimento" required>
+                        <option value="ENTRADA">Entrada (Adicionar ao Estoque)</option>
+                        <option value="SAIDA">Saída (Remover do Estoque)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="dataOperacao">Data de Operação</label>
+                    <input type="date" id="dataOperacao" required>
+                </div>
+
+                <div class="input-group full-width">
+                    <label for="produtoId">Identificação do Produto (ID)</label>
+                    <input type="number" id="produtoId" placeholder="Ex: 1024" required min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" id="quantidade" placeholder="0" min="1" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="motivo">Motivo da Movimentação</label>
+                    <input type="text" id="motivo" placeholder="Ex: Ajuste de inventário" required>
+                </div>
+
+                <div class="form-actions full-width">
+                    <button type="button" class="btn btn-cancel" onclick="window.location.href='estoque.html'">Cancelar</button>
+                    <button type="submit" class="btn btn-confirm">Confirmar Registro</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    const API_URL = "http://localhost:5187/api/MovimentacaoEstoque";
+
+    /* ========================================================
+       FUNÇÃO AUXILIAR DE DECODIFICAÇÃO JWT
+    ======================================================== */
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            console.error("Falha ao decodificar token:", e);
+            return null;
+        }
+    }
+
+    function obterToken() {
+        return localStorage.getItem("token") || sessionStorage.getItem("token");
+    }
+
+    /* ========================================================
+       CARREGAMENTO DE SESSÃO E INICIALIZAÇÃO DA DATA
+    ======================================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+        const tokenAtivo = obterToken();
+        
+        if (!tokenAtivo) {
+            document.getElementById('nomeUsuarioSidebar').textContent = "Usuário não logado";
+            window.location.replace("./login.html");
+            return;
+        }
+
+        const payloadJson = parseJwt(tokenAtivo);
+
+        if (payloadJson) {
+            const nomeUsuario = payloadJson["unique_name"] || 
+                                payloadJson["name"] || 
+                                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                                "Usuário Boreal";
+            
+            document.getElementById("nomeUsuarioSidebar").innerText = nomeUsuario;
+        } else {
+            document.getElementById("nomeUsuarioSidebar").innerText = "Erro de Sessão";
+        }
+
+        // Define o dia atual respeitando o fuso horário local correto (formato YYYY-MM-DD)
+        const hoje = new Date();
+        const ano = hoje.getFullYear();
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoje.getDate()).padStart(2, '0');
+        document.getElementById('dataOperacao').value = `${ano}-${mes}-${dia}`;
+    });
+
+    /* ========================================================
+       LOGOUT
+    ======================================================== */
+    function efetuarLogout() {
+        try {
+            localStorage.clear();
+            sessionStorage.clear();
+        } catch (e) {
+            console.error("Erro ao efetuar limpeza:", e);
+        }
+        window.location.replace("./login.html");
+    }
+
+    /* ========================================================
+       ENVIO DOS DADOS (POST API)
+    ======================================================== */
+    document.getElementById('formMovimentacao').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const tokenAtivo = obterToken();
+        if (!tokenAtivo) {
+            alert('Você precisa estar autenticado. Faça login novamente.');
+            window.location.replace("./login.html");
+            return;
+        }
+
+        // Normalização protetiva contra fuso horário do JS para evitar que mude o dia enviado ao C#
+        const dataInput = document.getElementById('dataOperacao').value;
+        const dataIsoCorreta = new Date(`${dataInput}T00:00:00`).toISOString();
+
+        const movimentacaoDto = {
+            ProdutoId: parseInt(document.getElementById('produtoId').value),
+            Quantidade: parseInt(document.getElementById('quantidade').value),
+            Tipo: document.getElementById('tipoMovimento').value,
+            Data: dataIsoCorreta,
+            Motivo: document.getElementById('motivo').value
+        };
+
+        try {
+            const resposta = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenAtivo}`
+                },
+                body: JSON.stringify(movimentacaoDto)
+            });
+
+            if (resposta.status === 401) {
+                alert("Sua sessão expirou. Por favor, realize o login novamente.");
+                window.location.replace("./login.html");
+                return;
+            }
+
+            if (resposta.ok) {
+                alert('Movimentação registrada com sucesso!');
+                window.location.href = './estoque.html';
+            } else {
+                const msgErro = await resposta.text();
+                alert(`Erro na operação: ${msgErro}`);
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Não foi possível conectar ao servidor da API. Certifique-se de que o backend está ativo na porta 5187.');
+        }
+    });
+</script>
 </body>
 </html>

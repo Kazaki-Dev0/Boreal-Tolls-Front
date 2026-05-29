@@ -5,392 +5,442 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RH - Holerite</title>
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-body {
-    background-color: #0a0a0a; /* Fundo bem escuro */
-    background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-    color: white;
-    display: flex;
-    height: 100%;
-}
+        body {
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            display: flex;
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+        }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
+        /* Padronização da Barra Lateral */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px;
+            flex-shrink: 0;
+        }
 
-/* Destaque para a página atual (Funcionários) */
-.secoes:nth-child(6) {background-color: #2e4a3e; /* Verde escuro */}
+        .secoes:nth-child(6) {
+            background-color: #2e4a3e;
+        }
 
-/* O "Quadro" centralizado com borda brilhante */
-main {
-    border: 1px solid #2e4a3e;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
-    margin: 10%;
-}
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px; 
+            width: 100%;
+        }
 
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
 
-.titulo h2 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-}
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.titulo p {
-    color: #888;
-    margin-bottom: 25px;
-}
+        /* Área Central do Painel */
+        main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            max-width: calc(100vw - 260px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.atalhos-main {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-bottom: 30px;
-}
+        .main-container {
+            width: 100%;
+            max-width: 1150px;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+        }
 
-.atalhos-main input {
-    background: transparent;
-    border: 1px solid #444;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
-    width: 250px;
-}
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
 
-.atalhos-main button {
-    background-color: #5e5e5e;
-    color: whitesmoke;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .titulo h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.atalhos-main button:hover {background-color: #333;}
+        .titulo h2 img {
+            width: 28px;
+            height: 28px;
+        }
 
-.containt {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
-    gap: 16px;
-}
+        .titulo p {
+            color: #6da381;
+            font-size: 0.85rem;
+        }
 
-.left, .right {
-    background-color: #222;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
+        .atalhos-main button {
+            background-color: #2e4a3e;
+            color: whitesmoke;
+            border: 1px solid #4a5a50;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
+        .atalhos-main button:hover {
+            background-color: #23332b;
+            border-color: #7bcf9c;
+        }
 
-.left input {
-    border-radius: 20px;
-    height: 30px;
-    padding: 10px;
-}
+        .containt {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
 
-.proventos, .descontos {
-    background-color: #3d3d3d;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-radius: 15px;
-}
+        .left, .right {
+            background-color: rgba(15, 15, 15, 0.6);
+            border: 1px solid #23332b;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
 
-.left {
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+        .left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-.proventos h5 {
-    color: #a5d6a7; 
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-}
+        .proventos, .descontos {
+            background-color: rgba(40, 40, 40, 0.3);
+            border: 1px solid #2e4a3e;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-radius: 12px;
+        }
 
-.descontos h5 {
-    color: #ee6559; 
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-}
+        .proventos h5 {
+            color: #a5d6a7; 
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(165, 214, 167, 0.2);
+            padding-bottom: 8px;
+        }
 
-/* Labels e Inputs */
-label {
-    display: block;
-    color: white;
-    font-weight: bold;
-    font-size: 0.85rem;
-    margin-bottom: 8px;
-}
+        .descontos h5 {
+            color: #ee6559; 
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(238, 101, 89, 0.2);
+            padding-bottom: 8px;
+        }
 
-input {
-    border: none;
-    padding: 12px 20px;
-    border-radius: 28px;
-    width: 100%;
-    font-weight: bold;
-    outline: none;
-}
+        label {
+            display: block;
+            color: #b2c7bc;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
 
-.input-provento {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    width: 80%;
-}
+        input, select {
+            border: 1px solid #3d5246;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.6);
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
 
-.descontosInputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+        input:focus, select:focus {
+            border-color: #7bcf9c;
+        }
 
-.input-desconto {
-    display: flex;
-    flex-direction: column;
-}
+        /* Remove setas de input de número */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
 
-.input-desconto input{
-    width: 100%;
-}
+        .input-provento {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
 
-.right {width: auto; }
+        .descontosInputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
 
-/* Espaçamento entre as seções Up e Down */
-.up {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #444; /* Linha divisória sutil */
-    padding-bottom: 20px;
-}
+        .input-desconto {
+            display: flex;
+            flex-direction: column;
+        }
 
-/* Estilização do Select */
-.select {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 25px;
-}
+        .up {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #23332b; 
+            padding-bottom: 20px;
+        }
 
-.select label {
-    font-weight: bold;
-    font-size: 0.9rem;
-}
+        .select {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 25px;
+        }
 
-.select select {
-    border: none;
-    padding: 12px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .right h5 {
+            font-size: 1.05rem; 
+            color: #7bcf9c;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
 
-h5 {font-size: 1.1rem; margin-bottom: 20px;}
+        table {
+            width: 100%; 
+            border-collapse: collapse;
+        }
 
-table {width: 100%; border-collapse: collapse;}
+        td {
+            padding: 10px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
 
-td {padding: 8px 0;font-size: 0.95rem;}
+        td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: white;
+        }
 
-/* Alinha os valores (R$) à direita */
-td:last-child {
-    text-align: right;
-    font-weight: bold;
-}
+        .down td:first-child {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+        }
 
-/* Estilo específico para o Total Líquido */
-.down td:first-child {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
+        .down td:last-child {
+            font-size: 1.4rem;
+            color: #7bcf9c;
+        }
 
-.down td:last-child {font-size: 1.5rem;}
+        .down p {
+            text-align: right;
+            font-size: 0.75rem;
+            color: #6da381;
+            margin-top: 4px;
+            margin-bottom: 25px;
+        }
 
-.down p {
-    text-align: right;
-    font-size: 0.75rem;
-    color: #bbb;
-    margin-top: -5px;
-    margin-bottom: 30px;
-}
+        .btn-holerite {
+            width: 100%;
+            border: 1px solid #4a5a50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 8px;
+            background: #80B297;
+            color: #000;
+            padding: 14px;
+        }
 
-/* Botão Estilizado */
-.btn-holerite {
-    width: 100%;
-    border: 2px solid #555;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-    border-radius: 10px;
-    box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.25);
-    background: #2B2A2A;
-    color: whitesmoke;
-    padding: 16px;
-}
+        .btn-holerite:hover {
+            background-color: #81c784;
+        }
 
-.btn-holerite:hover {background-color: #444; border-color: #00b359;}
+        .btn-holerite img {
+            width: 24px; 
+            height: auto;
+        }
 
-.btn-holerite img {width: 40px; height: auto;}
+        @media(max-width: 950px) {
+            body { flex-direction: column; }
+            .side-bar { display: none; }
+            main { max-width: 100vw; padding: 20px; }
+            .containt { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-
     <section class="side-bar">
-        <div class="sidebar-header">
+        <div>
+            <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
-        
-        <div class="perfil">
+            </div>
+            
+            <div class="perfil">
                 <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="produtos.html">Produtos</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="vendas.html">Vendas</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/relatorios.png" class="secao-icon">
-                    <a href="./categorias.html">Categorias</a>
-                </div>
-        </nav>
+                <p id="nomeUsuarioSidebar">Carregando...</p>
+            </div> 
+            
+            <nav class="nav-side-bar">
+                <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a href="dashboard.html">Início</a></div>
+                <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a href="produtos.html">Produtos</a></div>
+                <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a href="./estoque.html">Estoques</a></div>
+                <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
+                <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
+                <div class="secoes active"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
+                <div class="secoes"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes</a></div>
+                <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
+            </nav>
+        </div>
 
         <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
         </div>
     </section>
 
     <main>
-        <div class="main-header">
-            <div class="titulo">
-                <h2><img src="./img/RH-Icon.png" alt=""> Recursos Humanos (Holerite) </h2>
-                <p>Gerencie a equipe, cargos, salários e horas extras.</p>
-            </div>
-            <div class="atalhos-main">
-                <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
-            </div>
-        </div>
-        <div class="containt">
-            <div class="left">
-                <div class="proventos">
-                    <h5>Proventos (+)</h5>
-                    <div class="input-provento">
-                        <label for="">Salário Base</label>
-                        <input type="number" placeholder="0.00">
-                    </div>
-                    <div class="input-provento">
-                        <label for="">Outros (Horas Extras, Bônus)</label>
-                        <input type="number" placeholder="0.00">
-                    </div>
+        <div class="main-container">
+            <div class="main-header">
+                <div class="titulo">
+                    <h2><img src="./img/RH-Icon.png" alt=""> Recursos Humanos (Holerite)</h2>
+                    <p>Gerencie a folha de pagamento e realize lançamentos financeiros diretos.</p>
                 </div>
-                <div class="descontos">
-                    <h5>Descontos (-)</h5>
-                    <div class="descontosInputs">
-                        <div class="input-desconto">
-                            <label for="">INSS</label>
-                            <input type="number" placeholder="0.00">
-                        </div>
-                        <div class="input-desconto">
-                            <label for="">IRRF</label>
-                            <input type="number" placeholder="0.00">
-                        </div>
-                        <div class="input-desconto">
-                            <label for="">Benefícios (Vt/Vr)</label>
-                            <input type="number" placeholder="0.00">
-                        </div>
-                        <div class="input-desconto">
-                            <label for="">Outros (Faltas)</label>
-                            <input type="number" placeholder="0.00">
-                        </div>
-                    </div>
+                <div class="atalhos-main">
+                    <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
                 </div>
             </div>
-            <div class="right">
-                <div class="up">
-                    <div class="select">
-                        <label for="">Selecione o funcionário</label>
-                        <select name="funcionario" id="funcionario">
-                
-                        </select>
-                    </div>
-                    <h5>Resumo da Folha</h5>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Total de Proventos:</td>
-                                <td>R$ 0,00</td>
-                            </tr>
-                            <tr>
-                                <td>Total de Descontos:</td>
-                                <td>- R$ 0,00</td>z
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="down">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Total Líquido:</td>
-                                <td>R$ 0,00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p>Valor a ser lançado no Contas a Pagar</p>
 
-                    <button type="submit" class="btn-holerite" id="btn-holerite"> <img src="./img/cedula.png" alt="">Lançar despesas no financeiro</button>
+            <div class="containt">
+                <div class="left">
+                    <div class="proventos">
+                        <h5>Proventos (+)</h5>
+                        <div class="input-provento">
+                            <label for="salario">Salário Base (R$)</label>
+                            <input type="number" step="0.01" id="salario" placeholder="0.00">
+                        </div>
+                        <div class="input-provento">
+                            <label for="adicionais">Outros (Horas Extras, Bônus)</label>
+                            <input type="number" step="0.01" id="adicionais" placeholder="0.00" value="0">
+                        </div>
+                    </div>
+
+                    <div class="descontos">
+                        <h5>Descontos (-)</h5>
+                        <div class="descontosInputs">
+                            <div class="input-desconto">
+                                <label for="inss">INSS</label>
+                                <input type="number" step="0.01" id="inss" placeholder="0.00" value="0">
+                            </div>
+                            <div class="input-desconto">
+                                <label for="irrf">IRRF</label>
+                                <input type="number" step="0.01" id="irrf" placeholder="0.00" value="0">
+                            </div>
+                            <div class="input-desconto">
+                                <label for="beneficios">Benefícios (VT/VR)</label>
+                                <input type="number" step="0.01" id="beneficios" placeholder="0.00" value="0">
+                            </div>
+                            <div class="input-desconto">
+                                <label for="faltas">Outros (Faltas/Atrasos)</label>
+                                <input type="number" step="0.01" id="faltas" placeholder="0.00" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <div class="up">
+                        <div class="select">
+                            <label for="funcionario">Selecione o funcionário</label>
+                            <select id="funcionario">
+                                <option value="">Carregando funcionários...</option>
+                            </select>
+                        </div>
+                        <h5>Resumo da Folha</h5>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Total de Proventos:</td>
+                                    <td id="totalProventos">R$ 0,00</td>
+                                </tr>
+                                <tr>
+                                    <td>Total de Descontos:</td>
+                                    <td id="totalDesconto">- R$ 0,00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="down">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Total Líquido:</td>
+                                    <td id="totalLiquido">R$ 0,00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Valor a ser lançado no Contas a Pagar</p>
+
+                        <button type="button" class="btn-holerite" id="btn-lançar">
+                            <img src="./img/cedula.png" alt=""> Lançar despesas no financeiro
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <script src="holerite.js"></script>
 </body>
 </html>

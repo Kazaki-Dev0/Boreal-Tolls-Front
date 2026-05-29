@@ -3,297 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Novo Funcionáro</title>
+    <title>Cadastro Novo Funcionário</title>
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-body {
-    background-color: #0a0a0a; /* Fundo bem escuro */
-    background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-    color: white;
-    display: flex;
-    height: 100%;
-}
+        body {
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            display: flex;
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+        }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
+        /* Padronização da Barra Lateral */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px;
+            flex-shrink: 0;
+        }
 
-/* Destaque para a página atual (Funcionários) */
-.secoes:nth-child(6) {
-    background-color: #2e4a3e;
-}
+        .secoes:nth-child(6) {
+            background-color: #2e4a3e;
+        }
 
-/* Main Content Area */
-main {
-    padding: 40px;
-    overflow-y: auto;
-}
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px; 
+            width: 100%;
+        }
 
-/* O "Quadro" centralizado com borda brilhante */
-main {
-    border: 1px solid #2e4a3e;
-    width: 70%;
-    border-radius: 20px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.02);
-    box-shadow: 0 0 25px rgba(3, 255, 15, 0.5);
-    margin: 10%;
-}
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
 
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.titulo h2 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    
-}
+        /* Painel de Conteúdo Principal */
+        main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            max-width: calc(100vw - 260px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.titulo p {
-    color: #888;
-    margin-bottom: 25px;
-}
+        .main-container {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+        }
 
-.atalhos-main {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-bottom: 30px;
-}
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
 
-.atalhos-main input {
-    background: transparent;
-    border: 1px solid #444;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
-    width: 250px;
-}
+        .titulo h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.atalhos-main button {
-    background-color: #5e5e5e;
-    color: whitesmoke;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .titulo h2 img {
+            width: 28px;
+            height: 28px;
+        }
 
-.atalhos-main button:hover {
-    background-color: #333;
-}
+        .titulo p {
+            color: #6da381;
+            font-size: 0.85rem;
+        }
 
-form {
-    background-color: #333;
-    padding: 32px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    
-}
+        .atalhos-main button {
+            background-color: #2e4a3e;
+            color: whitesmoke;
+            border: 1px solid #4a5a50;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.inputs-cad {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    gap: 10px;
-}
+        .atalhos-main button:hover {
+            background-color: #23332b;
+            border-color: #7bcf9c;
+        }
 
-.input-divs {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
+        form {
+            background-color: rgba(15, 15, 15, 0.6);
+            border: 1px solid #23332b;
+            padding: 30px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px; 
+        }
 
-.input-divs input {
-    height: 32px;
-    border-radius: 12px;
-}
+        .inputs-cad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
 
-label img {
-    width: 20px;
-    height: 20px;
-}
+        .input-divs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #b2c7bc;
+        }
 
-#cadastrarFuncionario {
-    background-color: #80B297;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: whitesmoke;
-}
+        label img {
+            width: 16px;
+            height: 16px;
+            opacity: 0.8;
+        }
 
-#cadastrarFuncionario:hover{
-    background-color: #81c784;
-}
+        .input-divs input {
+            height: 38px;
+            border-radius: 8px;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid #3d5246;
+            color: white;
+            padding: 0 12px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-divs input:focus {
+            border-color: #7bcf9c;
+        }
+
+        /* Remove as setas padrão do input numérico */
+        .input-divs input[type=number]::-webkit-inner-spin-button, 
+        .input-divs input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        #cadastrarFuncionario {
+            background-color: #80B297;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        #cadastrarFuncionario:hover{
+            background-color: #81c784;
+        }
+
+        @media(max-width: 950px) {
+            body { flex-direction: column; }
+            .side-bar { display: none; }
+            main { max-width: 100vw; padding: 20px; }
+            .inputs-cad { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media(max-width: 600px) {
+            .inputs-cad { grid-template-columns: 1fr; }
+            .main-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+        }
     </style>
 </head>
 <body>
 
     <section class="side-bar">
-        <div class="sidebar-header">
+        <div>
+            <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-        </div>
-        
-        <div class="perfil">
+            </div>
+            
+            <div class="perfil">
                 <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-        </div> 
-        
-        <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-                <div class="secoes active" href="./produtos.html" >
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="produtos.html">Produtos</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="vendas.html">Vendas</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/relatorios.png" class="secao-icon">
-                    <a href="./categorias.html">Categorias</a>
-                </div>
-        </nav>
+                <p id="nomeUsuarioSidebar">Carregando...</p>
+            </div> 
+            
+            <nav class="nav-side-bar">
+                <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a href="dashboard.html">Início</a></div>
+                <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a href="produtos.html">Produtos</a></div>
+                <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a href="./estoque.html">Estoques</a></div>
+                <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
+                <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
+                <div class="secoes active"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
+                <div class="secoes"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes</a></div>
+                <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
+            </nav>
+        </div>
 
         <div class="logout-link">
-            <a href="./login.html">← Deslogar</a>
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
         </div>
     </section>
 
     <main>
-        <div class="main-header">
-            <div class="titulo">
-                <h2><img src="./img/mala.png" alt=""> Novo Funcionário</h2>
-                <p>Gerencie a equipe, cargos, salários e horas extras.</p>
+        <div class="main-container">
+            <div class="main-header">
+                <div class="titulo">
+                    <h2><img src="./img/mala.png" alt=""> Novo Funcionário</h2>
+                    <p>Insira as credenciais e dados cadastrais da nova contratação.</p>
+                </div>
+                <div class="atalhos-main">
+                    <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
+                </div>
             </div>
-            <div class="atalhos-main">
-                <a href="funcionarios.html"><button>← Voltar à Equipe</button></a>
-            </div>
+
+            <form id="formFuncionario">
+                <div class="inputs-cad">
+                    <div class="input-divs">
+                        <label for="nome"><img src="./img/inf-pessoais-cad-func.png" alt="">Nome Completo</label>
+                        <input type="text" id="nome" required>
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="rg"><img src="./img/inf-pessoais-cad-func.png" alt=""> RG</label>
+                        <input type="text" id="rg" required>
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="cpf"><img src="./img/inf-pessoais-cad-func.png" alt=""> CPF</label>
+                        <input type="text" id="cpf" required>
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="telefone"><img src="./img/tel-cad-func.png" alt=""> Telefone</label>
+                        <input type="text" id="telefone">
+                    </div>
+
+                    <div class="input-divs"> 
+                        <label for="email"><img src="./img/email-cad-func.png" alt=""> Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="dataNascimento"><img src="./img/data-cad-func.png" alt=""> Data de Nascimento</label>
+                        <input type="date" id="dataNascimento" required>
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="departamento"><img src="./img/inf-pessoais-cad-func.png" alt=""> Departamento</label>
+                        <input type="text" id="departamento">
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="cargo"><img src="./img/inf-pessoais-cad-func.png" alt=""> Cargo/Função</label>
+                        <input type="text" id="cargo" required>
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="salario"><img src="./img/sifrao-cad-func.png" alt=""> Salário Base (R$)</label>
+                        <input type="number" step="0.01" id="salario" required>
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="cep"><img src="./img/ender-cad-func.png" alt=""> CEP</label>
+                        <input type="text" id="cep">
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="rua"><img src="./img/ender-cad-func.png" alt=""> Rua</label>
+                        <input type="text" id="rua">
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="bairro"><img src="./img/ender-cad-func.png" alt=""> Bairro</label>
+                        <input type="text" id="bairro">
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="cidade"><img src="./img/ender-cad-func.png" alt=""> Cidade</label>
+                        <input type="text" id="cidade">
+                    </div>
+
+                    <div class="input-divs">
+                        <label for="estado"><img src="./img/ender-cad-func.png" alt=""> Estado</label>
+                        <input type="text" id="estado">
+                    </div>
+                    
+                    <div class="input-divs">
+                        <label for="complemento"><img src="./img/ender-cad-func.png" alt=""> Complemento</label>
+                        <input type="text" id="complemento">
+                    </div>
+                </div>
+                <button type="submit" id="cadastrarFuncionario">Confirmar e Cadastrar</button>
+            </form>
         </div>
-        <form action="">
-            <div class="inputs-cad">
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt="">Nome Completo</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> RG</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> CPF</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/tel-cad-func.png" alt=""> elefone</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs"> 
-                    <label for=""><img src="./img/email-cad-func.png" alt=""> Email</label>
-                    <input type="email">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/data-cad-func.png" alt=""> Data de Nascimento</label>
-                    <input type="date">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Departamento</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Cargo/Função</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/sifrao-cad-func.png" alt=""> Salário Base (R$)</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> CEP</label>
-                    <input type="number">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Rua</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Bairro</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Cidade</label>
-                    <input type="text">
-                </div>
-
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Estado</label>
-                    <input type="text">
-                </div>
-                
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Complemento</label>
-                    <input type="text">
-                </div>
-            </div>
-            <button type="submit" id="cadastrarFuncionario">Cadastrar Funcionário</button>
-        </form>
     </main>
+
+    <script src="funcionariosCadastrar.js"></script>
 </body>
 </html>
