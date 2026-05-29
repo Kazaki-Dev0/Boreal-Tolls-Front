@@ -116,20 +116,6 @@
             box-shadow: 0 0 0 3px rgba(6, 59, 36, 0.1);
         }
 
-        .input-group input[type="file"] {
-            padding: 10px 16px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .input-group .field-hint {
-            color: #777;
-            font-size: 0.75rem;
-            display: block;
-            margin-top: 4px;
-            padding-left: 4px;
-        }
-
         .btn-submit {
             width: 100%;
             padding: 14px;
@@ -223,15 +209,6 @@
                         <input type="password" id="reg-confirmar-senha" placeholder="Confirme sua senha" required>
                     </div>
                     
-                    <div class="input-group">
-                        <input type="url" id="reg-foto-url" placeholder="Link/URL da foto de perfil (Opcional)">
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="file" id="reg-foto-arquivo" accept="image/*">
-                        <span class="field-hint">Ou selecione um arquivo de imagem do seu dispositivo</span>
-                    </div>
-
                     <button type="submit" class="btn-submit">Registrar</button>
                 </form>
                 <div class="form-footer">
@@ -245,7 +222,7 @@
     <script>
         const apiBaseURL = "http://localhost:5187/api/Auth"; 
 
-        // 1. FUNÇÃO DE LOGIN (Salva os dados de imagem retornados pelo C# no navegador)
+        // 1. FUNÇÃO DE LOGIN (Guarda apenas o Token JWT com segurança)
         async function handleLogin(event) {
             event.preventDefault(); 
             
@@ -289,7 +266,7 @@
             }
         }
 
-        // 2. FUNÇÃO DE CADASTRO CORRIGIDA (Formata o Base64 corretamente antes do envio)
+        // 2. FUNÇÃO DE CADASTRO (Envia apenas Nome, Email e Senha)
         async function handleRegister(event) {
             event.preventDefault();
 

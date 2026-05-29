@@ -8,174 +8,98 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="sidebar.css">
+    
     <style>
-        /* =========================================
-           1. VARIÁVEIS DE COR
-        ========================================= */
-        :root {
-            --bg-main: #0a0a0a;
-            --bg-sidebar: #06100b;
-            --bg-panel: #131715;
-            --text-primary: #ffffff;
-            --neon-green: #87ffb9;
-            --border-color: #242e29;
-        }
-
-        /* =========================================
-           2. RESET E CONFIGURAÇÕES GERAIS
-        ========================================= */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background:
-    linear-gradient(
-        109deg,
-        #090909 32.55%,
-        #002c18 79.54%,
-        #003019 88.95%
-    );
-            color: var(--text-primary);
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden; /* Evita scroll na página principal */
+        }
+
+        .main-wrapper {
             display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        } 
+            min-height: 100vh;
+            width: 100vw;
+        }
 
         a {
             text-decoration: none;
-            color: #ffffff;
+            color: inherit;
         }
 
-        /* =========================================
-           3. ESTRUTURA PRINCIPAL (LAYOUT)
-        ========================================= */
-        .main-wrapper {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .content {
-            flex: 1;
-            padding: 3rem 4rem;
-            background: radial-gradient(circle at top right, #0d1a13, #0a0a0a);
-            overflow-y: auto;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        /* =========================================
-           4. SIDEBAR
-        ========================================= */
+        /* Padronização do Sidebar conforme o Dashboard */
         .side-bar {
-            background-color: #1a1a1a; 
-            padding: 10px;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid var(--border-color);
-            min-width: 460px;
-            width: 320px;
+            justify-content: space-between;
             height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px; /* Largura padrão ideal */
+            flex-shrink: 0;
         }
 
-        .sidebar-header {
-            padding: 2rem 1rem 1rem 1rem;
-            text-align: center;
-        }
-
-        .logo {
-            width: auto;
-            max-width: 406px;
+        .secoes:nth-child(2) {
+            background-color: #2e4a3e; /* Aba de Produtos Ativa */
         }
 
         .perfil {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            padding-bottom: 1.5rem;
+            justify-content: center;
             text-align: center;
+            gap: 6px; 
+            width: 100%;
         }
 
         .perfil img {
-            width: 80px;
-            height: 80px;
-            background: #c8e6c9;
+            width: 95px;
+            height: 95px;
             border-radius: 50%;
-            margin-bottom: 5px;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
         }
 
         .perfil p {
-            font-size: 24px;
-        }
-
-        .nav-side-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .secoes {
-            background-color: #0a0a0a;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.3s;
-            gap: 10%;
-            cursor: pointer;
-            color: #b0b0b0; /* Cor padrão alterada para bater com as outras páginas */
-            font-size: 0.9rem; /* Tamanho ajustado conforme solicitado */
+            font-size: 1rem;
             font-weight: 500;
-        }
-
-        .secoes a {
-            color: inherit;
-        }
-
-        .secoes:hover {
-            background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .secoes.active {
-            background-color: #3b5745;
-            color: #ffffff;
-        }
-
-        .logout-link {
-            margin-top: auto;
-            padding: 15px 25px;
-            font-size: 0.9rem; /* Ajustado para acompanhar os atalhos */
-            font-weight: 500;
-        }
-
-        .logout-link a {
-            color: #b0b0b0; /* Alterado para a cor cinza padrão discreta */
-            transition: color 0.3s;
-        }
-
-        .logout-link a:hover {
-            color: #ffffff; /* Acende em branco ao passar o mouse */
+        /* Área de Conteúdo Anti-Scroll Lateral */
+        .content {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto; /* Rolagem apenas vertical no conteúdo */
+            max-width: calc(100vw - 260px);
         }
 
         /* =========================================
-           5. PAINEL DE PRODUTOS E TOPO
+           PAINEL DE PRODUTOS E TOPO
         ========================================= */
         .product-panel {
-            background: rgba(26, 26, 26, 0.8);
-            border: 1px solid rgba(135, 255, 185, 0.2);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 0 30px rgba(135, 255, 185, 0.05);
             width: 100%;
-            max-width: 1100px;
+            max-width: 1250px;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 20px auto;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
         }
 
         .panel-header {
@@ -188,7 +112,7 @@
         .panel-title h2 {
             font-size: 1.5rem;
             font-weight: 400;
-            color: var(--text-primary);
+            color: #ffffff;
             margin-bottom: 5px;
         }
 
@@ -205,7 +129,7 @@
             background: rgba(135, 255, 185, 0.1);
             padding: 10px;
             border-radius: 8px;
-            color: var(--neon-green);
+            color: #7bcf9c;
             font-size: 1.8rem;
             display: flex;
             align-items: center;
@@ -232,7 +156,7 @@
         .search-box input {
             background: transparent;
             border: none;
-            color: var(--text-primary);
+            color: #ffffff;
             outline: none;
             width: 100%;
             font-size: 0.85rem;
@@ -263,7 +187,7 @@
         }
 
         /* =========================================
-           6. TABELA E BOTÕES DE AÇÃO
+           TABELA E BOTÕES DE AÇÃO
         ========================================= */
         .product-table {
             width: 100%;
@@ -273,7 +197,7 @@
         .product-table th {
             text-align: left;
             padding: 12px 15px;
-            color: var(--text-primary);
+            color: #ffffff;
             font-size: 0.8rem;
             font-weight: 400;
             border-bottom: 1px solid #333;
@@ -356,7 +280,7 @@
         }
 
         /* =========================================
-           7. MODAL DE DETALHES
+           MODAL DE DETALHES
         ========================================= */
         .modal-overlay {
             position: fixed;
@@ -403,13 +327,13 @@
 
         .modal-header-left i {
             font-size: 2rem;
-            color: var(--neon-green);
+            color: #7bcf9c;
         }
 
         .modal-header h3 {
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: #ffffff;
         }
 
         .btn-delete {
@@ -462,52 +386,54 @@
 
     <div class="main-wrapper">
         <section class="side-bar">
-            <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+            <div>
+                <div class="sidebar-header">
+                    <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+                </div>
+            
+                <div class="perfil">
+                    <img id="user-avatar" src="./img/perfil-icon.png" alt="Foto de Perfil">
+                    <p id="user-name">Carregando...</p>
+                </div> 
+            
+                <nav class="nav-side-bar">
+                    <div class="secoes">
+                        <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
+                        <a href="dashboard.html">Início</a>
+                    </div>
+                    <div class="secoes">
+                        <img src="./img/produtos.png" alt="" class="secao-icon">
+                        <a href="#">Produtos</a>
+                    </div>
+                    <div class="secoes">
+                        <img src="./img/estoque.png" alt="" class="secao-icon">
+                        <a href="./estoque.html">Estoques</a>
+                    </div>
+                    <div class="secoes">
+                        <img src="./img/financeiro.png" alt="" class="secao-icon">
+                        <a href="./financeiro.html">Financeiro</a>
+                    </div>
+                    <div class="secoes">
+                        <img src="./img/vendas.png" alt="" class="secao-icon">
+                        <a href="vendas.html">Vendas</a>
+                    </div>
+                    <div class="secoes">
+                        <img src="./img/funcionarios.png" alt="" class="secao-icon">
+                        <a href="./funcionarios.html">Funcionários</a>
+                    </div>
+                    <div class="secoes">
+                        <img src="./img/clientes.png" alt="" class="secao-icon">
+                        <a href="./ClienteFornecedor.html">Clientes</a>
+                    </div>
+                    <div class="secoes">
+                        <img src="./img/relatorios.png" alt="" class="secao-icon">
+                        <a href="./categorias.html">Categorias</a>
+                    </div>
+                </nav>
             </div>
-        
-            <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p>Fulano de Tal</p>
-            </div> 
-        
-            <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-                <div class="secoes active">
-                    <img src="./img/produtos.png" alt="" class="secao-icon">
-                    <a href="#">Produtos</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/estoque.png" alt="" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/financeiro.png" alt="" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/vendas.png" alt="" class="secao-icon">
-                    <a href="vendas.html">Vendas</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" alt="" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/clientes.png" alt="" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-                <div class="secoes">
-                    <img src="./img/relatorios.png" class="secao-icon">
-                    <a href="./categorias.html">Categorias</a>
-                </div>
-            </nav>
 
             <div class="logout-link">
-                <a href="./login.html">← Deslogar</a>
+                <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
             </div>
         </section>
 
@@ -554,22 +480,79 @@
     </div>
 
     <div id="modalDetalhes" class="modal-overlay" onclick="fecharModalFora(event)">
-        <div class="modal-box">
-            </div>
+        <div class="modal-box"></div>
     </div>
 
     <script>
         const apiURL = "http://localhost:5187/api/Produtos";
         let produtosLocais = []; 
 
+        /* ========================================================
+           FUNÇÃO AUXILIAR DE DECODIFICAÇÃO JWT
+        ======================================================== */
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error("Falha ao decodificar token:", e);
+                return null;
+            }
+        }
+
         function obterToken() {
             return localStorage.getItem("token") || sessionStorage.getItem("token");
         }
 
+        /* ========================================================
+           CARREGAMENTO DE SESSÃO, NOME E PRODUTOS
+        ======================================================== */
         document.addEventListener("DOMContentLoaded", () => {
+            const token = obterToken();
+            
+            if (!token) {
+                document.getElementById('user-name').textContent = "Usuário não logado";
+                window.location.replace("./login.html");
+                return;
+            }
+
+            const payloadJson = parseJwt(token);
+
+            if (payloadJson) {
+                const nomeUsuario = payloadJson["unique_name"] || 
+                                    payloadJson["name"] || 
+                                    payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                                    "Usuário Boreal";
+                
+                document.getElementById('user-name').textContent = nomeUsuario;
+            } else {
+                document.getElementById('user-name').textContent = "Erro de Sessão";
+            }
+
             buscarProdutos();
         });
 
+        /* ========================================================
+           LOGOUT
+        ======================================================== */
+        function efectuarLogout() {
+            try {
+                localStorage.clear();
+                sessionStorage.clear();
+            } catch (e) {
+                console.error("Erro ao efetuar limpeza:", e);
+            }
+            window.location.replace("./login.html");
+        }
+
+        /* ========================================================
+           REQUISIÇÕES E LÓGICA DE PRODUTOS
+        ======================================================== */
         async function buscarProdutos() {
             const tbody = document.querySelector(".product-table tbody");
             if (!tbody) return;
@@ -587,7 +570,7 @@
                 if (!resposta.ok) {
                     if (resposta.status === 401) {
                         alert("Sessão expirada. Faça login novamente.");
-                        window.location.href = "./login.html";
+                        window.location.replace("./login.html");
                         return;
                     }
                     throw new Error(`Erro: ${resposta.status}`);
@@ -607,15 +590,13 @@
             tbody.innerHTML = "";
 
             if (lista.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-secondary);">Nenhum produto encontrado.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #aaa;">Nenhum produto encontrado.</td></tr>`;
                 return;
             }
 
             lista.forEach(produto => {
                 const tr = document.createElement("tr");
                 const valorFormatado = (produto.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-                // CORREÇÃO: Varre todas as possíveis nomenclaturas que o backend C# pode enviar para a quantidade de estoque
                 const estoqueAtual = produto.quantidadeEstoque ?? produto.qtdEstoque ?? produto.QuantidadeEstoque ?? produto.QtdEstoque ?? 0;
 
                 tr.innerHTML = `
@@ -658,8 +639,6 @@
 
                 const produtoCompleto = await resposta.json();
                 const valorFormatado = (produtoCompleto.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                
-                // CORREÇÃO: Varre as nomenclaturas no modal também para evitar exibir 0 indevidamente
                 const estoqueAtualModal = produtoCompleto.quantidadeEstoque ?? produtoCompleto.qtdEstoque ?? produtoCompleto.QuantidadeEstoque ?? produtoCompleto.QtdEstoque ?? 0;
 
                 modalBox.innerHTML = `
@@ -750,7 +729,6 @@
             }
         }
 
-        // Redireciona para a página de cadastro passando o ID na URL
         function abrirModalEdicao(idProduto) {
             window.location.href = `./cadastro_produtos.html?id=${idProduto}`;
         }

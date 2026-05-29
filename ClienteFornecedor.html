@@ -1,373 +1,425 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Boreal Tools - Clientes</title>
-
-<link rel="stylesheet" href="sidebar.css">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-
-/* =========================
-   RESET
-========================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body{
-
-    background:
-    linear-gradient(
-        109deg,
-        #090909 32.55%,
-        #002c18 79.54%,
-        #003019 88.95%
-    );
-
-    color:white;
-
-    display:grid;
-
-    grid-template-columns:400px 1fr;
-
-    min-height:100vh;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-/* =========================
-   PAGINA ATIVA
-========================= */
-
-.secoes:nth-child(7){
-    background-color:#2e4a3e;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-main{
-
-    padding:25px;
-
-    overflow-y:auto;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:flex-start;
-}
-
-/* =========================
-   PAINEL
-========================= */
-
-.clients-card{
-
-    width:95%;
-
-    max-width:1250px;
-
-    border-radius:20px;
-
-    padding:40px;
-
-    margin:20px auto;
-
-    background:rgba(20,20,20,0.7);
-
-    border:1px solid #2e4a3e;
-
-    box-shadow:
-    0 0 25px rgba(0,255,120,0.08);
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.clients-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:flex-start;
-
-    margin-bottom:30px;
-}
-
-.title-area h2{
-
-    font-size:2rem;
-
-    font-weight:500;
-
-    margin-bottom:10px;
-}
-
-.subtitle{
-
-    color:#7bcf9c;
-
-    font-size:0.95rem;
-}
-
-.subtitle span{
-    color:#aaa;
-}
-
-.panel-icon{
-
-    width:50px;
-    height:50px;
-
-    border-radius:10px;
-
-    background:#163125;
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    color:#7bcf9c;
-
-    font-size:24px;
-}
-
-/* =========================
-   TOOLBAR
-========================= */
-
-.actions{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:40px;
-}
-
-.search-box{
-
-    width:340px;
-
-    display:flex;
-
-    align-items:center;
-
-    border:1px solid #3a4a43;
-
-    border-radius:30px;
-
-    padding:10px 18px;
-
-    background:transparent;
-}
-
-.search-box input{
-
-    width:100%;
-
-    background:none;
-
-    border:none;
-
-    outline:none;
-
-    color:white;
-
-    font-size:0.95rem;
-}
-
-.search-box input::placeholder{
-    color:#777;
-}
-
-.search-box i{
-    color:#777;
-}
-
-/* =========================
-   BOTAO
-========================= */
-
-.btn-add{
-
-    background:#9cc8aa;
-
-    color:black;
-
-    padding:12px 24px;
-
-    border-radius:10px;
-
-    font-weight:600;
-
-    transition:0.3s;
-}
-
-.btn-add:hover{
-    background:#81c784;
-}
-
-/* =========================
-   TABELA
-========================= */
-
-.clients-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-}
-
-.clients-table th{
-
-    text-align:left;
-
-    padding:18px 15px;
-
-    color:white;
-
-    font-size:0.95rem;
-
-    font-weight:500;
-
-    border-bottom:1px solid #2b2b2b;
-}
-
-.clients-table td{
-
-    padding:22px 15px;
-
-    color:#cfcfcf;
-
-    border-bottom:1px solid #2b2b2b;
-}
-
-.clients-table tbody tr:hover{
-    background:rgba(255,255,255,0.02);
-}
-
-/* =========================
-   BOTAO DETALHES
-========================= */
-
-.btn-detail{
-
-    background:#9cc8aa;
-
-    color:black;
-
-    border:none;
-
-    padding:8px 18px;
-
-    border-radius:20px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:0.3s;
-}
-
-.btn-detail:hover{
-    background:#81c784;
-}
-
-/* =========================
-   LINHAS VAZIAS
-========================= */
-
-.empty-row td{
-    height:55px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Clientes</title>
+
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100vw;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Padronização da Barra Lateral */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px;
+            flex-shrink: 0;
+        }
+
+        /* Destaque na seção de Clientes (7º item do menu) */
+        .secoes:nth-child(7) {
+            background-color: #2e4a3e;
+        }
+
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px; 
+            width: 100%;
+        }
+
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
+
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Área do Painel Principal */
+        main {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            max-width: calc(100vw - 260px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .client-panel {
+            width: 100%;
+            max-width: 1250px;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 20px auto;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .panel-title h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .panel-subtitle {
+            color: #6da381;
+            font-size: 0.8rem;
+        }
+
+        .panel-icon {
+            background: rgba(135, 255, 185, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            color: #7bcf9c;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border: 1px solid #4a5a50;
+            border-radius: 20px;
+            padding: 8px 16px;
+            width: 320px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            outline: none;
+            width: 100%;
+            font-size: 0.85rem;
+        }
+
+        .search-box input::placeholder { color: #666; }
+        .search-box i { color: #666; }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            background-color: #80B297;
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn:hover { background-color: #81c784; }
+
+        /* Grid dos Cards (Baseado em Funcionários) */
+        .client-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .client-card {
+            background: rgba(15, 15, 15, 0.6);
+            border: 1px solid #23332b;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.25s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .client-card:hover {
+            border-color: #7bcf9c;
+            transform: translateY(-3px);
+            background: rgba(20, 20, 20, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .client-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .client-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(123, 207, 156, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #7bcf9c;
+            font-size: 18px;
+            border: 1px solid #2e4a3e;
+        }
+
+        .client-name h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .client-name p { color: #6da381; font-size: 0.8rem; }
+
+        .client-id {
+            color: #7bcf9c;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(123, 207, 156, 0.08);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .client-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .client-table tr { border-bottom: 1px solid #23332b; }
+        .client-table tr:last-child { border: none; }
+        .client-table td { padding: 10px 0; font-size: 0.85rem; }
+        .client-table td:first-child { color: #888; }
+        .client-table td:last-child { text-align: right; color: white; font-weight: 500; }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-detalhes {
+            background: transparent;
+            color: #7bcf9c;
+            border: 1px solid #2e4a3e;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-detalhes:hover {
+            background: rgba(123, 207, 156, 0.1);
+            border-color: #7bcf9c;
+        }
+
+        .btn-delete {
+            background: transparent;
+            color: #e57373;
+            border: 1px solid rgba(229, 115, 115, 0.3);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: rgba(229, 115, 115, 0.1);
+            border-color: #e57373;
+        }
+
+        /* Modal Visual */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #121212;
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 30px rgba(0, 255, 120, 0.1);
+            width: 90%;
+            max-width: 650px;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2e4a3e;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 { font-size: 1.3rem; color: #7bcf9c; font-weight: 500; }
+        .modal-close { background: transparent; border: none; color: #aaa; font-size: 1.5rem; cursor: pointer; transition: 0.2s; }
+        .modal-close:hover { color: #e57373; }
+
+        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .info-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: #161616;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #23332b;
+            font-size: 0.9rem;
+        }
+
+        .info-box strong {
+            font-size: 0.75rem;
+            color: #6da381;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media(max-width:900px){
+            .main-wrapper { flex-direction: column; }
+            .side-bar { display: none; }
+            main { max-width: 100vw; }
+            .toolbar { flex-direction: column; align-items: flex-start; }
+            .actions { flex-wrap: wrap; width: 100%; }
+            .search-box { width: 100%; }
+            .details-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
+<div class="main-wrapper">
+    <section class="side-bar">
+        <div>
+            <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+            </div>
 
-<section class="side-bar">
+            <div class="perfil">
+                <img src="./img/perfil-icon.png" alt="Perfil">
+                <p id="nomeUsuarioSidebar">Carregando...</p>
+            </div>
 
-    <div class="sidebar-header">
-        <img src="./img/LogoBorealTools.png"
-        alt="Boreal Tools"
-        class="logo">
-    </div>
-
-    <div class="perfil">
-
-        <img src="./img/perfil-icon.png"
-        alt="Perfil">
-
-        <p>Fulano de Tal</p>
-
-    </div>
-
-    <nav class="nav-side-bar">
-
-        <div class="secoes">
-            <img src="./img/inicio.sidebar.png" class="secao-icon">
-            <a href="dashboard.html">Início</a>
+            <nav class="nav-side-bar">
+                <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a href="dashboard.html">Início</a></div>
+                <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a href="produtos.html">Produtos</a></div>
+                <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a href="./estoque.html">Estoques</a></div>
+                <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
+                <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
+                <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
+                <div class="secoes active"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes</a></div>
+                <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
+            </nav>
         </div>
 
-        <div class="secoes">
-            <img src="./img/produtos.png" class="secao-icon">
-            <a href="produtos.html">Produtos</a>
+        <div class="logout-link">
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
         </div>
+    </section>
 
-        <div class="secoes">
-            <img src="./img/estoque.png" class="secao-icon">
-            <a href="./estoque.html">Estoques</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/financeiro.png" class="secao-icon">
-            <a href="./financeiro.html">Financeiro</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/vendas.png" class="secao-icon">
-            <a href="vendas.html">Vendas</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/funcionarios.png" class="secao-icon">
-            <a href="./funcionarios.html">Funcionários</a>
-        </div>
-
-        <div class="secoes active">
-            <img src="./img/clientes.png" class="secao-icon">
-            <a href="./ClienteFornecedor.html">Clientes</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/relatorios.png" class="secao-icon">
-            <a href="./categorias.html">Categorias</a>
-        </div>
+    <main>
+        <div class="client-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <h2>Clientes e Fornecedores</h2>
+                    <div class="subtitle panel-subtitle">Gerencie os registros cadastrais, contatos, CPF/CNPJ e tipos de vínculo.</div>
+                </div>
+                <div class="panel-icon"><i class="fa-solid fa-user"></i></div>
+            </div>
 
     </nav>
 
@@ -396,8 +448,14 @@ main{
             <div class="subtitle">
                 <span>Gerencie sua base de clientes/fornecedores e acompanhe informações detalhadas.</span>
 
+                <div class="actions">
+                    <a href="cadastrarCliente.html" class="btn">+ Cadastrar</a>
+                </div>
             </div>
 
+            <div class="client-grid" id="client-grid">
+                <p style="color: #aaa;">Carregando dados dos registros...</p>
+            </div>
         </div>
 
         <div class="panel-icon">
@@ -422,6 +480,7 @@ main{
         </a>
 
     </div>
+</div>
 
 
     <table class="clients-table">

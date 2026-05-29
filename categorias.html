@@ -1,468 +1,431 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boreal Tools - Categorias</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-<title>Boreal Tools - Categorias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<link rel="stylesheet" href="sidebar.css">
+        body {
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+        /* Container principal unificado para alinhar a sidebar e o conteúdo sem bugs */
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100vw;
+        }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-body{
-    background:
-    linear-gradient(
-        109deg,
-        #090909 32.55%,
-        #002c18 79.54%,
-        #003019 88.95%
-    );
+        /* Padronização da Barra Lateral */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px; 
+            width: 260px;
+            flex-shrink: 0;
+        }
 
-    color:white;
-    display:grid;
-    grid-template-columns:400px 1fr;
-    min-height:100vh;
-}
+        .secoes.active {
+            background-color: #2e4a3e;
+        }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px; 
+            width: 100%;
+        }
 
-/* =========================
-   PAGINA ATIVA
-========================= */
-.secoes.active{
-    background-color:#2e4a3e;
-}
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
 
-/* =========================
-   MAIN
-========================= */
-main{
-    padding:25px;
-    overflow-y:auto;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-}
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-/* =========================
-   PAINEL
-========================= */
-.category-panel{
-    width:95%;
-    max-width:1250px;
-    border-radius:20px;
-    padding:40px;
-    margin:20px auto;
-    background:rgba(20,20,20,0.7);
-    border:1px solid #2e4a3e;
-    box-shadow: 0 0 25px rgba(0,255,120,0.08);
-}
+        /* Área do Painel Principal com rolagem controlada */
+        main {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            max-width: calc(100vw - 260px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-/* =========================
-   HEADER
-========================= */
-.panel-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:30px;
-}
+        .category-panel {
+            width: 100%;
+            max-width: 1250px;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 20px auto;
+            background: rgba(20, 20, 20, 0.72);
+            border: 1px solid #2e4a3e;
+            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
+        }
 
-.panel-title h2{
-    font-size:2rem;
-    font-weight:500;
-    margin-bottom:10px;
-}
+        /* HEADER */
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
 
-.panel-subtitle{
-    color:#aaa;
-    font-size:0.95rem;
-}
+        .panel-title h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
 
-.panel-icon{
-    width:50px;
-    height:50px;
-    border-radius:10px;
-    background:#163125;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#7bcf9c;
-    font-size:28px;
-}
+        .panel-subtitle {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
 
-/* =========================
-   TOOLBAR
-========================= */
-.table-toolbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:35px;
-    gap:20px;
-}
+        .panel-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: #163125;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #7bcf9c;
+            font-size: 28px;
+        }
 
-.search-box{
-    width:350px;
-    display:flex;
-    align-items:center;
-    border:1px solid #3a4a43;
-    border-radius:30px;
-    padding:10px 18px;
-    background:transparent;
-}
+        /* TOOLBAR */
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            gap: 20px;
+        }
 
-.search-box input{
-    width:100%;
-    background:none;
-    border:none;
-    outline:none;
-    color:white;
-    font-size:0.95rem;
-}
+        .search-box {
+            width: 350px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #3a4a43;
+            border-radius: 30px;
+            padding: 10px 18px;
+            background: transparent;
+        }
 
-.search-box input::placeholder{
-    color:#777;
-}
+        .search-box input {
+            width: 100%;
+            background: none;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 0.95rem;
+        }
 
-.search-box i{
-    color:#777;
-}
+        .search-box input::placeholder {
+            color: #777;
+        }
 
-/* =========================
-   BOTÕES
-========================= */
-.btn-add{
-    background:#9cc8aa;
-    color:black;
-    padding:12px 24px;
-    border-radius:10px;
-    font-weight:600;
-    border: none;
-    cursor: pointer;
-    transition:0.3s;
-}
+        .search-box i {
+            color: #777;
+        }
 
-.btn-add:hover{
-    background:#81c784;
-}
+        /* BOTÕES */
+        .btn-add {
+            background: #9cc8aa;
+            color: black;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.btn-delete{
-    background:#e57373;
-    color:black;
-    border:none;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    font-size:1.2rem;
-    cursor:pointer;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    transition:0.3s;
-}
+        .btn-add:hover {
+            background: #81c784;
+        }
 
-.btn-delete:hover{
-    background:#ef5350;
-    color:white;
-    box-shadow: 0 0 12px rgba(239, 83, 80, 0.4);
-}
+        .btn-delete {
+            background: #e57373;
+            color: black;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
 
-.btn-back{
-    background:#2b2b2b;
-    color:#aaa;
-    border:1px solid #3a4a43;
-    padding:12px 24px;
-    border-radius:10px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
-}
+        .btn-delete:hover {
+            background: #ef5350;
+            color: white;
+            box-shadow: 0 0 12px rgba(239, 83, 80, 0.4);
+        }
 
-.btn-back:hover{
-    background:#3a4a43;
-    color:white;
-}
+        .btn-back {
+            background: #2b2b2b;
+            color: #aaa;
+            border: 1px solid #3a4a43;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-/* =========================
-   LISTA DE CATEGORIAS (Grid para ID, Nome e Botão)
-========================= */
-.category-list{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-}
+        .btn-back:hover {
+            background: #3a4a43;
+            color: white;
+        }
 
-.category-card{
-    background:#1c1c1c;
-    border:1px solid #2b2b2b;
-    border-radius:18px;
-    padding:22px 28px;
-    display:grid;
-    grid-template-columns: 1fr 4fr auto; 
-    align-items:center;
-    transition:0.3s;
-    gap:20px;
-}
+        /* LISTA DE CATEGORIAS */
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
 
-.category-card:hover{
-    border-color:#2e4a3e;
-    background:#202020;
-}
+        .category-card {
+            background: #1c1c1c;
+            border: 1px solid #2b2b2b;
+            border-radius: 18px;
+            padding: 22px 28px;
+            display: grid;
+            grid-template-columns: 1fr 4fr auto; 
+            align-items: center;
+            transition: 0.3s;
+            gap: 20px;
+        }
 
-/* =========================
-   CAMPOS DO FORMULÁRIO DE CADASTRO
-========================= */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 25px;
-}
+        .category-card:hover {
+            border-color: #2e4a3e;
+            background: #202020;
+        }
 
-.form-input {
-    width: 100%;
-    max-width: 600px;
-    background: rgba(28, 28, 28, 0.8);
-    border: 1px solid #3a4a43;
-    border-radius: 10px;
-    padding: 14px 20px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-    transition: 0.3s;
-}
+        /* FORMULÁRIO */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
 
-.form-input:focus {
-    border-color: #7bcf9c;
-    box-shadow: 0 0 10px rgba(0, 255, 120, 0.15);
-}
+        .form-input {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(28, 28, 28, 0.8);
+            border: 1px solid #3a4a43;
+            border-radius: 10px;
+            padding: 14px 20px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
 
-.form-actions {
-    display: flex;
-    gap: 15px;
-}
+        .form-input:focus {
+            border-color: #7bcf9c;
+            box-shadow: 0 0 10px rgba(0, 255, 120, 0.15);
+        }
 
-/* =========================
-   INFORMAÇÕES
-========================= */
-.info-group{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
+        .form-actions {
+            display: flex;
+            gap: 15px;
+        }
 
-.info-label{
-    color:#888;
-    font-size:0.85rem;
-}
+        /* INFORMAÇÕES */
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-.info-value{
-    font-size:1rem;
-    font-weight:600;
-    color:white;
-}
+        .info-label {
+            color: #888;
+            font-size: 0.85rem;
+        }
 
-/* =========================
-   RESPONSIVO
-========================= */
-@media(max-width:1200px){
-    body{
-        grid-template-columns:320px 1fr;
-    }
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+        }
 
-    .table-toolbar{
-        flex-direction:column;
-        align-items:flex-start;
-    }
+        /* RESPONSIVO */
+        @media(max-width:1200px) {
+            .table-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-    .search-box{
-        width:100%;
-    }
+            .search-box {
+                width: 100%;
+            }
 
-    .category-card{
-        grid-template-columns: 1fr;
-        gap:15px;
-    }
-    
-    .btn-delete {
-        border-radius: 8px;
-        width: 100%;
-        height: 44px;
-    }
+            .category-card {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .btn-delete {
+                border-radius: 8px;
+                width: 100%;
+                height: 44px;
+            }
 
-    .form-actions {
-        flex-direction: column;
-    }
-    .form-input {
-        max-width: 100%;
-    }
-}
+            .form-actions {
+                flex-direction: column;
+            }
 
-@media(max-width:900px){
-    body{
-        grid-template-columns:1fr;
-    }
+            .form-input {
+                max-width: 100%;
+            }
+        }
 
-    .side-bar{
-        display:none;
-    }
-
-    .category-panel{
-        width:100%;
-    }
-}
-
-.perfil img {
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #7bcf9c;
-    box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
-    background-color: #141414;
-}
-</style>
+        @media(max-width:900px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .side-bar {
+                display: none;
+            }
+            main {
+                max-width: 100vw;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<section class="side-bar">
-
-    <div class="sidebar-header">
-        <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-    </div>
-
-    <div class="perfil">
-        <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
-        <p id="user-name">Carregando...</p>
-    </div>
-
-    <nav class="nav-side-bar">
-        <div class="secoes">
-            <img src="./img/inicio.sidebar.png" class="secao-icon">
-            <a href="dashboard.html">Início</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/produtos.png" class="secao-icon">
-            <a href="produtos.html">Produtos</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/estoque.png" class="secao-icon">
-            <a href="./estoque.html">Estoques</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/financeiro.png" class="secao-icon">
-            <a href="./financeiro.html">Financeiro</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/vendas.png" class="secao-icon">
-            <a href="vendas.html">Vendas</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/funcionarios.png" class="secao-icon">
-            <a href="./funcionarios.html">Funcionários</a>
-        </div>
-
-        <div class="secoes">
-            <img src="./img/clientes.png" class="secao-icon">
-            <a href="./ClienteFornecedor.html">Clientes</a>
-        </div>
-
-        <div class="secoes active">
-            <img src="./img/relatorios.png" class="secao-icon">
-            <a href="./categorias.html">Categorias</a>
-        </div>
-    </nav>
-
-    <div class="logout-link">
-        <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
-    </div>
-
-</section>
-
-<main>
-
-<div class="category-panel">
-
-    <div class="panel-header">
-        <div class="panel-title">
-            <h2 id="panel-main-title">Categorias de Produtos</h2>
-            <div id="panel-main-subtitle" class="panel-subtitle">
-                Gerencie, cadastre e organize as categorias do estoque.
-            </div>
-        </div>
-        
-        <div class="panel-icon">
-            <i class="ph ph-squares-four"></i>
-        </div>
-    </div>
-
-    <div id="view-listing">
-        <div class="table-toolbar">
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Pesquisar por categoria...">
-                <i class="ph ph-magnifying-glass"></i>
+<div class="main-wrapper">
+    <section class="side-bar">
+        <div>
+            <div class="sidebar-header">
+                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
             </div>
 
-            <button id="btn-open-form" class="btn-add">
-                + Nova Categoria
-            </button>
-        </div>
-
-        <div class="category-list" id="category-container">
-            <p style="color: #7bcf9c; text-align: center;">Carregando categorias...</p>
-        </div>
-    </div>
-
-    <div id="view-form" style="display: none;">
-        <form id="form-nova-categoria">
-            
-            <div class="form-group">
-                <label for="nome-categoria" class="info-label" style="font-size: 0.95rem; font-weight: 600;">
-                    Nome da Categoria
-                </label>
-                <input type="text" id="nome-categoria" class="form-input" placeholder="Ex: Ferramentas Manuais" required>
+            <div class="perfil">
+                <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
+                <p id="user-name">Carregando...</p>
             </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn-add">
-                    Salvar Categoria
-                </button>
-                <button type="button" id="btn-back-list" class="btn-back">
-                    ← Voltar para a Listagem
-                </button>
+            <nav class="nav-side-bar">
+                <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a href="dashboard.html">Início</a></div>
+                <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a href="produtos.html">Produtos</a></div>
+                <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a href="./estoque.html">Estoques</a></div>
+                <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
+                <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
+                <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
+                <div class="secoes"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes</a></div>
+                <div class="secoes active"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
+            </nav>
+        </div>
+
+        <div class="logout-link">
+            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
+        </div>
+    </section>
+
+    <main>
+        <div class="category-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <h2 id="panel-main-title">Categorias de Produtos</h2>
+                    <div id="panel-main-subtitle" class="panel-subtitle">
+                        Gerencie, cadastre e organize as categorias do estoque.
+                    </div>
+                </div>
+                
+                <div class="panel-icon">
+                    <i class="ph ph-squares-four"></i>
+                </div>
             </div>
 
-        </form>
-    </div>
+            <div id="view-listing">
+                <div class="table-toolbar">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Pesquisar por categoria...">
+                        <i class="ph ph-magnifying-glass"></i>
+                    </div>
 
+                    <button id="btn-open-form" class="btn-add">
+                        + Nova Categoria
+                    </button>
+                </div>
+
+                <div class="category-list" id="category-container">
+                    <p style="color: #7bcf9c; text-align: center;">Carregando categorias...</p>
+                </div>
+            </div>
+
+            <div id="view-form" style="display: none;">
+                <form id="form-nova-categoria">
+                    <div class="form-group">
+                        <label for="nome-categoria" class="info-label" style="font-size: 0.95rem; font-weight: 600;">
+                            Nome da Categoria
+                        </label>
+                        <input type="text" id="nome-categoria" class="form-input" placeholder="Ex: Ferramentas Manuais" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-add">
+                            Salvar Categoria
+                        </button>
+                        <button type="button" id="btn-back-list" class="btn-back">
+                            ← Voltar para a Listagem
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
 </div>
 
-</main>
-
 <script>
-    // ========================================================
-    // URL CORRIGIDA CONFORME SEU BACKEND (PORTA 5187 / PLURAL)
-    // ========================================================
     const API_URL = "http://localhost:5187/api/Categorias"; 
 
     let listaCategoriasGlobal = [];
@@ -520,9 +483,6 @@ main{
         carregarCategorias();
     });
 
-    /* ========================================================
-       GET: BUSCAR CATEGORIAS NO BANCO
-    ======================================================== */
     async function carregarCategorias() {
         try {
             const response = await fetch(API_URL, {
@@ -545,9 +505,6 @@ main{
         }
     }
 
-    /* ========================================================
-       RENDERIZAÇÃO DA LISTA (APENAS ID E NOME DA CATEGORIA)
-    ======================================================== */
     function renderizarLista(lista) {
         if (lista.length === 0) {
             containerCategorias.innerHTML = `<p style="color: #aaa; text-align: center;">Nenhuma categoria encontrada.</p>`;
@@ -579,9 +536,6 @@ main{
         });
     }
 
-    /* ========================================================
-       POST CORRIGIDO: ENVIAR PARA O CONTROLLER C#
-    ======================================================== */
     document.getElementById('form-nova-categoria').addEventListener('submit', async (e) => {
         e.preventDefault();
         const nomeInput = document.getElementById('nome-categoria').value;
@@ -593,7 +547,6 @@ main{
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
-                // Passando exatamente o DTO esperado pelo seu C# (CategoriaCreateDto)
                 body: JSON.stringify({ Nome: nomeInput }) 
             });
 
@@ -612,9 +565,6 @@ main{
         }
     });
 
-    /* ========================================================
-       DELETE: EXCLUIR CATEGORIA DO BANCO
-    ======================================================== */
     async function deletarCategoria(id) {
         if (!confirm("Tem certeza que deseja excluir esta categoria permanentemente?")) return;
 
@@ -643,9 +593,6 @@ main{
         }
     }
 
-    /* ========================================================
-       FILTRO DINÂMICO DE PESQUISA
-    ======================================================== */
     inputPesquisa.addEventListener('input', (e) => {
         const termoBusca = e.target.value.toLowerCase().trim();
         const filtradas = listaCategoriasGlobal.filter(cat => {
@@ -655,9 +602,6 @@ main{
         renderizarLista(filtradas);
     });
 
-    /* ========================================================
-       CONTROLES DE FLUXO DA INTERFACE
-    ======================================================== */
     btnOpenForm.addEventListener('click', () => {
         viewListing.style.display = 'none';
         viewForm.style.display = 'block';
@@ -679,6 +623,5 @@ main{
         window.location.replace("./login.html");
     }
 </script> 
-
 </body>
 </html>
