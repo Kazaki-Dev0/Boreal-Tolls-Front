@@ -394,9 +394,7 @@ main{
             </h2>
 
             <div class="subtitle">
-
-                Clientes >
-                <span>Lista de registros</span>
+                <span>Gerencie sua base de clientes/fornecedores e acompanhe informações detalhadas.</span>
 
             </div>
 
@@ -414,17 +412,13 @@ main{
 
         <div class="search-box">
 
-            <input type="text" id="inputBusca" placeholder="Buscar por ID, Nome ou CPF/CNPJ">
-
+            <input type="text" id="inputBusca" placeholder="Buscar por ID ou Nome">
             <i class="fa-solid fa-magnifying-glass"></i>
 
         </div>
 
-        <a href="cadastrarCliente.html"
-        class="btn-add">
-
+        <a href="cadastrarCliente.html" class="btn-add" onclick="localStorage.removeItem('idEdicao'); localStorage.removeItem('tipoEdicao');">
             + Cadastrar
-
         </a>
 
     </div>
@@ -438,7 +432,7 @@ main{
                 <th>CPF/CNPJ</th>
                 <th>E-mail</th>
                 <th>Telefone</th>
-                <th>Ações</th>
+                <th></th>
             </tr>
         </thead>
         
@@ -448,11 +442,15 @@ main{
 </div> 
 </main> 
 
-<script src="listarClientes.js"></script>
-</body>
-</html>
 
-    
+<div id="modalDetalhes" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+            <div style="background-color: #222; border: 1px solid #444; border-radius: 10px; padding: 25px; width: 600px; max-width: 90%; position: relative;">
+                <div id="modalConteudo">
+                    </div>
+            </div>
+        </div>
 
-</body>
+        <script src="listarClientes.js"></script> 
+        <script src="ClienteFonecedorDetalhes.js"></script> 
+    </body>
 </html>
