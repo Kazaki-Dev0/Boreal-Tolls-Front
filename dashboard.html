@@ -6,15 +6,10 @@
     <title>Boreal Tools - Dashboard</title>
 
     <link rel="icon" type="image/png" href="./images/logo-removebg.png">
-    
     <link rel="stylesheet" href="sidebar.css">
-    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* ========================================================
-           CSS ORIGINAL MANTIDO E CORRIGIDO PARA A FOTO DO USUÁRIO
-        ======================================================== */
         body {
             background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
             color: white;
@@ -32,7 +27,6 @@
             color: inherit;
         }
 
-        /* Destaque da página ativa na sidebar original */
         .secoes:nth-child(1) {
             background-color: #2e4a3e;
         }
@@ -43,7 +37,6 @@
             overflow-y: auto;
         }
 
-        /* Estrutura original da Sidebar mantida */
         .side-bar {
             display: flex;
             flex-direction: column;
@@ -52,9 +45,6 @@
             padding-bottom: 20px; 
         }
 
-        /* =========================
-            DIV PERFIL CORRIGIDA (SEM ALTERAR LAYOUT)
-        ========================= */
         .perfil {
             display: flex;
             flex-direction: column;
@@ -65,15 +55,14 @@
             width: 100%;
         }
 
-        /* CORREÇÃO ESTREITA: Garante que qualquer imagem vire um círculo perfeito object-fit: cover */
         .perfil img {
-            width: 95px; /* Tamanho original mantido */
-            height: 95px; /* Tamanho original mantido */
-            border-radius: 50%; /* Transforma em círculo perfeito */
-            object-fit: cover; /* Recorta a imagem centralizadamente para não distorcer */
-            border: 2px solid #7bcf9c; /* Borda verde original */
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
             box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
-            background-color: #141414; /* Cor de fundo caso a imagem falhe */
+            background-color: #141414;
         }
 
         .perfil p {
@@ -86,9 +75,6 @@
             text-overflow: ellipsis;
         }
 
-        /* ========================================================
-           RESTANTE DO CSS ORIGINAL (MANTIDO INTACTO)
-        ======================================================== */
         /* Carrossel */
         .carousel-wrapper {
             position: relative;
@@ -226,7 +212,6 @@
         .info-value { font-size: 2rem; font-weight: 600; color: white; }
     </style>
 </head>
-
 <body>
 
 <div class="main-wrapper">
@@ -379,7 +364,7 @@
 
 <script>
     /* ========================================================
-       FUNÇÃO AUXILIAR DE DECODIFICAÇÃO JWT SEGURA
+       FUNÇÃO AUXILIAR DE DECODIFICAÇÃO JWT
     ======================================================== */
     function parseJwt(token) {
         try {
@@ -397,16 +382,13 @@
     }
 
     /* ========================================================
-       CARREGAMENTO DINÂMICO DE PERFIL (CORRIGIDO E INTEGRADO)
+       CARREGAMENTO DE SESSÃO E NOME
     ======================================================== */
     document.addEventListener("DOMContentLoaded", () => {
         let token = null;
-        let fotoDiretaDoLogin = null;
         
         try {
-            // Busca o token JWT e a foto que foram salvos durante o Login
             token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            fotoDiretaDoLogin = localStorage.getItem('urlFoto');
         } catch (e) {
             console.warn("Acesso ao storage bloqueado.");
         }
@@ -418,9 +400,8 @@
         }
 
         const payloadJson = parseJwt(token);
-        const imgElement = document.getElementById('user-avatar');
 
-        // 1. Processamento Dinâmico do Nome do Usuário
+        // Atualiza dinamicamente apenas o nome do usuário extraído do Token
         if (payloadJson) {
             const nomeUsuario = payloadJson["unique_name"] || 
                                 payloadJson["name"] || 
@@ -431,36 +412,10 @@
         } else {
             document.getElementById('user-name').textContent = "Erro de Sessão";
         }
-
-        /* ============================================================
-           2. RENDERIZAÇÃO DA IMAGEM SALVA (MÓDULO DE VERIFICAÇÃO)
-        ============================================================ */
-        let fotoFinal = "./img/perfil-icon.png"; // Fallback padrão caso não exista foto salva
-
-        // Primeiro tenta recuperar do localStorage alimentado no fluxo de autenticação
-        if (fotoDiretaDoLogin && fotoDiretaDoLogin !== "null" && fotoDiretaDoLogin !== "") {
-            fotoFinal = fotoDiretaDoLogin;
-        } 
-        // Segundo caso: tenta varrer atributos customizados injetados no próprio JWT
-        else if (payloadJson && payloadJson["urlFoto"] && payloadJson["urlFoto"] !== "") {
-            fotoFinal = payloadJson["urlFoto"];
-        }
-
-        // Aplicação segura da imagem avaliando o tipo de dado recebido do banco (URL ou Base64)
-        if (fotoFinal.startsWith('http://') || fotoFinal.startsWith('https://') || fotoFinal.startsWith('./') || fotoFinal.startsWith('data:image')) {
-            // Se já contiver o cabeçalho base64 ou for um link/caminho web direto
-            imgElement.src = fotoFinal;
-        } else if (fotoFinal !== "./img/perfil-icon.png") {
-            // Se for uma string codificada em Base64 crua vinda do C#, injeta a especificação MIME
-            imgElement.src = `data:image/jpeg;base64,${fotoFinal}`;
-        } else {
-            // Mantém a imagem padrão do sistema
-            imgElement.src = fotoFinal;
-        }
     });
 
     /* ========================================================
-       LOGOUT SEGURO - LIMPEZA INTEGRAL
+       LOGOUT
     ======================================================== */
     function efetuarLogout() {
         try {
@@ -473,7 +428,7 @@
     }
 
     /* ========================================================
-       CARROSSEL AUTOPLAY (Original mantido)
+       CARROSSEL AUTOPLAY
     ======================================================== */
     let slideIndex = 0;
     let slideInterval;
