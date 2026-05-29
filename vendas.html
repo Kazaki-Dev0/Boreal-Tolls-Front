@@ -270,7 +270,6 @@ main{
 </head>
 
 <body>
-
     <section class="side-bar">
 
         <div class="sidebar-header">
@@ -354,7 +353,7 @@ main{
             <div class="table-toolbar">
 
                 <div class="search-box">
-                    <input type="text"placeholder="Pesquisar por cliente ou ID">
+                    <input type="text" id="search-input" placeholder="Pesquisar por cliente ou ID">
                     <i class="ph ph-magnifying-glass"></i>
                 </div>
 
@@ -362,69 +361,166 @@ main{
             </div>
 
             <!-- LISTA DE VENDAS -->
-            <div class="sales-list">
-                <!-- CARD -->
-                <article class="sale-card">
-                    <div class="info-group">
-                        <span class="info-label">Pedido</span>
-                        <span class="info-value">#001</span>
-                    </div>
+            <div class="sales-list" id="sales-container">
 
-                    <div class="info-group">
-                        <span class="info-label">Data</span>
-                        <span class="info-value">29/02/2024</span>
-                    </div>
-
-                    <div class="info-group">
-                        <span class="info-label">Cliente</span>
-                        <span class="info-value">João Silva</span>
-                    </div>
-
-                    <button class="btn-detail">
-                        Ver detalhes
-                    </button>
-
-                    <div class="info-group">
-                        <span class="info-label">Total da Venda</span>
-                        <span class="info-value total-value">
-                            R$ 1.250,00
-                        </span>
-                    </div>
-                </article>
-                <article class="sale-card">
-
-                    <div class="info-group">
-                        <span class="info-label">Pedido</span>
-                        <span class="info-value">#002</span>
-                    </div>
-
-                    <div class="info-group">
-                        <span class="info-label">Data</span>
-                        <span class="info-value">03/03/2024</span>
-                    </div>
-
-                    <div class="info-group">
-                        <span class="info-label">Cliente</span>
-                        <span class="info-value">Maria Souza</span>
-                    </div>
-
-                    <button class="btn-detail">
-                        Ver detalhes
-                    </button>
-
-                    <div class="info-group">
-                        <span class="info-label">Total da Venda</span>
-                        <span class="info-value total-value">
-                            R$ 2.800,00
-                        </span>
-                    </div>
-                </article>
             </div>
         </div>
     </main>
 
     <script>
         
+        // Configuração da URL base do seu controller C# (Altere a porta caso seja diferente)
+        const API_URL = 'http://localhost:5187/api/Pedidos'; 
+
+        // Elementos capturados do DOM
+        const salesContainer = document.getElementById('sales-container');
+        const searchInput = document.getElementById('search-input');
+
+        // Evento disparado quando a página carrega completamente
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarAutenticacao();
+            carregarPedidos();
+            configurarFiltroPesquisa();
+        });
+
+        /**
+         * Valida se o usuário possui um token JWT salvo para evitar requisições perdidas
+         */
+        function verificarAutenticacao() {
+            const token = localStorage.getItem('token'); // Presume-se que o token foi guardado no login
+            if (!token) {
+                alert('Sessão expirada ou usuário não autenticado. Redirecionando para o login...');
+                window.location.href = './login.html';
+            }
+        }
+
+        /**
+         * Busca a lista de pedidos do backend C# enviando o Token JWT de autorização
+         */
+        async function carregarPedidos() {
+            try {
+                salesContainer.innerHTML = '<p style="text-align:center; padding:20px;">Carregando registros...</p>';
+
+                const token = localStorage.getItem('token');
+                const response = await fetch(API_URL, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Envia o cabeçalho exigido pelo [Authorize] do C#
+                    }
+                });
+
+                if (response.status === 401) {
+                    alert('Você não tem permissão ou seu token expirou.');
+                    window.location.href = './login.html';
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP! Status: ${response.status}`);
+                }
+
+                const pedidos = await response.json();
+                
+                // Armazena globalmente os pedidos para realizar filtros em tempo real
+                window.listaDePedidosGlobal = pedidos; 
+                
+                renderizarCards(pedidos);
+
+            } catch (error) {
+                console.error('Erro ao buscar pedidos:', error);
+                salesContainer.innerHTML = `
+                    <p style="color: red; text-align: center; padding: 20px; font-weight: bold;">
+                        Erro ao carregar vendas. Certifique-se de que a API está rodando e o banco está acessível.
+                    </p>`;
+            }
+        }
+
+        /**
+         * Injeta dinamicamente os elementos de pedidos no HTML estruturado
+         * @param {Array} pedidos - Array contendo objetos mapeados do C#
+         */
+        function renderizarCards(pedidos) {
+            salesContainer.innerHTML = '';
+
+            if (pedidos.length === 0) {
+                salesContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Nenhum pedido registrado.</p>';
+                return;
+            }
+
+            pedidos.forEach(pedido => {
+                // Formata a data vinda do C# (ex: "2026-05-29T11:00:00") para o padrão "dd/mm/aaaa"
+                const dataFormatada = new Date(pedido.data).toLocaleDateString('pt-BR');
+
+                // Formata o valor decimal do C# para Real brasileiro (R$ 0,00)
+                const valorFormatado = pedido.valorTotal.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                });
+
+                // Monta o article conforme o seu padrão visual original do HTML
+                const cardArticle = document.createElement('article');
+                cardArticle.className = 'sale-card';
+                cardArticle.innerHTML = `
+                    <div class="info-group">
+                        <span class="info-label">Pedido</span>
+                        <span class="info-value">#${pedido.id.toString().padStart(3, '0')}</span>
+                    </div>
+
+                    <div class="info-group">
+                        <span class="info-label">Data</span>
+                        <span class="info-value">${dataFormatada}</span>
+                    </div>
+
+                    <div class="info-group">
+                        <span class="info-label">Cliente</span>
+                        <span class="info-value">${pedido.clienteNome || 'Cliente ID: ' + pedido.clienteId}</span>
+                    </div>
+
+                    <button class="btn-detail" onclick="redirecionarDetalhes(${pedido.id})">
+                        Ver detalhes
+                    </button>
+
+                    <div class="info-group">
+                        <span class="info-label">Total da Venda</span>
+                        <span class="info-value total-value">${valorFormatado}</span>
+                    </div>
+                `;
+
+                salesContainer.appendChild(cardArticle);
+            });
+        }
+
+        /**
+         * Filtra os pedidos localmente por ID ou ID do Cliente à medida que o usuário digita (Filtro reativo)
+         */
+        function configurarFiltroPesquisa() {
+            searchInput.addEventListener('input', (evento) => {
+                const termoBusca = evento.target.value.trim().toLowerCase();
+                
+                if (!window.listaDePedidosGlobal) return;
+
+                // Filtra a lista pelo ID do pedido ou pelo ClienteId informado
+                const pedidosFiltrados = window.listaDePedidosGlobal.filter(pedido => {
+                    const idMatch = pedido.id.toString().toLowerCase().includes(termoBusca);
+                    const clienteMatch = pedido.clienteId.toString().toLowerCase().includes(termoBusca);
+                    
+                    return idMatch || clienteMatch;
+                });
+
+                renderizarCards(pedidosFiltrados);
+            });
+        }
+
+        /**
+         * Executado ao clicar no botão 'Ver detalhes'
+         * Redireciona enviando o id mapeado pela rota GET correspondente
+         * @param {number} id - ID do pedido capturado
+         */
+        function redirecionarDetalhes(id) {
+            // Redireciona para a página correspondente passando o ID via Query String
+            window.location.href = `detalhesVenda.html?id=${id}`;
+        }
     </script>
 
 </body>
