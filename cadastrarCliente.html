@@ -444,6 +444,106 @@
     </main>
 </div>
 
-    <script src="cadastrarClienteFornecedor.js"></script>
+<script>
+    // URL CONFIGURADA PARA O NOVO ENDPOINT DE PRODUÇÃO NO AZURE
+    const apiURL = "https://api-time7.azurewebsites.net/api/Clientes";
+
+    const formCliente = document.getElementById("clienteForm");
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+    // Função interna para ler as claims do token JWT de forma síncrona e segura
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!token) {
+            efetuarLogout();
+            return;
+        }
+        atualizarDadosUsuario();
+    });
+
+    // CADASTRAR CLIENTE / FORNECEDOR
+    async function cadastrarCliente(event) {
+        event.preventDefault();
+
+        // Mapeamento dos campos estruturado conforme os requisitos da API do Azure
+        const cliente = {
+            tipoVinculo: document.getElementById("tipo").value,
+            nome: document.getElementById("Nome").value,
+            cpf: document.getElementById("tipo").value === "cliente" ? document.getElementById("CPF").value : null,
+            cnpj: document.getElementById("tipo").value === "fornecedor" ? document.getElementById("CPF").value : null,
+            telefone: document.getElementById("Telefone").value || null,
+            email: document.getElementById("Email").value || null,
+            dataNascimento: document.getElementById("DataNascimento").value || null,
+            cep: document.getElementById("CEP").value || null,
+            cidade: document.getElementById("Cidade").value || null,
+            rua: document.getElementById("Rua").value || null,
+            bairro: document.getElementById("Bairro").value || null,
+            numero: document.getElementById("Número").value || null,
+            estado: document.getElementById("Estado").value || null,
+            complemento: document.getElementById("Complemento").value || null
+        };
+
+        try {
+            const resposta = await fetch(apiURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(cliente)
+            });
+
+            if (!resposta.ok) {
+                const erroTexto = await resposta.text();
+                throw new Error(erroTexto || "Erro interno ao cadastrar registro.");
+            }
+
+            alert("Registro cadastrado com sucesso!");
+            formCliente.reset();
+            
+            // Redireciona de volta para o painel principal de listagem
+            window.location.href = "ClienteFornecedor.html";
+
+        } catch (error) {
+            console.error("Erro na operação:", error);
+            alert(error.message || "Erro ao efetuar o cadastro. Verifique os dados.");
+        }
+    }
+
+    // EVENTO DO FORMULÁRIO
+    formCliente.addEventListener("submit", cadastrarCliente);
+
+    // ATUALIZAR NOME DO PERFIL NA SIDEBAR VIA CLAIMS DO JWT
+    function atualizarDadosUsuario() {
+        const payloadJson = parseJwt(token);
+        if (payloadJson) {
+            document.getElementById("nomeUsuarioSidebar").innerText = 
+                payloadJson["unique_name"] || 
+                payloadJson["name"] || 
+                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                "Usuário Boreal";
+        } else {
+            document.getElementById("nomeUsuarioSidebar").innerText = "Usuário Autenticado";
+        }
+    }
+
+    function efetuarLogout() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("./login.html");
+    }
+</script>
 </body>
 </html>
