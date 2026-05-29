@@ -421,11 +421,32 @@
                 <div class="panel-icon"><i class="fa-solid fa-user"></i></div>
             </div>
 
-            <div class="toolbar">
-                <div class="search-box">
-                    <input type="text" id="input-search" placeholder="Pesquisar por nome, documento ou tipo...">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+    </nav>
+
+    <div class="logout-link">
+        <a href="./login.html">← Deslogar</a>
+    </div>
+
+</section>
+
+<!-- MAIN -->
+
+<main>
+
+<div class="clients-card">
+
+    <!-- HEADER -->
+
+    <div class="clients-header">
+
+        <div class="title-area">
+
+            <h2>
+                Clientes e Fornecedores
+            </h2>
+
+            <div class="subtitle">
+                <span>Gerencie sua base de clientes/fornecedores e acompanhe informações detalhadas.</span>
 
                 <div class="actions">
                     <a href="cadastrarCliente.html" class="btn">+ Cadastrar</a>
@@ -436,19 +457,59 @@
                 <p style="color: #aaa;">Carregando dados dos registros...</p>
             </div>
         </div>
-    </main>
-</div>
 
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modal-client-name">Nome Fantasia / Razão Social</h3>
-            <button class="modal-close" onclick="fecharModal()">&times;</button>
+        <div class="panel-icon">
+            <i class="fa-solid fa-user"></i>
         </div>
-        <div class="details-grid" id="modalContent"></div>
+
+    </div>
+
+    <!-- TOOLBAR -->
+
+    <div class="actions">
+
+        <div class="search-box">
+
+            <input type="text" id="inputBusca" placeholder="Buscar por ID ou Nome">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </div>
+
+        <a href="cadastrarCliente.html" class="btn-add" onclick="localStorage.removeItem('idEdicao'); localStorage.removeItem('tipoEdicao');">
+            + Cadastrar
+        </a>
+
     </div>
 </div>
 
-<script src="clienteFornecedor.js" defer></script>
-</body>
+
+    <table class="clients-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF/CNPJ</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody id="tabelaClientesBody"></tbody>
+    </table>
+
+</div> 
+</main> 
+
+
+<div id="modalDetalhes" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+            <div style="background-color: #222; border: 1px solid #444; border-radius: 10px; padding: 25px; width: 600px; max-width: 90%; position: relative;">
+                <div id="modalConteudo">
+                    </div>
+            </div>
+        </div>
+
+        <script src="listarClientes.js"></script> 
+        <script src="ClienteFonecedorDetalhes.js"></script> 
+    </body>
 </html>
