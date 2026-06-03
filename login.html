@@ -274,25 +274,13 @@
             const emailInput = document.getElementById('reg-email').value;
             const senhaInput = document.getElementById('reg-senha').value;
             const confirmarSenhaInput = document.getElementById('reg-confirmar-senha').value;
-            const fotoUrlInput = document.getElementById('reg-foto-url').value;
-            const fotoArquivoInput = document.getElementById('reg-foto-arquivo').files[0];
 
             if (senhaInput !== confirmarSenhaInput) {
                 alert("As senhas informadas não coincidem!");
                 return;
             }
 
-            let imagemBase64 = "";
-            if (fotoArquivoInput) {
-                try {
-                    const base64Completo = await converterParaBase64(fotoArquivoInput);
-                    // CORREÇÃO: Remove o cabeçalho "data:image/...;base64," deixando apenas os dados puros para o C#
-                    imagemBase64Raw = base64Completo.split(',')[1];
-                } catch (err) {
-                    alert("Erro ao processar a imagem selecionada.");
-                    return;
-                }
-            }
+           
 
             try {
                 const resposta = await fetch(`${apiBaseURL}/registrar`, {
@@ -304,9 +292,7 @@
                         nome: nomeInput,
                         email: emailInput,
                         senha: senhaInput,
-                        // CORREÇÃO: Alterado de 'fotoUrl' para 'urlFoto' para mapear corretamente com o C# (camelCase)
-                        urlFoto: fotoUrlInput || null,
-                        fotoBase64: imagemBase64 || null
+                       
                     })
                 });
 
