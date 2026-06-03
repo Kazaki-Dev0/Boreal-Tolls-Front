@@ -10,265 +10,7 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="sidebar.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-            color: white;
-            min-height: 100vh;
-            overflow: hidden; /* Evita scroll na página principal */
-        }
-
-        .main-wrapper {
-            display: flex;
-            min-height: 100vh;
-            width: 100vw;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* Padronização do Sidebar conforme referências */
-        .side-bar {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100vh;
-            padding-bottom: 20px; 
-            width: 260px;
-            flex-shrink: 0;
-        }
-
-        .secoes:nth-child(4) {
-            background-color: #2e4a3e; /* Aba de Financeiro Ativa */
-        }
-
-        .perfil {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 6px; 
-            width: 100%;
-        }
-
-        .perfil img {
-            width: 95px;
-            height: 95px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #7bcf9c;
-            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
-            background-color: #141414;
-        }
-
-        .perfil p {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #ffffff;
-            max-width: 85%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Área de Conteúdo Anti-Scroll Lateral */
-        main {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto; /* Rolagem apenas vertical no conteúdo */
-            max-width: calc(100vw - 260px);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        /* =========================================
-           PAINEL FINANCEIRO
-        ========================================= */
-        .stock-panel {
-            width: 100%;
-            max-width: 1250px;
-            border-radius: 20px;
-            padding: 40px;
-            margin: 0 auto 20px auto;
-            background: rgba(20, 20, 20, 0.72);
-            border: 1px solid #2e4a3e;
-            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
-        }
-
-        /* HEADER */
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 30px;
-        }
-
-        .panel-title h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
-
-        .panel-icon {
-            background: rgba(135, 255, 185, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            color: #7bcf9c;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* GRÁFICO INTEGRADO */
-        .chart-container {
-            width: 100%;
-            background: rgba(15, 15, 15, 0.6);
-            border: 1px solid #2e4a3e;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            height: 280px;
-        }
-
-        /* TOOLBAR */
-        .table-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            gap: 20px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: transparent;
-            border: 1px solid #4a5a50;
-            border-radius: 20px;
-            padding: 8px 16px;
-            width: 320px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            outline: none;
-            width: 100%;
-            font-size: 0.85rem;
-        }
-
-        .search-box input::placeholder {
-            color: #666;
-        }
-
-        .search-box i {
-            color: #666;
-            font-size: 1.1rem;
-            margin-left: 8px;
-        }
-
-        /* BOTÃO */
-        .btn-add {
-            background-color: #80B297;
-            color: #000;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-
-        .btn-add:hover {
-            background-color: #81c784;
-        }
-
-        /* TABELA */
-        .stock-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .stock-table th {
-            text-align: left;
-            padding: 12px 15px;
-            color: #ffffff;
-            font-size: 0.8rem;
-            font-weight: 400;
-            border-bottom: 1px solid #333;
-        }
-
-        .stock-table td {
-            padding: 16px 15px;
-            color: #b0b0b0;
-            font-size: 0.85rem;
-            border-bottom: 1px solid #333;
-            vertical-align: middle;
-        }
-
-        .stock-table tbody tr {
-            transition: background 0.2s;
-        }
-
-        .stock-table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        /* BADGES / ESTILOS FLUXO */
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .badge-entrada {
-            background: rgba(76, 175, 80, 0.15);
-            color: #81c784;
-        }
-
-        .badge-saida {
-            background: rgba(244, 67, 54, 0.15);
-            color: #ff7b7b;
-        }
-
-        .value-entrada {
-            color: #81c784;
-            font-weight: 600;
-        }
-
-        .value-saida {
-            color: #ff7b7b;
-            font-weight: 600;
-        }
-
-        /* RESPONSIVO */
-        @media(max-width: 1200px) {
-            .table-toolbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="financeiro.css">
 </head>
 
 <body>
@@ -370,27 +112,307 @@
                     </tr>
                 </thead>
                 <tbody id="listaFinanceira">
-                    <tr>
-                        <td>10/05/2026</td>
-                        <td><span class="badge badge-entrada">Entrada</span></td>
-                        <td style="color:white; font-weight:500;">Venda Produto X</td>
-                        <td><span style="color: #81c784;">Pago</span></td>
-                        <td class="value-entrada">+ R$ 1.200,00</td>
-                    </tr>
-                    <tr>
-                        <td>11/05/2026</td>
-                        <td><span class="badge badge-saida">Saída</span></td>
-                        <td style="color:white; font-weight:500;">Fornecedor Y</td>
-                        <td><span style="color: #e5a93c;">Pendente</span></td>
-                        <td class="value-saida">- R$ 400,00</td>
-                    </tr>
-                </tbody>
+                     </tbody>
             </table>
         </div>
     </main>
 </div>
 
-<script src="financeiro.js"></script>
+<script>
+    const API_URL = "https://api-time7.azurewebsites.net/api/Financeiro";
+    let meuGrafico = null;
+
+/* =========================================================
+   TRATAMENTO E FORMATAÇÃO DE DATA SEGURO (FUSO HORÁRIO)
+========================================================= */
+function obterDataLocal(dataString) {
+    if (!dataString) return null;
+    // Se vier no formato ISO do banco (YYYY-MM-DD...), separa os pedaços para evitar fuso UTC do navegador
+    if (typeof dataString === "string" && dataString.includes("-")) {
+        const partes = dataString.split("T")[0].split("-");
+        return new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]), 12, 0, 0);
+    }
+    const d = new Date(dataString);
+    d.setHours(12, 0, 0, 0);
+    return d;
+}
+
+/* =========================================================
+   TOKEN E EXTRAÇÃO DO USUÁRIO LOGADO
+========================================================= */
+function obterToken() {
+    return localStorage.getItem("token") || sessionStorage.getItem("token");
+}
+
+function carregarUsuarioLogado() {
+    const elementoNome = document.getElementById("nomeUsuarioSidebar");
+    if (!elementoNome) return;
+
+    let nome = "";
+    const token = obterToken();
+
+    if (token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            const payload = JSON.parse(jsonPayload);
+            nome = payload["unique_name"] || payload["name"] || payload["sub"] || payload["email"] || payload["given_name"];
+        } catch (e) {
+            console.error("Falha ao decodificar dados do token:", e);
+        }
+    }
+
+    if (!nome) {
+        let nomeRaw = localStorage.getItem("nomeUsuario") || localStorage.getItem("nome") || 
+                      localStorage.getItem("usuario") || localStorage.getItem("username");
+        if (nomeRaw && nomeRaw.startsWith("{")) {
+            try { nome = JSON.parse(nomeRaw).nome; } catch(e) {}
+        } else {
+            nome = nomeRaw;
+        }
+    }
+
+    elementoNome.innerText = nome ? nome : "Usuário Ativo";
+}
+
+/* =========================================================
+   PROCESSAMENTO DO GRÁFICO (LÓGICA DE EFETIVAÇÃO)
+========================================================= */
+function inicializarGrafico(dados) {
+    const ctx = document.getElementById('graficoFinanceiro');
+    if (!ctx) return;
+
+    if (meuGrafico) {
+        meuGrafico.destroy();
+    }
+
+    const hoje = new Date();
+    hoje.setHours(23, 59, 59, 999);
+    const trintaDiasAtras = new Date();
+    trintaDiasAtras.setDate(hoje.getDate() - 30);
+    trintaDiasAtras.setHours(0, 0, 0, 0);
+
+    const consolidado = {};
+
+    // Estrutura os últimos 30 dias contínuos
+    for (let d = new Date(trintaDiasAtras); d <= hoje; d.setDate(d.getDate() + 1)) {
+        const chaveData = d.toLocaleDateString('pt-BR');
+        consolidado[chaveData] = { entradas: 0, saidas: 0 };
+    }
+
+    // Filtragem e Acumulação
+    dados.forEach(item => {
+        if (!item.dataVencimento) return;
+
+        // CRITÉRIO DE EFETIVAÇÃO: Só renderiza no gráfico se estiver marcado como Pago ou Recebido
+        const statusLower = (item.status || "").toLowerCase();
+        if (statusLower !== "pago" && statusLower !== "recebido" && statusLower !== "efetivado") {
+            return; 
+        }
+
+        const dataItem = obterDataLocal(item.dataVencimento);
+        if (!dataItem) return;
+
+        if (dataItem >= trintaDiasAtras && dataItem <= hoje) {
+            const chaveData = dataItem.toLocaleDateString('pt-BR');
+            if (consolidado[chaveData]) {
+                const valorNum = parseFloat(item.valor) || 0;
+                const tipoLower = (item.tipo || "").toLowerCase();
+                
+                if (tipoLower.includes("receber") || tipoLower.includes("entrada") || tipoLower.includes("lucro")) {
+                    consolidado[chaveData].entradas += valorNum;
+                } else {
+                    consolidado[chaveData].saidas += valorNum; 
+                }
+            }
+        }
+    });
+
+    const labels = Object.keys(consolidado);
+    const dataEntradas = [];
+    const dataSaidas = [];
+    const dataSaldoAcumulado = [];
+    
+    let saldoCorrido = 0;
+
+    labels.forEach(data => {
+        const entradasDoDia = consolidado[data].entradas;
+        const saidasDoDia = consolidado[data].saidas;
+
+        dataEntradas.push(entradasDoDia);
+        dataSaidas.push(-saidasDoDia); 
+        
+        saldoCorrido += (entradasDoDia - saidasDoDia);
+        dataSaldoAcumulado.push(saldoCorrido);
+    });
+
+    meuGrafico = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Lucro / Entradas (R$)',
+                    data: dataEntradas,
+                    borderColor: '#81c784',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2.5,
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: 'Baixas / Saídas (R$)',
+                    data: dataSaidas,
+                    borderColor: '#ff7b7b', 
+                    backgroundColor: 'transparent',
+                    borderWidth: 2.5,
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: 'Saldo Total Atual (R$)',
+                    data: dataSaldoAcumulado,
+                    borderColor: '#ff9800', 
+                    backgroundColor: 'rgba(255, 152, 0, 0.03)',
+                    borderWidth: 3.5,
+                    tension: 0.2,
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#ffffff', font: { size: 11, family: 'Inter' } }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                    ticks: { color: '#b0b0b0', maxTicksLimit: 12 }
+                },
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.06)' },
+                    ticks: { color: '#b0b0b0' }
+                }
+            }
+        }
+    });
+}
+
+/* =========================================================
+   CARREGAR TABELA FINANCEIRA COMPLETA
+========================================================= */
+async function carregarFinanceiro() {
+    const tabela = document.getElementById("listaFinanceira");
+    if (!tabela) return;
+
+    const token = obterToken();
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Erro na resposta da API.");
+
+        const dados = await response.json();
+        tabela.innerHTML = "";
+
+        if (dados.length === 0) {
+            tabela.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#666;">Nenhum lançamento encontrado.</td></tr>`;
+            inicializarGrafico([]);
+            return;
+        }
+
+        // Ordenação Cronológica Decrescente (Mais recentes primeiro)
+        dados.sort((a, b) => new Date(b.dataVencimento) - new Date(a.dataVencimento));
+
+        dados.forEach(item => {
+            const objetoData = obterDataLocal(item.dataVencimento);
+            const dataFormatada = objetoData ? objetoData.toLocaleDateString("pt-BR") : "Data inválida";
+            
+            // Remove o caractere fixo duplicado e deixa o Intl tratar o padrão BRL
+            const valorFormatado = Number(item.valor).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            });
+
+            const tipoLower = (item.tipo || "").toLowerCase();
+            const ehEntrada = tipoLower.includes("receber") || tipoLower.includes("entrada") || tipoLower.includes("lucro");
+            
+            const badgeTipo = ehEntrada 
+                ? `<span class="badge badge-entrada">Entrada</span>` 
+                : `<span class="badge badge-saida">Saída</span>`;
+
+            const classeValor = ehEntrada ? "value-entrada" : "value-saida";
+            const sinal = ehEntrada ? "+" : "-";
+
+            let corStatus = "#81c784"; // Pago / Recebido
+            if (item.status === "Pendente") corStatus = "#e5a93c";
+            if (item.status === "Atrasado") corStatus = "#ff6b6b";
+
+            tabela.innerHTML += `
+                <tr>
+                    <td>${dataFormatada}</td>
+                    <td>${badgeTipo}</td>
+                    <td style="color:white; font-weight:500;">${item.descricao || "Sem descrição"}</td>
+                    <td><span style="color:${corStatus}">${item.status}</span></td>
+                    <td class="${classeValor}">${sinal} ${valorFormatado}</td>
+                </tr>
+            `;
+        });
+
+        inicializarGrafico(dados);
+
+    } catch (error) {
+        console.error("Erro ao processar requisição financeira:", error);
+        tabela.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#ff6b6b;">Falha ao carregar registros financeiros da API.</td></tr>`;
+    }
+}
+
+/* =========================================================
+   FILTRO / FILTRAGEM EM TEMPO REAL
+========================================================= */
+function configurarPesquisaFinanceira() {
+    const inputPesquisa = document.getElementById("txtPesquisaFinanceira");
+    if (!inputPesquisa) return;
+
+    inputPesquisa.addEventListener("keyup", () => {
+        const filtro = inputPesquisa.value.toLowerCase();
+        const linhas = document.querySelectorAll("#listaFinanceira tr");
+
+        linhas.forEach(linha => {
+            const texto = linha.innerText.toLowerCase();
+            linha.style.display = texto.includes(filtro) ? "" : "none";
+        });
+    });
+}
+
+/* =========================================================
+   STARTUP DO ECOSSISTEMA
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+    carregarUsuarioLogado();
+    carregarFinanceiro();
+    configurarPesquisaFinanceira();
+});
+
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./index.html");
+}
+</script>
 
 </body>
 </html>
