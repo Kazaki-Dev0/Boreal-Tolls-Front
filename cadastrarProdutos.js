@@ -99,3 +99,8 @@ async function salvarProduto(event) {
         alert("Erro de rede ao tentar contactar o servidor.");
     }
 }
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./index.html");
+}
