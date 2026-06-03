@@ -122,13 +122,6 @@
             margin-bottom: 5px;
         }
 
-        <div class="panel-title">
-            <h2>Controle Financeiro</h2>
-            <div class="breadcrumb">
-                <span>Gerencie pagamentos, recebimentos e fluxo de caixa da empresa.</span>
-            </div>
-        </div>
-
         .panel-icon {
             background: rgba(135, 255, 185, 0.1);
             padding: 10px;
@@ -397,111 +390,7 @@
     </main>
 </div>
 
-<script>
-    /* ========================================================
-       FUNÇÃO AUXILIAR DE DECODIFICAÇÃO JWT
-    ======================================================== */
-    function parseJwt(token) {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+<script src="financeiro.js"></script>
 
-            return JSON.parse(jsonPayload);
-        } catch (e) {
-            console.error("Falha ao decodificar token:", e);
-            return null;
-        }
-    }
-
-    function obterToken() {
-        return localStorage.getItem("token") || sessionStorage.getItem("token");
-    }
-
-    /* ========================================================
-       CARREGAMENTO DE SESSÃO E DE NOME DINÂMICO
-    ======================================================== */
-    document.addEventListener("DOMContentLoaded", () => {
-        const tokenAtivo = obterToken();
-        
-        if (!tokenAtivo) {
-            document.getElementById('nomeUsuarioSidebar').textContent = "Usuário não logado";
-            window.location.replace("./login.html");
-            return;
-        }
-
-        const payloadJson = parseJwt(tokenAtivo);
-
-        if (payloadJson) {
-            const nomeUsuario = payloadJson["unique_name"] || 
-                                payloadJson["name"] || 
-                                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
-                                "Usuário Boreal";
-            
-            document.getElementById("nomeUsuarioSidebar").innerText = nomeUsuario;
-        } else {
-            document.getElementById("nomeUsuarioSidebar").innerText = "Erro de Sessão";
-        }
-
-        inicializarGrafico();
-    });
-
-    /* ========================================================
-       LOGOUT
-    ======================================================== */
-    function efetuarLogout() {
-        try {
-            localStorage.clear();
-            sessionStorage.clear();
-        } catch (e) {
-            console.error("Erro ao efetuar limpeza:", e);
-        }
-        window.location.replace("./login.html");
-    }
-
-    /* ========================================================
-       INICIALIZAÇÃO DO GRÁFICO (Chart.js Padronizado)
-    ======================================================== */
-    function inicializarGrafico() {
-        const ctx = document.getElementById('graficoFinanceiro');
-        if (!ctx) return;
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                datasets: [{
-                    label: 'Fluxo de Caixa',
-                    data: [1200, 1900, 3000, 2500, 3200, 2800],
-                    borderColor: '#7bcf9c',
-                    backgroundColor: 'rgba(123, 207, 156, 0.08)',
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 2,
-                    pointBackgroundColor: '#7bcf9c'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#888', font: { size: 11 } }
-                    },
-                    y: {
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#888', font: { size: 11 } }
-                    }
-                }
-            }
-        });
-    }
-</script>
 </body>
 </html>
