@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5187/api/Funcionarios";
+const API_URL = "https://api-time7.azurewebsites.net/api/Funcionarios";
 
 const form = document.getElementById("formFuncionario");
 
@@ -51,3 +51,8 @@ form.addEventListener("submit", async (e) => {
         alert("Erro ao cadastrar funcionário");
     }
 });
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./index.html");
+}

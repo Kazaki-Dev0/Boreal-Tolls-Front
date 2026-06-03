@@ -142,3 +142,9 @@ document.getElementById('clienteForm').addEventListener('submit', async function
         alert('Erro de comunicação com o servidor.');
     }
 });
+
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./index.html");
+}

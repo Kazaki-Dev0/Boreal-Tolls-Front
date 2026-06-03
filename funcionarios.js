@@ -1,6 +1,6 @@
 // Configurações das URLs da API do servidor Backend C#
-const API_URL = "http://localhost:5187/api/Funcionarios";
-const API_PERFIL_URL = "http://localhost:5187/api/Usuarios/Perfil"; // Altere se o endpoint de perfil for diferente
+const API_URL = "https://api-time7.azurewebsites.net/api/Funcionarios";
+const API_PERFIL_URL = "https://api-time7.azurewebsites.net/api/Usuarios/Perfil"; // Altere se o endpoint de perfil for diferente
 
 // Lista global usada para o mecanismo de busca instantânea
 let funcionariosControle = [];
@@ -256,5 +256,5 @@ function parseJwt(token) {
 function efetuarLogout() {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.replace("./login.html");
+    window.location.replace("./index.html");
 }

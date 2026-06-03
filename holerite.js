@@ -1,8 +1,8 @@
 // Configuração das rotas da API do Servidor C#
-const API_FUNCIONARIOS = "http://localhost:5187/api/Funcionarios";
-const API_PERFIL_URL = "http://localhost:5187/api/Usuarios/Perfil";
+const API_FUNCIONARIOS = "https://api-time7.azurewebsites.net/api/Funcionarios";
+const API_PERFIL_URL = "https://api-time7.azurewebsites.net/api/Usuarios/Perfil";
 // Endpoint fictício para salvar o holerite gerado (ajuste caso mude no backend)
-const API_FINANCEIRO_FOLHA = "http://localhost:5187/api/Financeiro/Lancamentos"; 
+const API_FINANCEIRO_FOLHA = "https://api-time7.azurewebsites.net/api/Financeiro/Lancamentos"; 
 
 // Armazenamento em memória dos dados dos funcionários para troca rápida no select
 let listaFuncionariosCache = [];
@@ -193,5 +193,5 @@ function parseJwt(token) {
 function efetuarLogout() {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.replace("./login.html");
+    window.location.replace("./index.html");
 }
