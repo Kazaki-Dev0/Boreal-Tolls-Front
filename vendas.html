@@ -1,480 +1,297 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Registro de Vendas</title>
-    <link rel="icon" type="image/png" href="./images/logo-removebg.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="sidebar.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<title>Boreal Tools - Vendas</title>
 
-        body {
-            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-            color: white;
-            min-height: 100vh;
-            overflow: hidden; /* Garante que o scroll aconteça apenas no painel principal */
-        }
+<link rel="stylesheet" href="sidebar.css">
 
-        .main-wrapper {
-            display: flex;
-            min-height: 100vh;
-            width: 100vw;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-        /* Padronização do Sidebar Boreal */
-        .side-bar {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100vh;
-            padding-bottom: 20px; 
-            width: 260px;
-            flex-shrink: 0;
-        }
+<style>
 
-        .secoes:nth-child(5) {
-            background-color: #2e4a3e; /* Destaque da aba Vendas ativa */
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .perfil {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 6px; 
-            width: 100%;
-        }
+body{
+    background: linear-gradient( 109deg, #090909 32.55%,#002c18 79.54%,#003019 88.95%);
+    color:white;
+    display:grid;
+    grid-template-columns:400px 1fr;
+    min-height:100vh;
+}
 
-        .perfil img {
-            width: 95px;
-            height: 95px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #7bcf9c;
-            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
-            background-color: #141414;
-        }
+a{
+    text-decoration:none;
+    color:inherit;
+}
 
-        .perfil p {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #ffffff;
-            max-width: 85%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Container do Conteúdo Principal */
-        main {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            max-width: calc(100vw - 260px);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        /* Painel de Vendas */
-        .sales-panel {
-            width: 100%;
-            max-width: 1250px;
-            border-radius: 20px;
-            padding: 40px;
-            margin: 0 auto 20px auto;
-            background: rgba(20, 20, 20, 0.72);
-            border: 1px solid #2e4a3e;
-            box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
-        }
-
-        /* HEADER */
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 30px;
-        }
-
-        .panel-title h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
-
-        .panel-subtitle {
-            color: #6da381;
-            font-size: 0.8rem;
-        }
-
-        .panel-icon {
-            background: rgba(135, 255, 185, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            color: #7bcf9c;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* TOOLBAR */
-        .table-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 35px;
-            gap: 20px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: transparent;
-            border: 1px solid #4a5a50;
-            border-radius: 20px;
-            padding: 8px 16px;
-            width: 350px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            outline: none;
-            width: 100%;
-            font-size: 0.85rem;
-        }
-
-        .search-box input::placeholder {
-            color: #666;
-        }
-
-        .search-box i {
-            color: #666;
-            font-size: 1.1rem;
-            margin-left: 8px;
-        }
-
-        /* BOTÃO PADRONIZADO */
-        .btn-add {
-            background-color: #80B297;
-            color: #000;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-
-        .btn-add:hover {
-            background-color: #81c784;
-        }
-
-        /* CONTAINER DOS LIST CARDS */
-        .sales-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* ESTRUTURA DOS CARDS DE VENDA */
-        .sale-card {
-            background: rgba(15, 15, 15, 0.6);
-            border: 1px solid #23332b;
-            border-radius: 12px;
-            padding: 20px 25px;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr 2fr 1.5fr 1.5fr;
-            align-items: center;
-            gap: 20px;
-            transition: all 0.25s ease-in-out;
-        }
-
-        .sale-card:hover {
-            border-color: #7bcf9c;
-            background: rgba(20, 20, 20, 0.9);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        /* COMPONENTES INTERNOS DOS CARDS */
-        .info-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .info-label {
-            color: #666;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .info-value {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #ffffff;
-        }
-
-        .total-value {
-            color: #7bcf9c;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        /* BOTÃO DETALHES */
-        .btn-detail {
-            background: transparent;
-            color: #7bcf9c;
-            border: 1px solid #2e4a3e;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            max-width: 130px;
-            text-align: center;
-        }
-
-        .btn-detail:hover {
-            background: rgba(123, 207, 156, 0.1);
-            border-color: #7bcf9c;
-        }
-
-        /* RESPONSIVIDADE ADAPTATIVA */
-        @media(max-width: 1100px) {
-            .sale-card {
-                grid-template-columns: 1fr 1.5fr 2fr;
-                gap: 15px;
-            }
-            .btn-detail {
-                grid-row: 2;
-                grid-column: 1 / span 2;
-            }
-            .sale-card .info-group:last-child {
-                grid-row: 2;
-                grid-column: 3;
-            }
-        }
-
-        @media(max-width: 768px) {
-            .table-toolbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .search-box {
-                width: 100%;
-            }
-            .sale-card {
-                grid-template-columns: 1fr;
-                gap: 12px;
-                padding: 15px;
-            }
-            .btn-detail {
-                grid-row: unset;
-                grid-column: unset;
-                max-width: 100%;
-            }
-            .sale-card .info-group:last-child {
-                grid-row: unset;
-                grid-column: unset;
-            }
-        }
-    </style>
+/* =========================
+   PAGINA ATIVA
 </head>
 
 <body>
-
-<div class="main-wrapper">
     <section class="side-bar">
-        <div>
-            <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-            </div>
 
-            <div class="perfil">
-                <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
-                <p id="nomeUsuarioSidebar">Carregando...</p>
-            </div>
-
-            <nav class="nav-side-bar">
-                <div class="secoes">
-                    <img src="./img/inicio.sidebar.png" class="secao-icon">
-                    <a href="dashboard.html">Início</a>
-                </div>
-
-                <div class="secoes">
-                    <img src="./img/produtos.png" class="secao-icon">
-                    <a href="produtos.html">Produtos</a>
-                </div>
-
-                <div class="secoes">
-                    <img src="./img/estoque.png" class="secao-icon">
-                    <a href="./estoque.html">Estoques</a>
-                </div>
-
-                <div class="secoes">
-                    <img src="./img/financeiro.png" class="secao-icon">
-                    <a href="./financeiro.html">Financeiro</a>
-                </div>
-
-                <div class="secoes">
-                    <img src="./img/vendas.png" class="secao-icon">
-                    <a href="#">Vendas</a>
-                </div>
-
-                <div class="secoes">
-                    <img src="./img/funcionarios.png" class="secao-icon">
-                    <a href="./funcionarios.html">Funcionários</a>
-                </div>
-
-                <div class="secoes">
-                    <img src="./img/clientes.png" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
-                </div>
-
-                <div class="secoes">
-                    <img src="./img/relatorios.png" class="secao-icon">
-                    <a href="./categorias.html">Categorias</a>
-                </div>
-            </nav>
+        <div class="sidebar-header">
+            <img src="./img/LogoBorealTools.png"
+            alt="Boreal Tools"
+            class="logo">
         </div>
 
+        <div class="perfil">
+            <img src="./img/perfil-icon.png"
+            alt="Perfil">
+
+            <p>Fulano de Tal</p>
+        </div>
+
+        <nav class="nav-side-bar">
+
+            <div class="secoes">
+                <img src="./img/inicio.sidebar.png" class="secao-icon">
+                <a href="dashboard.html">Início</a>
+            </div>
+
+            <div class="secoes">
+                <img src="./img/produtos.png" class="secao-icon">
+                <a href="produtos.html">Produtos</a>
+            </div>
+
+            <div class="secoes">
+                <img src="./img/estoque.png" class="secao-icon">
+                <a href="./estoque.html">Estoques</a>
+            </div>
+
+            <div class="secoes">
+                <img src="./img/financeiro.png" class="secao-icon">
+                <a href="./financeiro.html">Financeiro</a>
+            </div>
+
+            <div class="secoes active">
+                <img src="./img/vendas.png" class="secao-icon">
+                <a href="vendas.html">Vendas</a>
+            </div>
+
+            <div class="secoes">
+                <img src="./img/funcionarios.png" class="secao-icon">
+                <a href="./funcionarios.html">Funcionários</a>
+            </div>
+
+            <div class="secoes">
+                <img src="./img/clientes.png" class="secao-icon">
+                <a href="./ClienteFornecedor.html">Clientes</a>
+            </div>
+
+            <div class="secoes">
+                <img src="./img/relatorios.png" class="secao-icon">
+                <a href="./categorias.html">Categorias</a>
+            </div>
+        </nav>
+
         <div class="logout-link">
-            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
+            <a href="./login.html">← Deslogar</a>
         </div>
     </section>
 
     <main>
         <div class="sales-panel">
+            <!-- HEADER -->
             <div class="panel-header">
                 <div class="panel-title">
                     <h2>Registro de Vendas</h2>
                     <div class="panel-subtitle">
-                        Acompanhe pedidos, clientes e faturamento das vendas em tempo real.
+                        Acompanhe pedidos, clientes e faturamento das vendas.
                     </div>
                 </div>
+
                 <div class="panel-icon">
                     <i class="ph ph-shopping-cart"></i>
                 </div>
             </div>
 
+            <!-- TOOLBAR -->
             <div class="table-toolbar">
+
                 <div class="search-box">
-                    <input type="text" id="txtPesquisaVendas" placeholder="Pesquisar por cliente ou ID do pedido...">
+                    <input type="text" id="search-input" placeholder="Pesquisar por cliente ou ID">
                     <i class="ph ph-magnifying-glass"></i>
                 </div>
+
                 <a href="cadastrarVenda.html" class="btn-add">+ Registrar Venda</a>
             </div>
 
-            <div class="sales-list" id="containerVendas">
-
-                <article class="sale-card">
-                    <div class="info-group">
-                        <span class="info-label">Pedido</span>
-                        <span class="info-value">#001</span>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Data</span>
-                        <span class="info-value">29/02/2026</span>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Cliente</span>
-                        <span class="info-value">João Silva</span>
-                    </div>
-                    <button class="btn-detail">Ver detalhes</button>
-                    <div class="info-group">
-                        <span class="info-label">Total da Venda</span>
-                        <span class="info-value total-value">R$ 1.250,00</span>
-                    </div>
-                </article>
-
-                <article class="sale-card">
-                    <div class="info-group">
-                        <span class="info-label">Pedido</span>
-                        <span class="info-value">#002</span>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Data</span>
-                        <span class="info-value">03/03/2026</span>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Cliente</span>
-                        <span class="info-value">Maria Souza</span>
-                    </div>
-                    <button class="btn-detail">Ver detalhes</button>
-                    <div class="info-group">
-                        <span class="info-label">Total da Venda</span>
-                        <span class="info-value total-value">R$ 2.800,00</span>
-                    </div>
-                </article>
-
-                <article class="sale-card">
-                    <div class="info-group">
-                        <span class="info-label">Pedido</span>
-                        <span class="info-value">#003</span>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Data</span>
-                        <span class="info-value">10/03/2026</span>
-                    </div>
-                    <div class="info-group">
-                        <span class="info-label">Cliente</span>
-                        <span class="info-value">Carlos Henrique</span>
-                    </div>
-                    <button class="btn-detail">Ver detalhes</button>
-                    <div class="info-group">
-                        <span class="info-label">Total da Venda</span>
-                        <span class="info-value total-value">R$ 980,00</span>
-                    </div>
-                </article>
+            <!-- LISTA DE VENDAS -->
+            <div class="sales-list" id="sales-container">
 
             </div>
         </div>
     </main>
-</div>
 
-<script>
-    /* ========================================================
-       SISTEMA DE AUTENTICAÇÃO JWT E CONTROLE DE SESSÃO
-    ======================================================== */
-    function parseJwt(token) {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+    <script>
+        
+        // Configuração da URL base do seu controller C# (Altere a porta caso seja diferente)
+        const API_URL = 'http://localhost:5187/api/Pedidos'; 
 
-            return JSON.parse(jsonPayload);
-        } catch (e) {
-            console.error("Falha ao descriptografar token de segurança:", e);
-            return null;
+        // Elementos capturados do DOM
+        const salesContainer = document.getElementById('sales-container');
+        const searchInput = document.getElementById('search-input');
+
+        // Evento disparado quando a página carrega completamente
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarAutenticacao();
+            carregarPedidos();
+            configurarFiltroPesquisa();
+        });
+
+        /**
+         * Valida se o usuário possui um token JWT salvo para evitar requisições perdidas
+         */
+        function verificarAutenticacao() {
+            const token = localStorage.getItem('token'); // Presume-se que o token foi guardado no login
+            if (!token) {
+                alert('Sessão expirada ou usuário não autenticado. Redirecionando para o login...');
+                window.location.href = './login.html';
+            }
         }
-    }
 
-    function obterToken() {
-        return localStorage.getItem("token") || sessionStorage.getItem("token");
-    }
+        /**
+         * Busca a lista de pedidos do backend C# enviando o Token JWT de autorização
+         */
+        async function carregarPedidos() {
+            try {
+                salesContainer.innerHTML = '<p style="text-align:center; padding:20px;">Carregando registros...</p>';
+
+                const token = localStorage.getItem('token');
+                const response = await fetch(API_URL, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Envia o cabeçalho exigido pelo [Authorize] do C#
+                    }
+                });
+
+                if (response.status === 401) {
+                    alert('Você não tem permissão ou seu token expirou.');
+                    window.location.href = './login.html';
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP! Status: ${response.status}`);
+                }
+
+                const pedidos = await response.json();
+                
+                // Armazena globalmente os pedidos para realizar filtros em tempo real
+                window.listaDePedidosGlobal = pedidos; 
+                
+                renderizarCards(pedidos);
+
+            } catch (error) {
+                console.error('Erro ao buscar pedidos:', error);
+                salesContainer.innerHTML = `
+                    <p style="color: red; text-align: center; padding: 20px; font-weight: bold;">
+                        Erro ao carregar vendas. Certifique-se de que a API está rodando e o banco está acessível.
+                    </p>`;
+            }
+        }
+
+        /**
+         * Injeta dinamicamente os elementos de pedidos no HTML estruturado
+         * @param {Array} pedidos - Array contendo objetos mapeados do C#
+         */
+        function renderizarCards(pedidos) {
+            salesContainer.innerHTML = '';
+
+            if (pedidos.length === 0) {
+                salesContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Nenhum pedido registrado.</p>';
+                return;
+            }
+
+            pedidos.forEach(pedido => {
+                // Formata a data vinda do C# (ex: "2026-05-29T11:00:00") para o padrão "dd/mm/aaaa"
+                const dataFormatada = new Date(pedido.data).toLocaleDateString('pt-BR');
+
+                // Formata o valor decimal do C# para Real brasileiro (R$ 0,00)
+                const valorFormatado = pedido.valorTotal.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                });
+
+                // Monta o article conforme o seu padrão visual original do HTML
+                const cardArticle = document.createElement('article');
+                cardArticle.className = 'sale-card';
+                cardArticle.innerHTML = `
+                    <div class="info-group">
+                        <span class="info-label">Pedido</span>
+                        <span class="info-value">#${pedido.id.toString().padStart(3, '0')}</span>
+                    </div>
+
+                    <div class="info-group">
+                        <span class="info-label">Data</span>
+                        <span class="info-value">${dataFormatada}</span>
+                    </div>
+
+                    <div class="info-group">
+                        <span class="info-label">Cliente</span>
+                        <span class="info-value">${pedido.clienteNome || 'Cliente ID: ' + pedido.clienteId}</span>
+                    </div>
+
+                    <button class="btn-detail" onclick="redirecionarDetalhes(${pedido.id})">
+                        Ver detalhes
+                    </button>
+
+                    <div class="info-group">
+                        <span class="info-label">Total da Venda</span>
+                        <span class="info-value total-value">${valorFormatado}</span>
+                    </div>
+                `;
+
+                salesContainer.appendChild(cardArticle);
+            });
+        }
+
+        /**
+         * Filtra os pedidos localmente por ID ou ID do Cliente à medida que o usuário digita (Filtro reativo)
+         */
+        function configurarFiltroPesquisa() {
+            searchInput.addEventListener('input', (evento) => {
+                const termoBusca = evento.target.value.trim().toLowerCase();
+                
+                if (!window.listaDePedidosGlobal) return;
+
+                // Filtra a lista pelo ID do pedido ou pelo ClienteId informado
+                const pedidosFiltrados = window.listaDePedidosGlobal.filter(pedido => {
+                    const idMatch = pedido.id.toString().toLowerCase().includes(termoBusca);
+                    const clienteMatch = pedido.clienteId.toString().toLowerCase().includes(termoBusca);
+                    
+                    return idMatch || clienteMatch;
+                });
+
+                renderizarCards(pedidosFiltrados);
+            });
+        }
+
+        /**
+         * Executado ao clicar no botão 'Ver detalhes'
+         * Redireciona enviando o id mapeado pela rota GET correspondente
+         * @param {number} id - ID do pedido capturado
+         */
+        function redirecionarDetalhes(id) {
+            // Redireciona para a página correspondente passando o ID via Query String
+            window.location.href = `detalhesVenda.html?id=${id}`;
+        }
+    </script>
 
     document.addEventListener("DOMContentLoaded", () => {
         const tokenAtivo = obterToken();

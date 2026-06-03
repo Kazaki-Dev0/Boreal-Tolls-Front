@@ -421,11 +421,32 @@
                 <div class="panel-icon"><i class="fa-solid fa-user"></i></div>
             </div>
 
-            <div class="toolbar">
-                <div class="search-box">
-                    <input type="text" id="input-search" placeholder="Pesquisar por nome, documento ou tipo...">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+    </nav>
+
+    <div class="logout-link">
+        <a href="./login.html">← Deslogar</a>
+    </div>
+
+</section>
+
+<!-- MAIN -->
+
+<main>
+
+<div class="clients-card">
+
+    <!-- HEADER -->
+
+    <div class="clients-header">
+
+        <div class="title-area">
+
+            <h2>
+                Clientes e Fornecedores
+            </h2>
+
+            <div class="subtitle">
+                <span>Gerencie sua base de clientes/fornecedores e acompanhe informações detalhadas.</span>
 
                 <div class="actions">
                     <a href="cadastrarCliente.html" class="btn">+ Cadastrar</a>
@@ -439,13 +460,27 @@
     </section>
 </div>
 
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modal-client-name">Nome Fantasia / Razão Social</h3>
-            <button class="modal-close" onclick="fecharModal()">&times;</button>
+        <div class="panel-icon">
+            <i class="fa-solid fa-user"></i>
         </div>
-        <div class="details-grid" id="modalContent"></div>
+
+    </div>
+
+    <!-- TOOLBAR -->
+
+    <div class="actions">
+
+        <div class="search-box">
+
+            <input type="text" id="inputBusca" placeholder="Buscar por ID ou Nome">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </div>
+
+        <a href="cadastrarCliente.html" class="btn-add" onclick="localStorage.removeItem('idEdicao'); localStorage.removeItem('tipoEdicao');">
+            + Cadastrar
+        </a>
+
     </div>
 </div>
 
