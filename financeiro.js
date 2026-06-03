@@ -243,3 +243,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     configurarPesquisaFinanceira();
 });
+
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./index.html");
+}
