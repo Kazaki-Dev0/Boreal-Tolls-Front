@@ -51,3 +51,8 @@ form.addEventListener("submit", async (e) => {
         alert("Erro ao cadastrar funcionário");
     }
 });
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./index.html");
+}

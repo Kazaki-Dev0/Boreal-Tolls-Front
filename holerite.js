@@ -193,5 +193,5 @@ function parseJwt(token) {
 function efetuarLogout() {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.replace("./login.html");
+    window.location.replace("./index.html");
 }

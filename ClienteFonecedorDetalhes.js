@@ -121,3 +121,9 @@ window.addEventListener('click', (e) => {
         fecharModalDetalhes();
     }
 });
+
+function efetuarLogout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("./index.html");
+}
