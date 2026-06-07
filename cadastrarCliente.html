@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -245,285 +246,310 @@
             transition: background-color 0.25s;
         }
 
-        #btnFinalizar:hover { background-color: #81c784; }
+        #btnFinalizar:hover {
+            background-color: #81c784;
+        }
 
         /* ========================= RESPONSIVO ========================= */
         @media(max-width: 900px) {
-            .main-wrapper { flex-direction: column; }
-            .side-bar { display: none; }
-            main { max-width: 100vw; }
-            .inputs-grid { grid-template-columns: 1fr 1fr; }
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .side-bar {
+                display: none;
+            }
+
+            main {
+                max-width: 100vw;
+            }
+
+            .inputs-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         @media(max-width: 600px) {
-            .inputs-grid { grid-template-columns: 1fr; }
+            .inputs-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
-<div class="main-wrapper">
+    <div class="main-wrapper">
 
-    <!-- SIDEBAR -->
-    <section class="side-bar">
-        <div>
-            <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-            </div>
-
-            <div class="perfil">
-                <img src="./img/perfil-icon.png" alt="Foto de Perfil">
-                <p id="nomeUsuarioSidebar">Carregando...</p>
-            </div>
-
-            <nav class="nav-side-bar">
-                <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a href="dashboard.html">Início</a></div>
-                <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a href="produtos.html">Produtos</a></div>
-                <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a href="./estoque.html">Estoques</a></div>
-                <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
-                <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
-                <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
-                <div class="secoes active"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes e Fornecedores</a></div>
-                <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
-            </nav>
-        </div>
-
-        <div class="logout-link">
-            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
-        </div>
-    </section>
-
-    <!-- MAIN -->
-    <main>
-        <div class="main-panel">
-
-            <!-- HEADER -->
-            <div class="main-header">
-                <div class="titulo">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <div class="titulo-text">
-                        <h2 id="tituloPagina">Novo Cliente</h2>
-                        <p>Gerencie sua base de clientes e acompanhe informações detalhadas.</p>
-                    </div>
-                </div>
-                <a href="ClienteFornecedor.html">
-                    <button class="btn-back">← Voltar</button>
-                </a>
-            </div>
-
-            <!-- FORMULÁRIO -->
-            <form id="clienteForm">
-                <div class="form-card">
-                    <div class="form-card-label">
-                        <i class="fa-solid fa-chevron-down"></i>
-                        <span id="formCardLabel">Cliente</span>
-                    </div>
-
-                    <div class="inputs-grid">
-
-                        <!-- TIPO -->
-                        <div class="input-div">
-                            <label for="tipo"><i class="fa-solid fa-tag"></i> Tipo</label>
-                            <select id="tipo" onchange="atualizarTipo()">
-                                <option value="cliente">Cliente</option>
-                                <option value="fornecedor">Fornecedor</option>
-                            </select>
-                        </div>
-
-                        <!-- NOME -->
-                        <div class="input-div">
-                            <label for="Nome"><i class="fa-solid fa-user"></i> Nome completo</label>
-                            <input type="text" id="Nome" placeholder="Ex: Neymar da Silva Santos" required>
-                        </div>
-
-                        <!-- CPF / CNPJ -->
-                        <div class="input-div">
-                            <label for="CPF" id="labelDoc"><i class="fa-solid fa-id-card"></i> CPF/CNPJ</label>
-                            <input type="text" id="CPF" placeholder="000.000.000-00">
-                        </div>
-
-                        <!-- TELEFONE -->
-                        <div class="input-div">
-                            <label for="Telefone"><i class="fa-solid fa-phone"></i> Telefone</label>
-                            <input type="text" id="Telefone" placeholder="(00) 00000-0000">
-                        </div>
-
-                        <!-- EMAIL -->
-                        <div class="input-div">
-                            <label for="Email"><i class="fa-solid fa-envelope"></i> Email</label>
-                            <input type="email" id="Email" placeholder="exemplo@email.com">
-                        </div>
-
-                        <!-- DATA DE NASCIMENTO (só para Cliente) -->
-                        <div class="input-div data-nasc-group" id="dataNascimentoGroup">
-                            <label for="DataNascimento"><i class="fa-solid fa-calendar"></i> Data de Nascimento</label>
-                            <input type="date" id="DataNascimento">
-                        </div>
-
-                        <!-- CEP -->
-                        <div class="input-div">
-                            <label for="CEP"><i class="fa-solid fa-location-dot"></i> CEP</label>
-                            <input type="text" id="CEP" placeholder="00000-000">
-                        </div>
-
-                        <!-- CIDADE -->
-                        <div class="input-div">
-                            <label for="Cidade"><i class="fa-solid fa-city"></i> Cidade</label>
-                            <input type="text" id="Cidade" placeholder="Marília">
-                        </div>
-
-                        <!-- RUA -->
-                        <div class="input-div">
-                            <label for="Rua"><i class="fa-solid fa-road"></i> Rua</label>
-                            <input type="text" id="Rua" placeholder="Av. Sampaio Vidal">
-                        </div>
-
-                        <!-- BAIRRO -->
-                        <div class="input-div">
-                            <label for="Bairro"><i class="fa-solid fa-map"></i> Bairro</label>
-                            <input type="text" id="Bairro" placeholder="Centro">
-                        </div>
-
-                        <!-- NÚMERO -->
-                        <div class="input-div">
-                            <label for="Numero"><i class="fa-solid fa-hashtag"></i> Nº Residência</label>
-                            <input type="text" id="Numero" placeholder="0000">
-                        </div>
-
-                        <!-- ESTADO -->
-                        <div class="input-div">
-                            <label for="Estado"><i class="fa-solid fa-map-location-dot"></i> Estado</label>
-                            <input type="text" id="Estado" placeholder="São Paulo">
-                        </div>
-
-                        <!-- COMPLEMENTO -->
-                        <div class="input-div">
-                            <label for="Complemento"><i class="fa-solid fa-circle-info"></i> Complemento</label>
-                            <input type="text" id="Complemento" placeholder="Ex: Sala 4 / Bloco B">
-                        </div>
-
-                    </div>
+        <!-- SIDEBAR -->
+        <section class="side-bar">
+            <div>
+                <div class="sidebar-header">
+                    <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
                 </div>
 
-                <button type="submit" id="btnFinalizar">Finalizar Cadastro</button>
-            </form>
+                <div class="perfil">
+                    <img src="./img/perfil-icon.png" alt="Foto de Perfil">
+                    <p id="nomeUsuarioSidebar">Carregando...</p>
+                </div>
 
-        </div>
-    </main>
-</div>
+                <nav class="nav-side-bar">
+                    <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a
+                            href="dashboard.html">Início</a></div>
+                    <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a
+                            href="produtos.html">Produtos</a></div>
+                    <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a
+                            href="./estoque.html">Estoques</a></div>
+                    <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a
+                            href="./financeiro.html">Financeiro</a></div>
+                    <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a>
+                    </div>
+                    <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a
+                            href="./funcionarios.html">Funcionários</a></div>
+                    <div class="secoes active"><img src="./img/clientes.png" class="secao-icon"><a
+                            href="./ClienteFornecedor.html">Clientes e Fornecedores</a></div>
+                    <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a
+                            href="./categorias.html">Categorias</a></div>
+                </nav>
+            </div>
 
-<script>
-    const API_URL = "https://api-time7.azurewebsites.net/api/Clientes";
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+            <div class="logout-link">
+                <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
+            </div>
+        </section>
 
-    /* ========================= AUTH ========================= */
-    function parseJwt(t) {
-        try {
-            const b64 = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-            return JSON.parse(decodeURIComponent(window.atob(b64).split('').map(c =>
-                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
-        } catch (e) { return null; }
-    }
+        <!-- MAIN -->
+        <main>
+            <div class="main-panel">
 
-    document.addEventListener("DOMContentLoaded", () => {
-        if (!token) { efetuarLogout(); return; }
+                <!-- HEADER -->
+                <div class="main-header">
+                    <div class="titulo">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <div class="titulo-text">
+                            <h2 id="tituloPagina">Novo Cliente</h2>
+                            <p>Gerencie sua base de clientes e acompanhe informações detalhadas.</p>
+                        </div>
+                    </div>
+                    <a href="ClienteFornecedor.html">
+                        <button class="btn-back">← Voltar</button>
+                    </a>
+                </div>
 
-        const payload = parseJwt(token);
-        if (payload) {
-            document.getElementById("nomeUsuarioSidebar").innerText =
-                payload["unique_name"] || payload["name"] ||
-                payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
-                "Usuário Boreal";
+                <!-- FORMULÁRIO -->
+                <form id="clienteForm">
+                    <div class="form-card">
+                        <div class="form-card-label">
+                            <i class="fa-solid fa-chevron-down"></i>
+                            <span id="formCardLabel">Cliente</span>
+                        </div>
+
+                        <div class="inputs-grid">
+
+                            <!-- TIPO -->
+                            <div class="input-div">
+                                <label for="tipo"><i class="fa-solid fa-tag"></i> Tipo</label>
+                                <select id="tipo" onchange="atualizarTipo()">
+                                    <option value="cliente">Cliente</option>
+                                    <option value="fornecedor">Fornecedor</option>
+                                </select>
+                            </div>
+
+                            <!-- NOME -->
+                            <div class="input-div">
+                                <label for="Nome"><i class="fa-solid fa-user"></i> Nome completo</label>
+                                <input type="text" id="Nome" placeholder="Ex: Neymar da Silva Santos" required>
+                            </div>
+
+                            <!-- CPF / CNPJ -->
+                            <div class="input-div">
+                                <label for="CPF" id="labelDoc"><i class="fa-solid fa-id-card"></i> CPF/CNPJ</label>
+                                <input type="text" id="CPF" placeholder="000.000.000-00">
+                            </div>
+
+                            <!-- TELEFONE -->
+                            <div class="input-div">
+                                <label for="Telefone"><i class="fa-solid fa-phone"></i> Telefone</label>
+                                <input type="text" id="Telefone" placeholder="(00) 00000-0000">
+                            </div>
+
+                            <!-- EMAIL -->
+                            <div class="input-div">
+                                <label for="Email"><i class="fa-solid fa-envelope"></i> Email</label>
+                                <input type="email" id="Email" placeholder="exemplo@email.com">
+                            </div>
+
+                            <!-- DATA DE NASCIMENTO (só para Cliente) -->
+                            <div class="input-div data-nasc-group" id="dataNascimentoGroup">
+                                <label for="DataNascimento"><i class="fa-solid fa-calendar"></i> Data de
+                                    Nascimento</label>
+                                <input type="date" id="DataNascimento">
+                            </div>
+
+                            <!-- CEP -->
+                            <div class="input-div">
+                                <label for="CEP"><i class="fa-solid fa-location-dot"></i> CEP</label>
+                                <input type="text" id="CEP" placeholder="00000-000">
+                            </div>
+
+                            <!-- CIDADE -->
+                            <div class="input-div">
+                                <label for="Cidade"><i class="fa-solid fa-city"></i> Cidade</label>
+                                <input type="text" id="Cidade" placeholder="Marília">
+                            </div>
+
+                            <!-- RUA -->
+                            <div class="input-div">
+                                <label for="Rua"><i class="fa-solid fa-road"></i> Rua</label>
+                                <input type="text" id="Rua" placeholder="Av. Sampaio Vidal">
+                            </div>
+
+                            <!-- BAIRRO -->
+                            <div class="input-div">
+                                <label for="Bairro"><i class="fa-solid fa-map"></i> Bairro</label>
+                                <input type="text" id="Bairro" placeholder="Centro">
+                            </div>
+
+                            <!-- NÚMERO -->
+                            <div class="input-div">
+                                <label for="Numero"><i class="fa-solid fa-hashtag"></i> Nº Residência</label>
+                                <input type="text" id="Numero" placeholder="0000">
+                            </div>
+
+                            <!-- ESTADO -->
+                            <div class="input-div">
+                                <label for="Estado"><i class="fa-solid fa-map-location-dot"></i> Estado</label>
+                                <input type="text" id="Estado" placeholder="São Paulo">
+                            </div>
+
+                            <!-- COMPLEMENTO -->
+                            <div class="input-div">
+                                <label for="Complemento"><i class="fa-solid fa-circle-info"></i> Complemento</label>
+                                <input type="text" id="Complemento" placeholder="Ex: Sala 4 / Bloco B">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnFinalizar">Finalizar Cadastro</button>
+                </form>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_URL = "https://api-time7.azurewebsites.net/api/Clientes";
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+        /* ========================= AUTH ========================= */
+        function parseJwt(t) {
+            try {
+                const b64 = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+                return JSON.parse(decodeURIComponent(window.atob(b64).split('').map(c =>
+                    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
+            } catch (e) { return null; }
         }
 
-        document.getElementById("clienteForm").addEventListener("submit", cadastrar);
-    });
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!token) { efetuarLogout(); return; }
 
-    /* ========================= ALTERNAR TIPO ========================= */
-    function atualizarTipo() {
-        const tipo = document.getElementById("tipo").value;
-        const isFornecedor = tipo === "fornecedor";
-
-        // Esconde Data de Nascimento para Fornecedor
-        const dnGroup = document.getElementById("dataNascimentoGroup");
-        dnGroup.classList.toggle("hidden", isFornecedor);
-
-        // Atualiza label do documento
-        document.getElementById("labelDoc").innerHTML =
-            `<i class="fa-solid fa-id-card"></i> ${isFornecedor ? "CNPJ" : "CPF/CNPJ"}`;
-        document.getElementById("CPF").placeholder = isFornecedor ? "00.000.000/0000-00" : "000.000.000-00";
-
-        // Atualiza título e label do card
-        document.getElementById("tituloPagina").innerText = isFornecedor ? "Novo Fornecedor" : "Novo Cliente";
-        document.getElementById("formCardLabel").innerText = isFornecedor ? "Fornecedor" : "Cliente";
-    }
-
-    /* ========================= CADASTRAR ========================= */
-    async function cadastrar(event) {
-        event.preventDefault();
-
-        const tipo = document.getElementById("tipo").value;
-        const isFornecedor = tipo === "fornecedor";
-
-        const payload = {
-            tipoVinculo: tipo,
-            nome: document.getElementById("Nome").value.trim(),
-            cpf: !isFornecedor ? (document.getElementById("CPF").value.trim() || null) : null,
-            cnpj: isFornecedor ? (document.getElementById("CPF").value.trim() || null) : null,
-            telefone: document.getElementById("Telefone").value.trim() || null,
-            email: document.getElementById("Email").value.trim() || null,
-            dataNascimento: (!isFornecedor && document.getElementById("DataNascimento").value)
-                ? document.getElementById("DataNascimento").value
-                : null,
-            cep: document.getElementById("CEP").value.trim() || null,
-            cidade: document.getElementById("Cidade").value.trim() || null,
-            rua: document.getElementById("Rua").value.trim() || null,
-            bairro: document.getElementById("Bairro").value.trim() || null,
-            numero: document.getElementById("Numero").value.trim() || null,
-            estado: document.getElementById("Estado").value.trim() || null,
-            complemento: document.getElementById("Complemento").value.trim() || null
-        };
-
-        if (!payload.nome) {
-            alert("O campo Nome é obrigatório.");
-            return;
-        }
-
-        const btnFinalizar = document.getElementById("btnFinalizar");
-        btnFinalizar.disabled = true;
-        btnFinalizar.innerText = "Salvando...";
-
-        try {
-            const res = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(payload)
-            });
-
-            if (!res.ok) {
-                const msg = await res.text();
-                throw new Error(msg || `Erro ${res.status}`);
+            const payload = parseJwt(token);
+            if (payload) {
+                document.getElementById("nomeUsuarioSidebar").innerText =
+                    payload["unique_name"] || payload["name"] ||
+                    payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
+                    "Usuário Boreal";
             }
 
-            alert("Registro cadastrado com sucesso!");
-            window.location.href = "ClienteFornecedor.html";
+            document.getElementById("clienteForm").addEventListener("submit", cadastrar);
+        });
 
-        } catch (err) {
-            console.error("Erro ao cadastrar:", err);
-            alert("Erro ao cadastrar: " + err.message);
-            btnFinalizar.disabled = false;
-            btnFinalizar.innerText = "Finalizar Cadastro";
+        /* ========================= ALTERNAR TIPO ========================= */
+        function atualizarTipo() {
+            const tipo = document.getElementById("tipo").value;
+            const isFornecedor = tipo === "fornecedor";
+
+            // Esconde Data de Nascimento para Fornecedor
+            const dnGroup = document.getElementById("dataNascimentoGroup");
+            dnGroup.classList.toggle("hidden", isFornecedor);
+
+            // Atualiza label do documento
+            document.getElementById("labelDoc").innerHTML =
+                `<i class="fa-solid fa-id-card"></i> ${isFornecedor ? "CNPJ" : "CPF/CNPJ"}`;
+            document.getElementById("CPF").placeholder = isFornecedor ? "00.000.000/0000-00" : "000.000.000-00";
+
+            // Atualiza título e label do card
+            document.getElementById("tituloPagina").innerText = isFornecedor ? "Novo Fornecedor" : "Novo Cliente";
+            document.getElementById("formCardLabel").innerText = isFornecedor ? "Fornecedor" : "Cliente";
         }
-    }
 
-    function efetuarLogout() {
-        localStorage.clear();
-        sessionStorage.clear();
-        window.location.replace("./index.html");
-    }
-</script>
+        /* ========================= CADASTRAR ========================= */
+        async function cadastrar(event) {
+            event.preventDefault();
+
+            const tipo = document.getElementById("tipo").value;
+            const isFornecedor = tipo === "fornecedor";
+
+            const payload = {
+                tipoVinculo: tipo,
+                nome: document.getElementById("Nome").value.trim(),
+                cpf: !isFornecedor ? (document.getElementById("CPF").value.trim() || null) : null,
+                cnpj: isFornecedor ? (document.getElementById("CPF").value.trim() || null) : null,
+                telefone: document.getElementById("Telefone").value.trim() || null,
+                email: document.getElementById("Email").value.trim() || null,
+                dataNascimento: (!isFornecedor && document.getElementById("DataNascimento").value)
+                    ? document.getElementById("DataNascimento").value
+                    : null,
+                cep: document.getElementById("CEP").value.trim() || null,
+                cidade: document.getElementById("Cidade").value.trim() || null,
+                rua: document.getElementById("Rua").value.trim() || null,
+                bairro: document.getElementById("Bairro").value.trim() || null,
+                numero: document.getElementById("Numero").value.trim() || null,
+                estado: document.getElementById("Estado").value.trim() || null,
+                complemento: document.getElementById("Complemento").value.trim() || null
+            };
+
+            if (!payload.nome) {
+                alert("O campo Nome é obrigatório.");
+                return;
+            }
+
+            const btnFinalizar = document.getElementById("btnFinalizar");
+            btnFinalizar.disabled = true;
+            btnFinalizar.innerText = "Salvando...";
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const msg = await res.text();
+                    throw new Error(msg || `Erro ${res.status}`);
+                }
+
+                alert("Registro cadastrado com sucesso!");
+                window.location.href = "ClienteFornecedor.html";
+
+            } catch (err) {
+                console.error("Erro ao cadastrar:", err);
+                alert("Erro ao cadastrar: " + err.message);
+                btnFinalizar.disabled = false;
+                btnFinalizar.innerText = "Finalizar Cadastro";
+            }
+        }
+
+        function efetuarLogout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("./index.html");
+        }
+    </script>
 </body>
+
 </html>

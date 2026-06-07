@@ -1,378 +1,376 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Boreal Tools - Vendas</title>
+    <title>Boreal Tools - Vendas</title>
 
-<link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="sidebar.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-<style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+        body {
+            background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+        }
 
-body{
-    background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
-    color:white;
-    min-height:100vh;
-    overflow: hidden; 
-}
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100vw;
+        }
 
-.main-wrapper {
-    display: flex;
-    min-height: 100vh;
-    width: 100vw;
-}
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
+        /* Padronização do Sidebar */
+        .side-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            padding-bottom: 20px;
+            width: 260px;
+            flex-shrink: 0;
+        }
 
-/* Padronização do Sidebar */
-.side-bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    padding-bottom: 20px; 
-    width: 260px;
-    flex-shrink: 0;
-}
+        .secoes:nth-child(5) {
+            background-color: #2e4a3e;
+        }
 
-.secoes:nth-child(5){
-    background-color:#2e4a3e;
-}
+        .perfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 6px;
+            width: 100%;
+        }
 
-.perfil {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 6px; 
-    width: 100%;
-}
+        .perfil img {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #7bcf9c;
+            box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
+            background-color: #141414;
+        }
 
-.perfil img {
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #7bcf9c;
-    box-shadow: 0 0 15px rgba(123, 207, 156, 0.3);
-    background-color: #141414;
-}
+        .perfil p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            max-width: 85%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.perfil p {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #ffffff;
-    max-width: 85%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* =========================
+        /* =========================
    MAIN
 ========================= */
 
-main{
-    flex: 1;
-    padding:25px;
-    overflow-y:auto;
-    max-width: calc(100vw - 260px);
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-}
+        main {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            max-width: calc(100vw - 260px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-/* =========================
+        /* =========================
    PAINEL
 ========================= */
 
-.sales-panel{
+        .sales-panel {
 
-width:95%;
+            width: 95%;
 
-max-width:1250px;
+            max-width: 1250px;
 
-border-radius:20px;
+            border-radius: 20px;
 
-padding:40px;
+            padding: 40px;
 
-margin:20px auto;
+            margin: 20px auto;
 
-background:rgba(20,20,20,0.7);
+            background: rgba(20, 20, 20, 0.7);
 
-border:1px solid #2e4a3e;
+            border: 1px solid #2e4a3e;
 
-box-shadow:
-0 0 25px rgba(0,255,120,0.08);
-}
+            box-shadow:
+                0 0 25px rgba(0, 255, 120, 0.08);
+        }
 
-/* =========================
+        /* =========================
    HEADER
 ========================= */
 
-.panel-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
 
-    margin-bottom:30px;
-}
+            margin-bottom: 30px;
+        }
 
-.panel-title h2{
-    font-size:2rem;
-    font-weight:500;
+        .panel-title h2 {
+            font-size: 2rem;
+            font-weight: 500;
 
-    margin-bottom:10px;
-}
+            margin-bottom: 10px;
+        }
 
-.panel-subtitle{
-    color:#aaa;
-    font-size:0.95rem;
-}
+        .panel-subtitle {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
 
-.panel-icon{
+        .panel-icon {
 
-    width:50px;
-    height:50px;
+            width: 50px;
+            height: 50px;
 
-    border-radius:10px;
+            border-radius: 10px;
 
-    background:#163125;
+            background: #163125;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    color:#7bcf9c;
+            color: #7bcf9c;
 
-    font-size:28px;
-}
+            font-size: 28px;
+        }
 
-/* =========================
+        /* =========================
    TOOLBAR
 ========================= */
 
-.table-toolbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-    margin-bottom:35px;
+            margin-bottom: 35px;
 
-    gap:20px;
-}
+            gap: 20px;
+        }
 
-.search-box{
+        .search-box {
 
-    width:350px;
+            width: 350px;
 
-    display:flex;
-    align-items:center;
+            display: flex;
+            align-items: center;
 
-    border:1px solid #3a4a43;
+            border: 1px solid #3a4a43;
 
-    border-radius:30px;
+            border-radius: 30px;
 
-    padding:10px 18px;
+            padding: 10px 18px;
 
-    background:transparent;
-}
+            background: transparent;
+        }
 
-.search-box input{
+        .search-box input {
 
-    width:100%;
+            width: 100%;
 
-    background:none;
+            background: none;
 
-    border:none;
+            border: none;
 
-    outline:none;
+            outline: none;
 
-    color:white;
+            color: white;
 
-    font-size:0.95rem;
-}
+            font-size: 0.95rem;
+        }
 
-.search-box input::placeholder{
-    color:#777;
-}
+        .search-box input::placeholder {
+            color: #777;
+        }
 
-.search-box i{
-    color:#777;
-}
+        .search-box i {
+            color: #777;
+        }
 
-/* =========================
+        /* =========================
    BOTÃO
 ========================= */
 
-.btn-add{
+        .btn-add {
 
-    background:#9cc8aa;
+            background: #9cc8aa;
 
-    color:black;
+            color: black;
 
-    padding:12px 24px;
+            padding: 12px 24px;
 
-    border-radius:10px;
+            border-radius: 10px;
 
-    font-weight:600;
+            font-weight: 600;
 
-    transition:0.3s;
-}
+            transition: 0.3s;
+        }
 
-.btn-add:hover{
-    background:#81c784;
-}
+        .btn-add:hover {
+            background: #81c784;
+        }
 
-/* =========================
+        /* =========================
    CARDS DE VENDA
 ========================= */
 
-.sales-list{
+        .sales-list {
 
-    display:flex;
+            display: flex;
 
-    flex-direction:column;
+            flex-direction: column;
 
-    gap:18px;
-}
+            gap: 18px;
+        }
 
-.sale-card{
+        .sale-card {
 
-    background:#1c1c1c;
+            background: #1c1c1c;
 
-    border:1px solid #2b2b2b;
+            border: 1px solid #2b2b2b;
 
-    border-radius:18px;
+            border-radius: 18px;
 
-    padding:22px 28px;
+            padding: 22px 28px;
 
-    display:flex;
+            display: flex;
 
-    justify-content:space-between;
+            justify-content: space-between;
 
-    align-items:center;
+            align-items: center;
 
-    transition:0.3s;
+            transition: 0.3s;
 
-    flex-wrap:wrap;
+            flex-wrap: wrap;
 
-    gap:20px;
-}
+            gap: 20px;
+        }
 
-.sale-card:hover{
+        .sale-card:hover {
 
-    border-color:#2e4a3e;
+            border-color: #2e4a3e;
 
-    background:#202020;
-}
+            background: #202020;
+        }
 
-/* =========================
+        /* =========================
    INFORMAÇÕES
 ========================= */
 
-.info-group{
+        .info-group {
 
-    display:flex;
+            display: flex;
 
-    flex-direction:column;
+            flex-direction: column;
 
-    gap:6px;
-}
+            gap: 6px;
+        }
 
-.info-label{
+        .info-label {
 
-    color:#888;
+            color: #888;
 
-    font-size:0.85rem;
-}
+            font-size: 0.85rem;
+        }
 
-.info-value{
+        .info-value {
 
-    font-size:1rem;
+            font-size: 1rem;
 
-    font-weight:600;
+            font-weight: 600;
 
-    color:white;
-}
+            color: white;
+        }
 
-.total-value{
+        .total-value {
 
-    color:#7bcf9c;
+            color: #7bcf9c;
 
-    font-size:1.2rem;
-}
+            font-size: 1.2rem;
+        }
 
-/* =========================
+        /* =========================
    BOTÃO DETALHES
 ========================= */
 
-.btn-detail{
+        .btn-detail {
 
-    background:#9cc8aa;
+            background: #9cc8aa;
 
-    color:black;
+            color: black;
 
-    border:none;
+            border: none;
 
-    padding:10px 22px;
+            padding: 10px 22px;
 
-    border-radius:30px;
+            border-radius: 30px;
 
-    font-weight:600;
+            font-weight: 600;
 
-    cursor:pointer;
+            cursor: pointer;
 
-    transition:0.3s;
-}
+            transition: 0.3s;
+        }
 
-.btn-detail:hover{
-    background:#81c784;
-}
+        .btn-detail:hover {
+            background: #81c784;
+        }
 
-/* =========================
+        /* =========================
    RESPONSIVO
 ========================= */
 
-@media(max-width: 1200px) {
-    .table-toolbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+        @media(max-width: 1200px) {
+            .table-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-    .search-box {
-        width: 100%;
-    }
-}
+            .search-box {
+                width: 100%;
+            }
+        }
 
-@media(max-width: 900px) {
-    .side-bar {
-        display: none;
-    }
-    
-    main {
-        max-width: 100vw;
-    }
-}
+        @media(max-width: 900px) {
+            .side-bar {
+                display: none;
+            }
 
-</style>
+            main {
+                max-width: 100vw;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -383,12 +381,12 @@ box-shadow:
                 <div class="sidebar-header">
                     <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
                 </div>
-            
+
                 <div class="perfil">
                     <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
                     <p id="nomeUsuarioSidebar">Carregando...</p>
                 </div>
-            
+
                 <nav class="nav-side-bar">
                     <div class="secoes">
                         <img src="./img/inicio.sidebar.png" class="secao-icon">
@@ -433,156 +431,154 @@ box-shadow:
         <!-- MAIN -->
         <main>
 
-<div class="sales-panel">
+            <div class="sales-panel">
 
-    <!-- HEADER -->
+                <!-- HEADER -->
 
-    <div class="panel-header">
+                <div class="panel-header">
 
-        <div class="panel-title">
+                    <div class="panel-title">
 
-            <h2>Registro de Vendas</h2>
+                        <h2>Registro de Vendas</h2>
 
-            <div class="panel-subtitle">
-                Acompanhe pedidos, clientes e faturamento das vendas.
+                        <div class="panel-subtitle">
+                            Acompanhe pedidos, clientes e faturamento das vendas.
+                        </div>
+
+                    </div>
+
+                    <div class="panel-icon">
+                        <i class="ph ph-shopping-cart"></i>
+                    </div>
+
+                </div>
+
+                <!-- TOOLBAR -->
+
+                <div class="table-toolbar">
+
+                    <div class="search-box">
+
+                        <input type="text" placeholder="Pesquisar por cliente ou ID">
+
+                        <i class="ph ph-magnifying-glass"></i>
+
+                    </div>
+
+                    <a href="cadastrarVenda.html" class="btn-add">
+
+                        + Registrar Venda
+
+                    </a>
+
+                </div>
+
+                <!-- LISTA DE VENDAS -->
+
+                <div class="sales-list">
+
+                    <!-- CARD -->
+
+                    <article class="sale-card">
+
+                        <div class="info-group">
+                            <span class="info-label">Pedido</span>
+                            <span class="info-value">#001</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Data</span>
+                            <span class="info-value">29/02/2024</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Cliente</span>
+                            <span class="info-value">João Silva</span>
+                        </div>
+
+                        <button class="btn-detail">
+                            Ver detalhes
+                        </button>
+
+                        <div class="info-group">
+                            <span class="info-label">Total da Venda</span>
+                            <span class="info-value total-value">
+                                R$ 1.250,00
+                            </span>
+                        </div>
+
+                    </article>
+
+                    <!-- CARD -->
+
+                    <article class="sale-card">
+
+                        <div class="info-group">
+                            <span class="info-label">Pedido</span>
+                            <span class="info-value">#002</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Data</span>
+                            <span class="info-value">03/03/2024</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Cliente</span>
+                            <span class="info-value">Maria Souza</span>
+                        </div>
+
+                        <button class="btn-detail">
+                            Ver detalhes
+                        </button>
+
+                        <div class="info-group">
+                            <span class="info-label">Total da Venda</span>
+                            <span class="info-value total-value">
+                                R$ 2.800,00
+                            </span>
+                        </div>
+
+                    </article>
+
+                    <!-- CARD -->
+
+                    <article class="sale-card">
+
+                        <div class="info-group">
+                            <span class="info-label">Pedido</span>
+                            <span class="info-value">#003</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Data</span>
+                            <span class="info-value">10/03/2024</span>
+                        </div>
+
+                        <div class="info-group">
+                            <span class="info-label">Cliente</span>
+                            <span class="info-value">Carlos Henrique</span>
+                        </div>
+
+                        <button class="btn-detail">
+                            Ver detalhes
+                        </button>
+
+                        <div class="info-group">
+                            <span class="info-label">Total da Venda</span>
+                            <span class="info-value total-value">
+                                R$ 980,00
+                            </span>
+                        </div>
+
+                    </article>
+
+                </div>
+
             </div>
 
-        </div>
-
-        <div class="panel-icon">
-            <i class="ph ph-shopping-cart"></i>
-        </div>
-
+        </main>
     </div>
-
-    <!-- TOOLBAR -->
-
-    <div class="table-toolbar">
-
-        <div class="search-box">
-
-            <input type="text"
-            placeholder="Pesquisar por cliente ou ID">
-
-            <i class="ph ph-magnifying-glass"></i>
-
-        </div>
-
-        <a href="cadastrarVenda.html"
-        class="btn-add">
-
-            + Registrar Venda
-
-        </a>
-
-    </div>
-
-    <!-- LISTA DE VENDAS -->
-
-    <div class="sales-list">
-
-        <!-- CARD -->
-
-        <article class="sale-card">
-
-            <div class="info-group">
-                <span class="info-label">Pedido</span>
-                <span class="info-value">#001</span>
-            </div>
-
-            <div class="info-group">
-                <span class="info-label">Data</span>
-                <span class="info-value">29/02/2024</span>
-            </div>
-
-            <div class="info-group">
-                <span class="info-label">Cliente</span>
-                <span class="info-value">João Silva</span>
-            </div>
-
-            <button class="btn-detail">
-                Ver detalhes
-            </button>
-
-            <div class="info-group">
-                <span class="info-label">Total da Venda</span>
-                <span class="info-value total-value">
-                    R$ 1.250,00
-                </span>
-            </div>
-
-        </article>
-
-        <!-- CARD -->
-
-        <article class="sale-card">
-
-            <div class="info-group">
-                <span class="info-label">Pedido</span>
-                <span class="info-value">#002</span>
-            </div>
-
-            <div class="info-group">
-                <span class="info-label">Data</span>
-                <span class="info-value">03/03/2024</span>
-            </div>
-
-            <div class="info-group">
-                <span class="info-label">Cliente</span>
-                <span class="info-value">Maria Souza</span>
-            </div>
-
-            <button class="btn-detail">
-                Ver detalhes
-            </button>
-
-            <div class="info-group">
-                <span class="info-label">Total da Venda</span>
-                <span class="info-value total-value">
-                    R$ 2.800,00
-                </span>
-            </div>
-
-        </article>
-
-        <!-- CARD -->
-
-        <article class="sale-card">
-
-            <div class="info-group">
-                <span class="info-label">Pedido</span>
-                <span class="info-value">#003</span>
-            </div>
-
-            <div class="info-group">
-                <span class="info-label">Data</span>
-                <span class="info-value">10/03/2024</span>
-            </div>
-
-            <div class="info-group">
-                <span class="info-label">Cliente</span>
-                <span class="info-value">Carlos Henrique</span>
-            </div>
-
-            <button class="btn-detail">
-                Ver detalhes
-            </button>
-
-            <div class="info-group">
-                <span class="info-label">Total da Venda</span>
-                <span class="info-value total-value">
-                    R$ 980,00
-                </span>
-            </div>
-
-        </article>
-
-    </div>
-
-</div>
-
-</main>
-</div>
 
     <script>
         /* =========================================================
@@ -592,7 +588,7 @@ box-shadow:
             try {
                 const base64Url = token.split('.')[1];
                 const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
                     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
                 }).join(''));
 
@@ -617,20 +613,20 @@ box-shadow:
             if (token) {
                 const payloadJson = parseJwt(token);
                 if (payloadJson) {
-                    nome = payloadJson["unique_name"] || 
-                           payloadJson["name"] || 
-                           payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
-                           payloadJson["sub"] || 
-                           payloadJson["email"] || 
-                           payloadJson["given_name"];
+                    nome = payloadJson["unique_name"] ||
+                        payloadJson["name"] ||
+                        payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
+                        payloadJson["sub"] ||
+                        payloadJson["email"] ||
+                        payloadJson["given_name"];
                 }
             }
 
             if (!nome) {
-                let nomeRaw = localStorage.getItem("nomeUsuario") || localStorage.getItem("nome") || 
-                              localStorage.getItem("usuario") || localStorage.getItem("username");
+                let nomeRaw = localStorage.getItem("nomeUsuario") || localStorage.getItem("nome") ||
+                    localStorage.getItem("usuario") || localStorage.getItem("username");
                 if (nomeRaw && nomeRaw.startsWith("{")) {
-                    try { nome = JSON.parse(nomeRaw).nome; } catch(e) {}
+                    try { nome = JSON.parse(nomeRaw).nome; } catch (e) { }
                 } else {
                     nome = nomeRaw;
                 }
@@ -659,4 +655,5 @@ box-shadow:
         }
     </script>
 </body>
+
 </html>
