@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Cadastrar Cliente</title>
+    <title>Boreal Tools - Cadastrar Cliente / Fornecedor</title>
+
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <style>
         * {
             margin: 0;
@@ -32,18 +35,17 @@
             text-decoration: none;
         }
 
-        /* Padronização da Barra Lateral */
+        /* ========================= SIDEBAR ========================= */
         .side-bar {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             height: 100vh;
-            padding-bottom: 20px; 
+            padding-bottom: 20px;
             width: 260px;
             flex-shrink: 0;
         }
 
-        /* Destaque para a página atual (Menu de Clientes) */
         .secoes:nth-child(7) {
             background-color: #2e4a3e;
         }
@@ -54,7 +56,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px; 
+            gap: 6px;
             width: 100%;
         }
 
@@ -78,7 +80,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Área do Painel Principal */
+        /* ========================= MAIN ========================= */
         main {
             flex: 1;
             padding: 25px;
@@ -91,99 +93,111 @@
 
         .main-panel {
             width: 100%;
-            max-width: 1250px;
+            max-width: 1000px;
             border-radius: 20px;
-            padding: 40px;
+            padding: 36px;
             margin: 0 auto 20px auto;
             background: rgba(20, 20, 20, 0.72);
             border: 1px solid #2e4a3e;
             box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
         }
 
+        /* ========================= HEADER ========================= */
         .main-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
-        .titulo h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
-
-        .titulo p {
-            color: #6da381;
-            font-size: 0.8rem;
-        }
-
-        .atalhos-main {
+        .titulo {
             display: flex;
-            gap: 15px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .titulo i {
+            font-size: 1.4rem;
+            color: #7bcf9c;
+        }
+
+        .titulo-text h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .titulo-text p {
+            color: #6da381;
+            font-size: 0.82rem;
+            margin-top: 3px;
         }
 
         .btn-back {
-            background-color: #5e5e5e;
-            color: whitesmoke;
-            border: none;
-            padding: 10px 18px;
+            background-color: #2a2a2a;
+            color: #bbb;
+            border: 1px solid #444;
+            padding: 9px 18px;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
+            transition: 0.2s;
+            white-space: nowrap;
         }
 
         .btn-back:hover {
             background-color: #333;
+            color: #fff;
         }
 
-        /* Formulário Estilizado */
-        form {
-            background-color: rgba(15, 15, 15, 0.6);
-            border: 1px solid #23332b;
-            padding: 32px;
-            border-radius: 12px;
+        /* ========================= FORMULÁRIO ========================= */
+        .form-card {
+            background: rgba(15, 15, 15, 0.65);
+            border: 1px solid #252525;
+            border-radius: 14px;
+            padding: 28px;
+        }
+
+        .form-card-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #9bcfb0;
+            margin-bottom: 18px;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            gap: 6px;
         }
 
-        .inputs-cad {
+        .form-card-label i {
+            font-size: 0.85rem;
+        }
+
+        .inputs-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 18px;
         }
 
-        .input-divs {
+        .input-div {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
-        .input-divs label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
+        .input-div label {
+            font-size: 0.82rem;
             color: #6da381;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .input-divs label img {
-            width: 16px;
-            height: 16px;
-            filter: brightness(0.9);
-        }
-
-        .input-divs input, .input-divs select {
+        .input-div input,
+        .input-div select {
             height: 38px;
             background-color: #111;
-            border: 1px solid #333;
+            border: 1px solid #2e2e2e;
             border-radius: 8px;
             padding: 0 12px;
             color: white;
@@ -192,60 +206,76 @@
             transition: border-color 0.2s;
         }
 
-        .input-divs input:focus, .input-divs select:focus {
+        .input-div input:focus,
+        .input-div select:focus {
             border-color: #7bcf9c;
         }
 
-        .input-divs input::placeholder {
+        .input-div input::placeholder {
             color: #555;
         }
 
-        #cadastrarBtn {
-            background-color: #80B297;
+        .input-div select option {
+            background: #111;
+        }
+
+        /* Campo Data de Nascimento — escondido para Fornecedor */
+        .data-nasc-group {
+            transition: opacity 0.2s;
+        }
+
+        .data-nasc-group.hidden {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        /* ========================= BOTÃO SUBMIT ========================= */
+        #btnFinalizar {
+            margin-top: 22px;
+            width: 100%;
+            background-color: #7bcf9c;
             color: #000;
-            padding: 12px;
             border: none;
             border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            padding: 13px;
+            font-size: 0.92rem;
+            font-weight: 700;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-            margin-top: 10px;
+            transition: background-color 0.25s;
         }
 
-        #cadastrarBtn:hover {
-            background-color: #81c784;
-        }
+        #btnFinalizar:hover { background-color: #81c784; }
 
+        /* ========================= RESPONSIVO ========================= */
         @media(max-width: 900px) {
             .main-wrapper { flex-direction: column; }
             .side-bar { display: none; }
             main { max-width: 100vw; }
-            .inputs-cad { grid-template-columns: 1fr 1fr; }
+            .inputs-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media(max-width: 600px) {
-            .inputs-cad { grid-template-columns: 1fr; }
+            .inputs-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
 
+<body>
 <div class="main-wrapper">
+
+    <!-- SIDEBAR -->
     <section class="side-bar">
         <div>
             <div class="sidebar-header">
                 <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
             </div>
-            
+
             <div class="perfil">
                 <img src="./img/perfil-icon.png" alt="Foto de Perfil">
                 <p id="nomeUsuarioSidebar">Carregando...</p>
-            </div> 
-            
+            </div>
+
             <nav class="nav-side-bar">
                 <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a href="dashboard.html">Início</a></div>
                 <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a href="produtos.html">Produtos</a></div>
@@ -253,7 +283,7 @@
                 <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
                 <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
                 <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
-                <div class="secoes active"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes</a></div>
+                <div class="secoes active"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes e Fornecedores</a></div>
                 <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
             </nav>
         </div>
@@ -263,279 +293,229 @@
         </div>
     </section>
 
+    <!-- MAIN -->
+    <main>
+        <div class="main-panel">
 
+            <!-- HEADER -->
+            <div class="main-header">
+                <div class="titulo">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <div class="titulo-text">
+                        <h2 id="tituloPagina">Novo Cliente</h2>
+                        <p>Gerencie sua base de clientes e acompanhe informações detalhadas.</p>
+                    </div>
+                </div>
+                <a href="ClienteFornecedor.html">
+                    <button class="btn-back">← Voltar</button>
+                </a>
+            </div>
 
-    <section class="main">
-
-        <div class="main-header">
-    
-            <div class="titulo">
-                <h2>Cadastrar</h2>
-                <p>Gerencie sua base de clientes/fornecedores e acompanhe informações detalhadas.</p>
-            </div>
-    
-            <div class="atalhos-main">
-                <a href="ClienteFornecedor.html"><button>← Voltar à Equipe</button></a>
-            </div>
-        </div>
-    
-    
-        <form id="clienteForm">
-    
-            <div class="inputs-cad">
-    
-                <!-- TIPO -->
-                <div class="input-divs">
-                    <label for="tipo"><img src="./img/inf-pessoais-cad-func.png" alt=""> Tipo </label>
-    
-                    <select id="tipo">
-                        <option value="cliente">Cliente</option>
-                        <option value="fornecedor">Fornecedor</option>
-                    </select>
-                </div>
-    
-                <!-- NOME -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> Nome Completo </label>
-                    <input type="text" placeholder="Neymar da Silva Santos Junior" id="Nome">
-                </div>
-    
-                <!-- CPF -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/inf-pessoais-cad-func.png" alt=""> CPF/CNPJ </label>
-                    <input type="text" placeholder="000.000.000-00" id="CPF">
-                </div>
-    
-                <!-- TELEFONE -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/tel-cad-func.png" alt=""> Telefone </label>
-                    <input type="text" placeholder="(00) 00000-0000" id="Telefone">
-                </div>
-    
-                <!-- EMAIL -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/email-cad-func.png" alt=""> Email </label>
-                    <input type="email" placeholder="Exemplo@gmail.com" id="Email">
-                </div>
-    
-                <!-- DATA NASCIMENTO -->
-                <div class="input-divs" id="dataNascimentoGroup">
-                    <label for=""><img src="./img/data-cad-func.png" alt=""> Data de Nascimento </label>
-                    <input type="date" id="DataNascimento">
-                </div>
-    
-                <!-- CEP -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> CEP </label>
-                    <input type="text" placeholder="00000-000" id="CEP">
-                </div>
-    
-                <!-- CIDADE -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Cidade </label>
-                    <input type="text" placeholder="Marília" id="Cidade">
-                </div>
-    
-                <!-- RUA -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Rua </label>
-                    <input type="text" placeholder="Av. Sampaio Vidal" id="Rua">
-                </div>
-    
-                <!-- BAIRRO -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Bairro </label>
-                    <input type="text" placeholder="Centro" id="Bairro">
-                </div>
-    
-                <!-- NUMERO -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Nº Residência </label>
-                    <input type="number" placeholder="0000" id="Numero">
-                </div>
-    
-                <!-- ESTADO -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Estado </label>
-                    <input type="text" placeholder="São Paulo" id="Estado">
-                </div>
-    
-                <!-- COMPLEMENTO -->
-                <div class="input-divs">
-                    <label for=""><img src="./img/ender-cad-func.png" alt=""> Complemento </label>
-                    <input type="text" placeholder="Do lado do Correio" id="Complemento">
-                </div>
-            </div>
-        
+            <!-- FORMULÁRIO -->
             <form id="clienteForm">
-                <div class="inputs-cad">
-                    <div class="input-divs">
-                        <label for="tipo"><img src="./img/inf-pessoais-cad-func.png" alt=""> Tipo</label>
-                        <select id="tipo">
-                            <option value="cliente">Cliente</option>
-                            <option value="fornecedor">Fornecedor</option>
-                        </select>
+                <div class="form-card">
+                    <div class="form-card-label">
+                        <i class="fa-solid fa-chevron-down"></i>
+                        <span id="formCardLabel">Cliente</span>
                     </div>
-        
-                    <div class="input-divs">
-                        <label for="Nome"><img src="./img/inf-pessoais-cad-func.png" alt=""> Nome Completo / Razão Social</label>
-                        <input type="text" placeholder="Ex: Neymar da Silva Santos" id="Nome" required>
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="CPF"><img src="./img/inf-pessoais-cad-func.png" alt=""> CPF / CNPJ</label>
-                        <input type="text" placeholder="000.000.000-00" id="CPF" required>
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Telefone"><img src="./img/tel-cad-func.png" alt=""> Telefone</label>
-                        <input type="text" placeholder="(00) 00000-0000" id="Telefone">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Email"><img src="./img/email-cad-func.png" alt=""> E-mail</label>
-                        <input type="email" placeholder="exemplo@diretorio.com" id="Email">
-                    </div>
-        
-                    <div class="input-divs" id="dataNascimentoGroup">
-                        <label for="DataNascimento"><img src="./img/data-cad-func.png" alt=""> Data de Nascimento</label>
-                        <input type="date" id="DataNascimento">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="CEP"><img src="./img/ender-cad-func.png" alt=""> CEP</label>
-                        <input type="text" placeholder="00000-000" id="CEP">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Cidade"><img src="./img/ender-cad-func.png" alt=""> Cidade</label>
-                        <input type="text" placeholder="Marília" id="Cidade">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Rua"><img src="./img/ender-cad-func.png" alt=""> Rua</label>
-                        <input type="text" placeholder="Av. Sampaio Vidal" id="Rua">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Bairro"><img src="./img/ender-cad-func.png" alt=""> Bairro</label>
-                        <input type="text" placeholder="Centro" id="Bairro">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Número"><img src="./img/ender-cad-func.png" alt=""> Nº Residência / Prédio</label>
-                        <input type="text" placeholder="0000" id="Número">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Estado"><img src="./img/ender-cad-func.png" alt=""> Estado</label>
-                        <input type="text" placeholder="São Paulo" id="Estado">
-                    </div>
-        
-                    <div class="input-divs">
-                        <label for="Complemento"><img src="./img/ender-cad-func.png" alt=""> Complemento</label>
-                        <input type="text" placeholder="Ex: Sala 4 / Bloco B" id="Complemento">
+
+                    <div class="inputs-grid">
+
+                        <!-- TIPO -->
+                        <div class="input-div">
+                            <label for="tipo"><i class="fa-solid fa-tag"></i> Tipo</label>
+                            <select id="tipo" onchange="atualizarTipo()">
+                                <option value="cliente">Cliente</option>
+                                <option value="fornecedor">Fornecedor</option>
+                            </select>
+                        </div>
+
+                        <!-- NOME -->
+                        <div class="input-div">
+                            <label for="Nome"><i class="fa-solid fa-user"></i> Nome completo</label>
+                            <input type="text" id="Nome" placeholder="Ex: Neymar da Silva Santos" required>
+                        </div>
+
+                        <!-- CPF / CNPJ -->
+                        <div class="input-div">
+                            <label for="CPF" id="labelDoc"><i class="fa-solid fa-id-card"></i> CPF/CNPJ</label>
+                            <input type="text" id="CPF" placeholder="000.000.000-00">
+                        </div>
+
+                        <!-- TELEFONE -->
+                        <div class="input-div">
+                            <label for="Telefone"><i class="fa-solid fa-phone"></i> Telefone</label>
+                            <input type="text" id="Telefone" placeholder="(00) 00000-0000">
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="input-div">
+                            <label for="Email"><i class="fa-solid fa-envelope"></i> Email</label>
+                            <input type="email" id="Email" placeholder="exemplo@email.com">
+                        </div>
+
+                        <!-- DATA DE NASCIMENTO (só para Cliente) -->
+                        <div class="input-div data-nasc-group" id="dataNascimentoGroup">
+                            <label for="DataNascimento"><i class="fa-solid fa-calendar"></i> Data de Nascimento</label>
+                            <input type="date" id="DataNascimento">
+                        </div>
+
+                        <!-- CEP -->
+                        <div class="input-div">
+                            <label for="CEP"><i class="fa-solid fa-location-dot"></i> CEP</label>
+                            <input type="text" id="CEP" placeholder="00000-000">
+                        </div>
+
+                        <!-- CIDADE -->
+                        <div class="input-div">
+                            <label for="Cidade"><i class="fa-solid fa-city"></i> Cidade</label>
+                            <input type="text" id="Cidade" placeholder="Marília">
+                        </div>
+
+                        <!-- RUA -->
+                        <div class="input-div">
+                            <label for="Rua"><i class="fa-solid fa-road"></i> Rua</label>
+                            <input type="text" id="Rua" placeholder="Av. Sampaio Vidal">
+                        </div>
+
+                        <!-- BAIRRO -->
+                        <div class="input-div">
+                            <label for="Bairro"><i class="fa-solid fa-map"></i> Bairro</label>
+                            <input type="text" id="Bairro" placeholder="Centro">
+                        </div>
+
+                        <!-- NÚMERO -->
+                        <div class="input-div">
+                            <label for="Numero"><i class="fa-solid fa-hashtag"></i> Nº Residência</label>
+                            <input type="text" id="Numero" placeholder="0000">
+                        </div>
+
+                        <!-- ESTADO -->
+                        <div class="input-div">
+                            <label for="Estado"><i class="fa-solid fa-map-location-dot"></i> Estado</label>
+                            <input type="text" id="Estado" placeholder="São Paulo">
+                        </div>
+
+                        <!-- COMPLEMENTO -->
+                        <div class="input-div">
+                            <label for="Complemento"><i class="fa-solid fa-circle-info"></i> Complemento</label>
+                            <input type="text" id="Complemento" placeholder="Ex: Sala 4 / Bloco B">
+                        </div>
+
                     </div>
                 </div>
-        
-                <button type="submit" id="cadastrarBtn">Finalizar Cadastro</button>
+
+                <button type="submit" id="btnFinalizar">Finalizar Cadastro</button>
             </form>
-        </section>
+
+        </div>
     </main>
 </div>
 
 <script>
-    // URL CONFIGURADA PARA O NOVO ENDPOINT DE PRODUÇÃO NO AZURE
-    const apiURL = "https://api-time7.azurewebsites.net/api/Clientes";
-
-    const formCliente = document.getElementById("clienteForm");
+    const API_URL = "https://api-time7.azurewebsites.net/api/Clientes";
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
-    // Função interna para ler as claims do token JWT de forma síncrona e segura
-    function parseJwt(token) {
+    /* ========================= AUTH ========================= */
+    function parseJwt(t) {
         try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        } catch (e) {
-            return null;
-        }
+            const b64 = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+            return JSON.parse(decodeURIComponent(window.atob(b64).split('').map(c =>
+                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
+        } catch (e) { return null; }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        if (!token) {
-            efetuarLogout();
-            return;
+        if (!token) { efetuarLogout(); return; }
+
+        const payload = parseJwt(token);
+        if (payload) {
+            document.getElementById("nomeUsuarioSidebar").innerText =
+                payload["unique_name"] || payload["name"] ||
+                payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
+                "Usuário Boreal";
         }
-        atualizarDadosUsuario();
+
+        document.getElementById("clienteForm").addEventListener("submit", cadastrar);
     });
 
-    // CADASTRAR CLIENTE / FORNECEDOR
-    async function cadastrarCliente(event) {
+    /* ========================= ALTERNAR TIPO ========================= */
+    function atualizarTipo() {
+        const tipo = document.getElementById("tipo").value;
+        const isFornecedor = tipo === "fornecedor";
+
+        // Esconde Data de Nascimento para Fornecedor
+        const dnGroup = document.getElementById("dataNascimentoGroup");
+        dnGroup.classList.toggle("hidden", isFornecedor);
+
+        // Atualiza label do documento
+        document.getElementById("labelDoc").innerHTML =
+            `<i class="fa-solid fa-id-card"></i> ${isFornecedor ? "CNPJ" : "CPF/CNPJ"}`;
+        document.getElementById("CPF").placeholder = isFornecedor ? "00.000.000/0000-00" : "000.000.000-00";
+
+        // Atualiza título e label do card
+        document.getElementById("tituloPagina").innerText = isFornecedor ? "Novo Fornecedor" : "Novo Cliente";
+        document.getElementById("formCardLabel").innerText = isFornecedor ? "Fornecedor" : "Cliente";
+    }
+
+    /* ========================= CADASTRAR ========================= */
+    async function cadastrar(event) {
         event.preventDefault();
 
-        // Mapeamento dos campos estruturado conforme os requisitos da API do Azure
-        const cliente = {
-            tipoVinculo: document.getElementById("tipo").value,
-            nome: document.getElementById("Nome").value,
-            cpf: document.getElementById("tipo").value === "cliente" ? document.getElementById("CPF").value : null,
-            cnpj: document.getElementById("tipo").value === "fornecedor" ? document.getElementById("CPF").value : null,
-            telefone: document.getElementById("Telefone").value || null,
-            email: document.getElementById("Email").value || null,
-            dataNascimento: document.getElementById("DataNascimento").value || null,
-            cep: document.getElementById("CEP").value || null,
-            cidade: document.getElementById("Cidade").value || null,
-            rua: document.getElementById("Rua").value || null,
-            bairro: document.getElementById("Bairro").value || null,
-            numero: document.getElementById("Número").value || null,
-            estado: document.getElementById("Estado").value || null,
-            complemento: document.getElementById("Complemento").value || null
+        const tipo = document.getElementById("tipo").value;
+        const isFornecedor = tipo === "fornecedor";
+
+        const payload = {
+            tipoVinculo: tipo,
+            nome: document.getElementById("Nome").value.trim(),
+            cpf: !isFornecedor ? (document.getElementById("CPF").value.trim() || null) : null,
+            cnpj: isFornecedor ? (document.getElementById("CPF").value.trim() || null) : null,
+            telefone: document.getElementById("Telefone").value.trim() || null,
+            email: document.getElementById("Email").value.trim() || null,
+            dataNascimento: (!isFornecedor && document.getElementById("DataNascimento").value)
+                ? document.getElementById("DataNascimento").value
+                : null,
+            cep: document.getElementById("CEP").value.trim() || null,
+            cidade: document.getElementById("Cidade").value.trim() || null,
+            rua: document.getElementById("Rua").value.trim() || null,
+            bairro: document.getElementById("Bairro").value.trim() || null,
+            numero: document.getElementById("Numero").value.trim() || null,
+            estado: document.getElementById("Estado").value.trim() || null,
+            complemento: document.getElementById("Complemento").value.trim() || null
         };
 
+        if (!payload.nome) {
+            alert("O campo Nome é obrigatório.");
+            return;
+        }
+
+        const btnFinalizar = document.getElementById("btnFinalizar");
+        btnFinalizar.disabled = true;
+        btnFinalizar.innerText = "Salvando...";
+
         try {
-            const resposta = await fetch(apiURL, {
+            const res = await fetch(API_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify(cliente)
+                body: JSON.stringify(payload)
             });
 
-            if (!resposta.ok) {
-                const erroTexto = await resposta.text();
-                throw new Error(erroTexto || "Erro interno ao cadastrar registro.");
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || `Erro ${res.status}`);
             }
 
             alert("Registro cadastrado com sucesso!");
-            formCliente.reset();
-            
-            // Redireciona de volta para o painel principal de listagem
             window.location.href = "ClienteFornecedor.html";
 
-        } catch (error) {
-            console.error("Erro na operação:", error);
-            alert(error.message || "Erro ao efetuar o cadastro. Verifique os dados.");
-        }
-    }
-
-    // EVENTO DO FORMULÁRIO
-    formCliente.addEventListener("submit", cadastrarCliente);
-
-    // ATUALIZAR NOME DO PERFIL NA SIDEBAR VIA CLAIMS DO JWT
-    function atualizarDadosUsuario() {
-        const payloadJson = parseJwt(token);
-        if (payloadJson) {
-            document.getElementById("nomeUsuarioSidebar").innerText = 
-                payloadJson["unique_name"] || 
-                payloadJson["name"] || 
-                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
-                "Usuário Boreal";
-        } else {
-            document.getElementById("nomeUsuarioSidebar").innerText = "Usuário Autenticado";
+        } catch (err) {
+            console.error("Erro ao cadastrar:", err);
+            alert("Erro ao cadastrar: " + err.message);
+            btnFinalizar.disabled = false;
+            btnFinalizar.innerText = "Finalizar Cadastro";
         }
     }
 
