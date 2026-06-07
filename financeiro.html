@@ -60,7 +60,7 @@
 
                 <div class="secoes">
                     <img src="./img/clientes.png" class="secao-icon">
-                    <a href="./ClienteFornecedor.html">Clientes</a>
+                    <a href="./ClienteFornecedor.html">Clientes e Fornecedores</a>
                 </div>
 
                 <div class="secoes">
@@ -160,7 +160,12 @@ function carregarUsuarioLogado() {
             }).join(''));
 
             const payload = JSON.parse(jsonPayload);
-            nome = payload["unique_name"] || payload["name"] || payload["sub"] || payload["email"] || payload["given_name"];
+            nome = payload["unique_name"] || 
+                   payload["name"] || 
+                   payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                   payload["sub"] || 
+                   payload["email"] || 
+                   payload["given_name"];
         } catch (e) {
             console.error("Falha ao decodificar dados do token:", e);
         }
@@ -402,6 +407,11 @@ function configurarPesquisaFinanceira() {
    STARTUP DO ECOSSISTEMA
 ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
+    const token = obterToken();
+    if (!token) {
+        window.location.replace("./index.html");
+        return;
+    }
     carregarUsuarioLogado();
     carregarFinanceiro();
     configurarPesquisaFinanceira();
