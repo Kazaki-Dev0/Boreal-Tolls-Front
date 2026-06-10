@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="sidebar.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -21,7 +22,7 @@
             background: linear-gradient(109deg, #090909 32.55%, #002c18 79.54%, #003019 88.95%);
             color: white;
             min-height: 100vh;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         .main-wrapper {
@@ -41,14 +42,14 @@
             flex-direction: column;
             justify-content: space-between;
             height: 100vh;
-            padding-bottom: 20px; 
-            width: 260px; 
+            padding-bottom: 20px;
+            width: 260px;
             flex-shrink: 0;
         }
 
         /* Mantém a aba de Produtos selecionada com a cor padrão */
         .secoes:nth-child(2) {
-            background-color: #2e4a3e; 
+            background-color: #2e4a3e;
         }
 
         .perfil {
@@ -57,7 +58,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px; 
+            gap: 6px;
             width: 100%;
         }
 
@@ -85,7 +86,7 @@
         .content {
             flex: 1;
             padding: 25px;
-            overflow-y: auto; 
+            overflow-y: auto;
             max-width: calc(100vw - 260px);
             display: flex;
             justify-content: center;
@@ -95,7 +96,8 @@
         /* Estilização do Painel do Formulário seguindo o .product-panel */
         .product-panel {
             width: 100%;
-            max-width: 800px; /* Largura reduzida para melhor estética de formulários */
+            max-width: 800px;
+            /* Largura reduzida para melhor estética de formulários */
             border-radius: 20px;
             padding: 40px;
             margin: 0 auto 20px auto;
@@ -191,7 +193,8 @@
             color: #b0b0b0;
         }
 
-        input, textarea {
+        input,
+        textarea {
             background-color: #141414;
             border: 1px solid #262626;
             border-radius: 6px;
@@ -202,11 +205,13 @@
             transition: border-color 0.3s;
         }
 
-        input:focus, textarea:focus {
+        input:focus,
+        textarea:focus {
             border-color: #2e4a3e;
         }
 
-        input::placeholder, textarea::placeholder {
+        input::placeholder,
+        textarea::placeholder {
             color: #555555;
         }
 
@@ -235,6 +240,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="main-wrapper">
@@ -243,12 +249,12 @@
                 <div class="sidebar-header">
                     <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
                 </div>
-            
+
                 <div class="perfil">
                     <img id="user-avatar" src="./img/perfil-icon.png" alt="Foto de Perfil">
                     <p id="user-name">Carregando...</p>
-                </div> 
-            
+                </div>
+
                 <nav class="nav-side-bar">
                     <div class="secoes">
                         <img src="./img/inicio.sidebar.png" alt="" class="secao-icon">
@@ -276,7 +282,7 @@
                     </div>
                     <div class="secoes">
                         <img src="./img/clientes.png" alt="" class="secao-icon">
-                        <a href="./ClienteFornecedor.html">Clientes</a>
+                        <a href="./ClienteFornecedor.html">Clientes e Fornecedores</a>
                     </div>
                     <div class="secoes">
                         <img src="./img/relatorios.png" alt="" class="secao-icon">
@@ -309,7 +315,8 @@
                 <form id="formProduto">
                     <div class="form-group">
                         <label for="urlImagem">Url da imagem:</label>
-                        <input type="text" id="urlImagem" placeholder="Ex: https://www.borealtools.com.br/imagens/produtos.png">
+                        <input type="text" id="urlImagem"
+                            placeholder="Ex: https://www.borealtools.com.br/imagens/produtos.png">
                     </div>
 
                     <div class="form-group">
@@ -369,7 +376,7 @@
             try {
                 const base64Url = token.split('.')[1];
                 const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
                     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
                 }).join(''));
 
@@ -386,7 +393,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             const token = obterToken();
-            
+
             if (!token) {
                 document.getElementById('user-name').textContent = "Usuário não logado";
                 window.location.replace("./login.html");
@@ -395,10 +402,10 @@
 
             const payloadJson = parseJwt(token);
             if (payloadJson) {
-                const nomeUsuario = payloadJson["unique_name"] || 
-                                    payloadJson["name"] || 
-                                    payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
-                                    "Usuário Boreal";
+                const nomeUsuario = payloadJson["unique_name"] ||
+                    payloadJson["name"] ||
+                    payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
+                    "Usuário Boreal";
                 document.getElementById('user-name').textContent = nomeUsuario;
             } else {
                 document.getElementById('user-name').textContent = "Erro de Sessão";
@@ -468,32 +475,32 @@
         }
 
         async function salvarProduto(event) {
-            event.preventDefault(); 
-            
-            const urlImagem = document.getElementById("urlImagem").value; 
+            event.preventDefault();
+
+            const urlImagem = document.getElementById("urlImagem").value;
             const nome = document.getElementById("nome").value;
             const marca = document.getElementById("marca").value;
             const valor = document.getElementById("valor").value;
-            const category = document.getElementById("categoria").value; 
+            const category = document.getElementById("categoria").value;
             const fornecedor = document.getElementById("fornecedor").value;
             const qtdMinima = document.getElementById("qtd_minima").value;
-            const qtdAtual = document.getElementById("qtd_atual").value; 
+            const qtdAtual = document.getElementById("qtd_atual").value;
             const descricao = document.getElementById("descricao").value;
-            
+
             try {
                 const token = obterToken();
 
                 const payload = {
-                    UrlImg: urlImagem, 
+                    UrlImg: urlImagem,
                     nome: nome,
                     marca: marca,
                     valor: parseFloat(valor) || 0.0,
-                    Descricao: descricao, 
-                    categoriaId: parseInt(category) || 1, 
-                    fornecedorId: parseInt(fornecedor) || 1, 
+                    Descricao: descricao,
+                    categoriaId: parseInt(category) || 1,
+                    fornecedorId: parseInt(fornecedor) || 1,
                     qtdMinimaEstoque: parseInt(qtdMinima) || 0,
                     qtdEstoque: parseInt(qtdAtual) || 0,
-                    quantidadeEstoque: parseInt(qtdAtual) || 0 
+                    quantidadeEstoque: parseInt(qtdAtual) || 0
                 };
 
                 if (modoEdicao) {
@@ -506,8 +513,8 @@
                 const resposta = await fetch(urlDestino, {
                     method: metodoHttP,
                     headers: {
-                        "Content-Type" : "application/json",
-                        "Authorization": `Bearer ${token}` 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
                     },
                     body: JSON.stringify(payload)
                 });
@@ -518,15 +525,15 @@
                     alert(`Falha na requisição (Erro ${resposta.status}).`);
                     return;
                 }
-                
+
                 if (modoEdicao) {
                     alert("Produto atualizado com sucesso!");
-                    window.location.href = "./produtos.html"; 
+                    window.location.href = "./produtos.html";
                 } else {
                     alert("Produto cadastrado com sucesso!");
-                    document.getElementById("formProduto").reset(); 
+                    document.getElementById("formProduto").reset();
                 }
-                
+
             } catch (error) {
                 console.error("Falha de comunicação:", error);
                 alert("Erro de rede ao tentar contactar o servidor.");
@@ -534,4 +541,5 @@
         }
     </script>
 </body>
+
 </html>

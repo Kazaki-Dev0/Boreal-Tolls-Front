@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boreal Tools - Clientes</title>
+    <title>Boreal Tools - Clientes e Fornecedores</title>
 
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,18 +35,17 @@
             color: inherit;
         }
 
-        /* Padronização da Barra Lateral */
+        /* ========================= SIDEBAR ========================= */
         .side-bar {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             height: 100vh;
-            padding-bottom: 20px; 
+            padding-bottom: 20px;
             width: 260px;
             flex-shrink: 0;
         }
 
-        /* Destaque na seção de Clientes (7º item do menu) */
         .secoes:nth-child(7) {
             background-color: #2e4a3e;
         }
@@ -57,7 +56,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px; 
+            gap: 6px;
             width: 100%;
         }
 
@@ -81,7 +80,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Área do Painel Principal */
+        /* ========================= MAIN ========================= */
         main {
             flex: 1;
             padding: 25px;
@@ -94,51 +93,50 @@
 
         .client-panel {
             width: 100%;
-            max-width: 1250px;
+            max-width: 1200px;
             border-radius: 20px;
-            padding: 40px;
+            padding: 36px;
             margin: 0 auto 20px auto;
             background: rgba(20, 20, 20, 0.72);
             border: 1px solid #2e4a3e;
             box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
         }
 
+        /* ========================= HEADER ========================= */
         .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 30px;
+            margin-bottom: 22px;
         }
 
-        .panel-title h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: #ffffff;
-            margin-bottom: 5px;
-        }
-
-        .panel-subtitle {
-            color: #6da381;
-            font-size: 0.8rem;
-        }
-
-        .panel-icon {
-            background: rgba(135, 255, 185, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            color: #7bcf9c;
-            font-size: 1.6rem;
+        .panel-title {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
         }
 
+        .panel-title i {
+            font-size: 1.5rem;
+            color: #7bcf9c;
+        }
+
+        .panel-title-text h2 {
+            font-size: 1.45rem;
+            font-weight: 500;
+        }
+
+        .panel-title-text p {
+            color: #6da381;
+            font-size: 0.82rem;
+            margin-top: 3px;
+        }
+
+        /* ========================= TOOLBAR ========================= */
         .toolbar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 35px;
+            gap: 12px;
         }
 
         .search-box {
@@ -147,8 +145,9 @@
             background: transparent;
             border: 1px solid #4a5a50;
             border-radius: 20px;
-            padding: 8px 16px;
-            width: 320px;
+            padding: 7px 14px;
+            width: 280px;
+            gap: 8px;
         }
 
         .search-box input {
@@ -157,232 +156,245 @@
             color: #ffffff;
             outline: none;
             width: 100%;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .search-box input::placeholder { color: #666; }
-        .search-box i { color: #666; }
+        .search-box i { color: #666; font-size: 0.85rem; }
 
-        .actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            background-color: #80B297;
+        .btn-cadastrar {
+            background-color: #7bcf9c;
             color: #000;
-            padding: 10px 18px;
+            padding: 8px 18px;
             border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: background-color 0.3s;
+            font-size: 0.82rem;
+            font-weight: 700;
             cursor: pointer;
             border: none;
-            display: inline-flex;
-            align-items: center;
+            transition: background-color 0.25s;
+            white-space: nowrap;
         }
 
-        .btn:hover { background-color: #81c784; }
+        .btn-cadastrar:hover { background-color: #81c784; }
 
-        /* Grid dos Cards (Baseado em Funcionários) */
-        .client-grid {
+        /* ========================= SEÇÕES ========================= */
+        .section-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ccc;
+            margin: 20px 0 10px 0;
+        }
+
+        /* ========================= LINHAS DA LISTA ========================= */
+        .list-row {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30, 30, 30, 0.65);
+            border: 1px solid #252525;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 8px;
+            transition: border-color 0.2s, background 0.2s;
         }
 
-        .client-card {
-            background: rgba(15, 15, 15, 0.6);
-            border: 1px solid #23332b;
-            border-radius: 12px;
-            padding: 24px;
-            transition: all 0.25s ease-in-out;
+        .list-row:hover {
+            border-color: #3a6048;
+            background: rgba(40, 40, 40, 0.85);
+        }
+
+        /* Colunas para Clientes: Nome | Id | Email | CPF | DataNasc | Botão */
+        .list-row.cliente {
+            grid-template-columns: 2fr 0.5fr 2fr 1.4fr 1.2fr auto;
+        }
+
+        /* Colunas para Fornecedores: Nome | Id | Email | CNPJ | Telefone | Botão */
+        .list-row.fornecedor {
+            grid-template-columns: 2fr 0.5fr 2fr 1.4fr 1.2fr auto;
+        }
+
+        .row-cell {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 2px;
         }
 
-        .client-card:hover {
-            border-color: #7bcf9c;
-            transform: translateY(-3px);
-            background: rgba(20, 20, 20, 0.9);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        .row-cell .cell-label {
+            font-size: 0.72rem;
+            color: #888;
         }
 
-        .client-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .client-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .client-photo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(123, 207, 156, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #7bcf9c;
-            font-size: 18px;
-            border: 1px solid #2e4a3e;
-        }
-
-        .client-name h4 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 2px;
-            max-width: 180px;
+        .row-cell .cell-value {
+            font-size: 0.88rem;
+            color: #fff;
+            font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .client-name p { color: #6da381; font-size: 0.8rem; }
-
-        .client-id {
+        .btn-ver-detalhes {
+            background-color: #2e4a3e;
             color: #7bcf9c;
-            font-size: 0.85rem;
+            border: 1px solid #3a6048;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.78rem;
             font-weight: 600;
-            background: rgba(123, 207, 156, 0.08);
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-
-        .client-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-        }
-
-        .client-table tr { border-bottom: 1px solid #23332b; }
-        .client-table tr:last-child { border: none; }
-        .client-table td { padding: 10px 0; font-size: 0.85rem; }
-        .client-table td:first-child { color: #888; }
-        .client-table td:last-child { text-align: right; color: white; font-weight: 500; }
-
-        .card-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .btn-detalhes {
-            background: transparent;
-            color: #7bcf9c;
-            border: 1px solid #2e4a3e;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            white-space: nowrap;
+            transition: background-color 0.2s, color 0.2s;
         }
 
-        .btn-detalhes:hover {
-            background: rgba(123, 207, 156, 0.1);
-            border-color: #7bcf9c;
+        .btn-ver-detalhes:hover {
+            background-color: #3a6048;
+            color: #fff;
         }
 
-        .btn-delete {
-            background: transparent;
-            color: #e57373;
-            border: 1px solid rgba(229, 115, 115, 0.3);
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
+        .empty-msg {
+            color: #666;
+            font-size: 0.88rem;
+            padding: 12px 0;
         }
 
-        .btn-delete:hover {
-            background: rgba(229, 115, 115, 0.1);
-            border-color: #e57373;
-        }
-
-        /* Modal Visual */
+        /* ========================= MODAL ========================= */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
 
-        .modal-content {
-            background: #121212;
+        .modal-overlay.open { display: flex; }
+
+        .modal-card {
+            background: #161616;
             border: 1px solid #2e4a3e;
-            box-shadow: 0 0 30px rgba(0, 255, 120, 0.1);
+            box-shadow: 0 0 30px rgba(0, 200, 100, 0.12);
             width: 90%;
-            max-width: 650px;
-            border-radius: 20px;
-            padding: 30px;
+            max-width: 560px;
+            border-radius: 16px;
+            padding: 28px;
             position: relative;
-            max-height: 85vh;
-            overflow-y: auto;
+            animation: fadeInUp 0.2s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #2e4a3e;
-            padding-bottom: 15px;
             margin-bottom: 20px;
         }
 
-        .modal-header h3 { font-size: 1.3rem; color: #7bcf9c; font-weight: 500; }
-        .modal-close { background: transparent; border: none; color: #aaa; font-size: 1.5rem; cursor: pointer; transition: 0.2s; }
-        .modal-close:hover { color: #e57373; }
-
-        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-
-        .info-box {
+        .modal-header-left {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
-            background: #161616;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 1px solid #23332b;
-            font-size: 0.9rem;
+            align-items: center;
+            gap: 10px;
         }
 
-        .info-box strong {
-            font-size: 0.75rem;
+        .modal-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(123, 207, 156, 0.12);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #7bcf9c;
+            font-size: 1rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: #888;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover { color: #e57373; background: rgba(229,115,115,0.1); }
+
+        .modal-delete {
+            background: transparent;
+            border: none;
+            color: #e57373;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .modal-delete:hover { background: rgba(229,115,115,0.1); }
+
+        .modal-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .modal-field {
+            background: #111;
+            border: 1px solid #252525;
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+
+        .modal-field .mf-label {
+            font-size: 0.72rem;
             color: #6da381;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
+            margin-bottom: 3px;
         }
 
-        @media(max-width:900px){
-            .main-wrapper { flex-direction: column; }
+        .modal-field .mf-value {
+            font-size: 0.88rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .modal-field.full { grid-column: span 2; }
+
+        /* ========================= RESPONSIVO ========================= */
+        @media(max-width: 900px) {
             .side-bar { display: none; }
             main { max-width: 100vw; }
-            .toolbar { flex-direction: column; align-items: flex-start; }
-            .actions { flex-wrap: wrap; width: 100%; }
+            .list-row.cliente,
+            .list-row.fornecedor { grid-template-columns: 1fr auto; }
+            .row-cell:not(:first-child):not(:last-child) { display: none; }
             .search-box { width: 100%; }
-            .details-grid { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: flex-start; }
+            .modal-fields { grid-template-columns: 1fr; }
+            .modal-field.full { grid-column: span 1; }
         }
     </style>
 </head>
 
 <body>
-
 <div class="main-wrapper">
+
+    <!-- SIDEBAR -->
     <section class="side-bar">
         <div>
             <div class="sidebar-header">
@@ -401,7 +413,7 @@
                 <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
                 <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
                 <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
-                <div class="secoes active"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes</a></div>
+                <div class="secoes"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes e Fornecedores</a></div>
                 <div class="secoes"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
             </nav>
         </div>
@@ -411,252 +423,306 @@
         </div>
     </section>
 
+    <!-- MAIN -->
     <main>
         <div class="client-panel">
+
+            <!-- HEADER + TOOLBAR -->
             <div class="panel-header">
                 <div class="panel-title">
-                    <h2>Clientes e Fornecedores</h2>
-                    <div class="subtitle panel-subtitle">Gerencie os registros cadastrais, contatos, CPF/CNPJ e tipos de vínculo.</div>
+                    <i class="fa-solid fa-users"></i>
+                    <div class="panel-title-text">
+                        <h2>Clientes e Fornecedores Registrados</h2>
+                        <p>Gerencie sua base de clientes e fornecedores, acompanhando informações detalhadas.</p>
+                    </div>
                 </div>
-                <div class="panel-icon"><i class="fa-solid fa-user"></i></div>
-            </div>
-
-    </nav>
-
-    <div class="logout-link">
-        <a href="./login.html">← Deslogar</a>
-    </div>
-
-</section>
-
-<!-- MAIN -->
-
-<main>
-
-<div class="clients-card">
-
-    <!-- HEADER -->
-
-    <div class="clients-header">
-
-        <div class="title-area">
-
-            <h2>
-                Clientes e Fornecedores
-            </h2>
-
-            <div class="subtitle">
-                <span>Gerencie sua base de clientes/fornecedores e acompanhe informações detalhadas.</span>
-
-                <div class="actions">
-                    <a href="cadastrarCliente.html" class="btn">+ Cadastrar</a>
+                <div class="toolbar">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="inputBusca" placeholder="Buscar por ID, Nome ou CPF/CNPJ">
+                    </div>
+                    <a href="cadastrarCliente.html" id="btn-cadastrar-link">
+                        <button class="btn-cadastrar" onclick="localStorage.removeItem('idEdicao'); localStorage.removeItem('tipoEdicao');">+ Cadastrar</button>
+                    </a>
                 </div>
             </div>
 
-            <div class="client-grid" id="client-grid">
-                <p style="color: #aaa;">Carregando dados dos registros...</p>
+            <!-- SEÇÃO CLIENTES -->
+            <div class="section-label">Clientes</div>
+            <div id="lista-clientes">
+                <p class="empty-msg">Carregando clientes...</p>
             </div>
+
+            <!-- SEÇÃO FORNECEDORES -->
+            <div class="section-label">Fornecedores</div>
+            <div id="lista-fornecedores">
+                <p class="empty-msg">Carregando fornecedores...</p>
+            </div>
+
         </div>
-    </section>
+    </main>
 </div>
 
-        <div class="panel-icon">
-            <i class="fa-solid fa-user"></i>
+<!-- MODAL DETALHES -->
+<div class="modal-overlay" id="modalOverlay" onclick="fecharModal(event)">
+    <div class="modal-card" id="modalCard">
+        <div class="modal-header">
+            <div class="modal-header-left">
+                <div class="modal-icon"><i class="fa-solid fa-user"></i></div>
+                <h3 id="modalTitulo">Detalhes</h3>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+                <button class="modal-delete" id="btnDeletarModal" title="Excluir registro">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                <button class="modal-close" onclick="fecharModal()" title="Fechar">✕</button>
+            </div>
         </div>
-
-    </div>
-
-    <!-- TOOLBAR -->
-
-    <div class="actions">
-
-        <div class="search-box">
-
-            <input type="text" id="inputBusca" placeholder="Buscar por ID ou Nome">
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-        </div>
-
-        <a href="cadastrarCliente.html" class="btn-add" onclick="localStorage.removeItem('idEdicao'); localStorage.removeItem('tipoEdicao');">
-            + Cadastrar
-        </a>
-
+        <div class="modal-fields" id="modalFields"></div>
     </div>
 </div>
 
 <script>
-    // URL CONFIGURADA PARA O NOVO ENDPOINT DE PRODUÇÃO NO AZURE
-    const API_URL = "https://api-time7.azurewebsites.net/api/Clientes"; 
+    const API_BASE = "https://api-time7.azurewebsites.net/api";
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
-    let registrosGlobais = [];
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    let todosClientes = [];
+    let todosFornecedores = [];
+    let registroAtualModal = null;
 
-    function parseJwt(token) {
+    /* ========================= AUTH ========================= */
+    function parseJwt(t) {
         try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        } catch (e) {
-            return null;
-        }
+            const b64 = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+            return JSON.parse(decodeURIComponent(window.atob(b64).split('').map(c =>
+                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
+        } catch (e) { return null; }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        if (!token) {
-            window.location.replace("./login.html");
-            return;
-        }
+        if (!token) { window.location.replace("./index.html"); return; }
 
-        // CARREGAMENTO DO NOME DO USUÁRIO INTEGRADO COM CLAIMS DA API DO AZURE
-        const payloadJson = parseJwt(token);
-        if (payloadJson) {
-            document.getElementById("nomeUsuarioSidebar").innerText = 
-                payloadJson["unique_name"] || 
-                payloadJson["name"] || 
-                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+        const payload = parseJwt(token);
+        if (payload) {
+            document.getElementById("nomeUsuarioSidebar").innerText =
+                payload["unique_name"] || payload["name"] ||
+                payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
                 "Usuário Boreal";
         }
 
-        carregarRegistros();
+        carregarDados();
 
-        // Configuração do filtro de pesquisa em tempo real
-        document.getElementById('input-search').addEventListener('input', (e) => {
-            const busca = e.target.value.toLowerCase().trim();
-            const filtrados = registrosGlobais.filter(reg => {
-                const nome = (reg.nome || reg.razaoSocial || "").toLowerCase();
-                const doc = (reg.cpf || reg.cnpj || "").toLowerCase();
-                const tipo = (reg.tipoVinculo || "").toLowerCase();
-                return nome.includes(busca) || doc.includes(busca) || tipo.includes(busca);
-            });
-            renderizarCards(filtrados);
-        });
+        document.getElementById("inputBusca").addEventListener("input", filtrar);
     });
 
-    async function carregarRegistros() {
-        const grid = document.getElementById('client-grid');
+    /* ========================= CARREGAR ========================= */
+    async function carregarDados() {
         try {
-            const response = await fetch(API_URL, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
+            const [resClientes, resFornecedores] = await Promise.all([
+                fetch(`${API_BASE}/Clientes`, { headers: { "Authorization": `Bearer ${token}` } }),
+                fetch(`${API_BASE}/Fornecedores`, { headers: { "Authorization": `Bearer ${token}` } })
+            ]);
+
+            if (resClientes.ok) todosClientes = await resClientes.json();
+            if (resFornecedores.ok) todosFornecedores = await resFornecedores.json();
+
+        } catch (e) {
+            console.warn("Tentando endpoint único /Clientes:", e);
+            try {
+                const res = await fetch(`${API_BASE}/Clientes`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const todos = await res.json();
+                    todosClientes = todos.filter(r =>
+                        (r.tipoVinculo || "").toLowerCase() !== "fornecedor");
+                    todosFornecedores = todos.filter(r =>
+                        (r.tipoVinculo || "").toLowerCase() === "fornecedor");
                 }
-            });
-
-            if (!response.ok) throw new Error("Erro na comunicação com a API.");
-
-            registrosGlobais = await response.json();
-            renderizarCards(registrosGlobais);
-
-        } catch (error) {
-            console.error("Erro ao obter dados de Clientes/Fornecedores:", error);
-            grid.innerHTML = `<p style="color: #e57373;">Não foi possível recuperar os dados da nuvem.</p>`;
+            } catch (err) {
+                console.error("Erro ao carregar dados:", err);
+            }
         }
+
+        renderizar(todosClientes, todosFornecedores);
     }
 
-    function renderizarCards(lista) {
-        const grid = document.getElementById('client-grid');
-        if (lista.length === 0) {
-            grid.innerHTML = `<p style="color: #aaa;">Nenhum registro encontrado.</p>`;
-            return;
-        }
+    /* ========================= FILTRAR ========================= */
+    function filtrar() {
+        const q = document.getElementById("inputBusca").value.toLowerCase().trim();
+        const fc = todosClientes.filter(r => bate(r, q));
+        const ff = todosFornecedores.filter(r => bate(r, q));
+        renderizar(fc, ff);
+    }
 
-        grid.innerHTML = "";
-        lista.forEach(reg => {
-            const id = reg.id;
-            const nomeExibicao = reg.nome || reg.razaoSocial || "Sem Nome Definido";
-            const documento = reg.cpf || reg.cnpj || "Não Informado";
-            const tipo = reg.tipoVinculo || "Cliente";
+    function bate(r, q) {
+        if (!q) return true;
+        const nome = (r.nome || r.razaoSocial || "").toLowerCase();
+        const doc = (r.cpf || r.cnpj || "").toLowerCase();
+        const id = String(r.id || "");
+        return nome.includes(q) || doc.includes(q) || id.includes(q);
+    }
 
-            const card = `
-                <div class="client-card">
-                    <div>
-                        <div class="client-top">
-                            <div class="client-info">
-                                <div class="client-photo"><i class="fa-solid fa-address-card"></i></div>
-                                <div class="client-name">
-                                    <h4>${nomeExibicao}</h4>
-                                    <p>${tipo.toUpperCase()}</p>
-                                </div>
-                            </div>
-                            <span class="client-id">#${id}</span>
-                        </div>
-                        <table class="client-table">
-                            <tr>
-                                <td>Documento</td>
-                                <td>${documento}</td>
-                            </tr>
-                            <tr>
-                                <td>Telefone</td>
-                                <td>${reg.telefone || "Não Informado"}</td>
-                            </tr>
-                        </table>
+    /* ========================= RENDERIZAR ========================= */
+    function renderizar(clientes, fornecedores) {
+        const lc = document.getElementById("lista-clientes");
+        const lf = document.getElementById("lista-fornecedores");
+
+        // CLIENTES
+        if (!clientes.length) {
+            lc.innerHTML = '<p class="empty-msg">Nenhum cliente encontrado.</p>';
+        } else {
+            lc.innerHTML = clientes.map(c => `
+                <div class="list-row cliente">
+                    <div class="row-cell">
+                        <span class="cell-label">Nome</span>
+                        <span class="cell-value">${esc(c.nome || c.razaoSocial || "—")}</span>
                     </div>
-                    <div class="card-actions">
-                        <button class="btn-detalhes" onclick="abrirDetalhes(${id})">Visualizar</button>
-                        <button class="btn-delete" onclick="deletarRegistro(${id})"><i class="fa-solid fa-trash"></i></button>
+                    <div class="row-cell">
+                        <span class="cell-label">Id</span>
+                        <span class="cell-value">${esc(String(c.id || "—"))}</span>
                     </div>
+                    <div class="row-cell">
+                        <span class="cell-label">Email</span>
+                        <span class="cell-value">${esc(c.email || "—")}</span>
+                    </div>
+                    <div class="row-cell">
+                        <span class="cell-label">CPF</span>
+                        <span class="cell-value">${esc(c.cpf || "—")}</span>
+                    </div>
+                    <div class="row-cell">
+                        <span class="cell-label">Data de Nascimento</span>
+                        <span class="cell-value">${formatData(c.dataNascimento)}</span>
+                    </div>
+                    <button class="btn-ver-detalhes" onclick="abrirDetalhes('cliente', ${c.id})">Ver detalhes</button>
                 </div>
-            `;
-            grid.insertAdjacentHTML('beforeend', card);
-        });
+            `).join("");
+        }
+
+        // FORNECEDORES
+        if (!fornecedores.length) {
+            lf.innerHTML = '<p class="empty-msg">Nenhum fornecedor encontrado.</p>';
+        } else {
+            lf.innerHTML = fornecedores.map(f => `
+                <div class="list-row fornecedor">
+                    <div class="row-cell">
+                        <span class="cell-label">Nome</span>
+                        <span class="cell-value">${esc(f.nome || f.razaoSocial || "—")}</span>
+                    </div>
+                    <div class="row-cell">
+                        <span class="cell-label">Id</span>
+                        <span class="cell-value">${esc(String(f.id || "—"))}</span>
+                    </div>
+                    <div class="row-cell">
+                        <span class="cell-label">Email</span>
+                        <span class="cell-value">${esc(f.email || "—")}</span>
+                    </div>
+                    <div class="row-cell">
+                        <span class="cell-label">CNPJ</span>
+                        <span class="cell-value">${esc(f.cnpj || f.cpf || "—")}</span>
+                    </div>
+                    <div class="row-cell">
+                        <span class="cell-label">Telefone</span>
+                        <span class="cell-value">${esc(f.telefone || "—")}</span>
+                    </div>
+                    <button class="btn-ver-detalhes" onclick="abrirDetalhes('fornecedor', ${f.id})">Ver detalhes</button>
+                </div>
+            `).join("");
+        }
     }
 
-    function abrirDetalhes(id) {
-        const reg = registrosGlobais.find(r => r.id === id);
+    /* ========================= MODAL ========================= */
+    function abrirDetalhes(tipo, id) {
+        const lista = tipo === "cliente" ? todosClientes : todosFornecedores;
+        const reg = lista.find(r => r.id === id);
         if (!reg) return;
 
-        document.getElementById('modal-client-name').innerText = reg.nome || reg.razaoSocial || "Detalhes do Registro";
-        
-        const content = document.getElementById('modalContent');
-        content.innerHTML = `
-            <div class="info-box"><strong>ID</strong><span>#${reg.id}</span></div>
-            <div class="info-box"><strong>Tipo de Vínculo</strong><span>${reg.tipoVinculo || "Cliente"}</span></div>
-            <div class="info-box"><strong>CPF / CNPJ</strong><span>${reg.cpf || reg.cnpj || "Não cadastrado"}</span></div>
-            <div class="info-box"><strong>Inscrição Estadual</strong><span>${reg.inscricaoEstadual || "Isento/Não informado"}</span></div>
-            <div class="info-box"><strong>E-mail</strong><span>${reg.email || "Sem e-mail cadastrado"}</span></div>
-            <div class="info-box"><strong>Telefone</strong><span>${reg.telefone || "Sem telefone cadastrado"}</span></div>
-            <div class="info-box" style="grid-column: span 2;"><strong>Endereço Completo</strong><span>${reg.endereco || "Não informado"}</span></div>
-        `;
+        registroAtualModal = { tipo, id };
 
-        document.getElementById('modalOverlay').style.display = 'flex';
+        const titulo = tipo === "cliente" ? "Detalhes do Cliente" : "Detalhes do Fornecedor";
+        document.getElementById("modalTitulo").innerText = titulo;
+
+        const campos = [];
+
+        campos.push({ label: "Nome", value: reg.nome || reg.razaoSocial || "—" });
+        campos.push({ label: "Id", value: String(reg.id || "—") });
+
+        if (tipo === "cliente") {
+            campos.push({ label: "Data de Nascimento", value: formatData(reg.dataNascimento) });
+            campos.push({ label: "CPF", value: reg.cpf || "—" });
+        } else {
+            campos.push({ label: "CNPJ", value: reg.cnpj || reg.cpf || "—" });
+        }
+
+        campos.push({ label: "Telefone", value: reg.telefone || "—" });
+        campos.push({ label: "Email", value: reg.email || "—" });
+        campos.push({ label: "CEP", value: reg.cep || "—" });
+        campos.push({ label: "Rua", value: reg.rua || "—" });
+        campos.push({ label: "Bairro", value: reg.bairro || "—" });
+        campos.push({ label: "Número da Residência", value: reg.numero || reg.numero || "—" });
+        campos.push({ label: "Cidade", value: reg.cidade || "—" });
+        campos.push({ label: "Estado", value: reg.estado || "—" });
+        campos.push({ label: "Complemento", value: reg.complemento || "—", full: true });
+
+        document.getElementById("modalFields").innerHTML = campos.map(c => `
+            <div class="modal-field ${c.full ? 'full' : ''}">
+                <div class="mf-label">${esc(c.label)}</div>
+                <div class="mf-value">${esc(String(c.value))}</div>
+            </div>
+        `).join("");
+
+        document.getElementById("btnDeletarModal").onclick = () => deletarRegistro(tipo, id);
+        document.getElementById("modalOverlay").classList.add("open");
     }
 
-    function fecharModal() {
-        document.getElementById('modalOverlay').style.display = 'none';
+    function fecharModal(e) {
+        if (e && e.target !== document.getElementById("modalOverlay")) return;
+        document.getElementById("modalOverlay").classList.remove("open");
+        registroAtualModal = null;
     }
 
-    async function deletarRegistro(id) {
-        if (!confirm("Deseja realmente remover este registro permanentemente?")) return;
+    /* ========================= DELETAR ========================= */
+    async function deletarRegistro(tipo, id) {
+        if (!confirm("Deseja realmente excluir este registro permanentemente?")) return;
 
+        const endpoint = tipo === "fornecedor" ? "Fornecedores" : "Clientes";
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
+            const res = await fetch(`${API_BASE}/${endpoint}/${id}`, {
                 method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
+                headers: { "Authorization": `Bearer ${token}` }
             });
 
-            if (response.ok) {
-                alert("Registro deletado com sucesso!");
-                carregarRegistros();
+            if (res.ok) {
+                alert("Registro excluído com sucesso!");
+                document.getElementById("modalOverlay").classList.remove("open");
+                carregarDados();
             } else {
-                alert("Ocorreu um erro ao tentar excluir do servidor.");
+                alert("Erro ao excluir registro (status " + res.status + ").");
             }
-        } catch (error) {
-            console.error("Erro na requisição DELETE:", error);
-            alert("Erro de conexão ao remover.");
+        } catch (err) {
+            console.error("Erro DELETE:", err);
+            alert("Erro de conexão ao tentar excluir.");
         }
+    }
+
+    /* ========================= UTILS ========================= */
+    function formatData(val) {
+        if (!val) return "—";
+        try {
+            const d = new Date(val);
+            if (isNaN(d)) return val;
+            return d.toLocaleDateString("pt-BR");
+        } catch { return val; }
+    }
+
+    function esc(str) {
+        return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
     }
 
     function efetuarLogout() {
         localStorage.clear();
         sessionStorage.clear();
-        window.location.replace("./login.html");
+        window.location.replace("./index.html");
     }
 </script>
 </body>
