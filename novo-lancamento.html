@@ -47,7 +47,7 @@
             color: inherit;
         }
 
-        /* Padronização do Sidebar */
+        /* Padronização do Sidebar conforme referências */
         .side-bar {
             display: flex;
             flex-direction: column;
@@ -92,7 +92,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Área de Conteúdo Centralizada */
+        /* Área de Conteúdo Centralizada Anti-Scroll */
         main.content {
             flex: 1;
             padding: 25px;
@@ -209,6 +209,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            user-select: none;
         }
 
         .toggle-btn.inactive {
@@ -238,7 +239,7 @@
             opacity: 1;
         }
 
-        /* Inputs Profissionais */
+        /* Inputs Estilo Clean */
         input, textarea {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
@@ -372,7 +373,7 @@
                     </div>
                     <div class="secoes">
                         <img src="./img/clientes.png" class="secao-icon">
-                        <a href="./ClienteFornecedor.html">Clientes</a>
+                        <a href="./ClienteFornecedor.html">Clientes e Fornecedores</a>
                     </div>
                     <div class="secoes">
                         <img src="./img/relatorios.png" class="secao-icon">
@@ -403,7 +404,7 @@
 
                 <form class="form-grid" id="formNovoLancamento" onsubmit="salvarDadosFormulario(event)">
                     
-                    <input type="hidden" name="tipo_transacao" id="tipo-transacao" value="recebimento">
+                    <input type="hidden" name="tipo_transacao_hidden" id="tipo-transacao-hidden" value="recebimento">
 
                     <div class="input-group full-width">
                         <label>Tipo de transação</label>
@@ -418,33 +419,33 @@
                     </div>
 
                     <div class="input-group">
-                        <label>Data do efetivo Pagamento/Recebimento</label>
-                        <input type="date" name="data_efetiva">
-                    </div>
-
-                    <div class="input-group" style="justify-content: flex-end;">
-                        <label class="checkbox-container">
-                            <input type="checkbox" name="efetivado_agora"> Marcar como pago/recebido agora
-                        </label>
-                    </div>
-
-                    <div class="input-group">
                         <label>Data Vencimento/Previsão</label>
-                        <input type="date" name="data_vencimento" required>
+                        <input type="date" name="data_vencimento" id="data_vencimento" required>
                     </div>
 
                     <div class="input-group">
                         <label>Valor (R$)</label>
-                        <input type="number" name="valor" placeholder="0.00" step="0.01" required>
+                        <input type="number" name="valor" id="valor" placeholder="0.00" step="0.01" required>
                     </div>
 
                     <div class="input-group full-width">
                         <label>Descrição</label>
-                        <textarea name="descricao" placeholder="Ex: Pagamento do fornecedor X / Recebimento Venda #1024" required></textarea>
+                        <textarea name="descricao" id="descricao" placeholder="Ex: Pagamento do fornecedor X / Recebimento Venda #1024" required></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Data do efetivo Pagamento/Recebimento (Opcional)</label>
+                        <input type="date" name="data_pagamento" id="data_pagamento">
+                    </div>
+
+                    <div class="input-group" style="justify-content: flex-end;">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="chkbx_pago" id="chkbx_pago"> Marcar como pago/recebido agora
+                        </label>
                     </div>
 
                     <div class="form-actions full-width">
-                        <button type="submit" class="btn-save">Salvar Lançamento</button>
+                        <button type="submit" class="btn-save" id="btnSalvar">Salvar Lançamento</button>
                         <button type="button" class="btn-cancel-form" onclick="window.location.href='./financeiro.html'">Cancelar</button>
                     </div>
                 </form>
@@ -453,13 +454,16 @@
     </div>
 
     <script>
+        // Definição da URL base da API
+        const API_BASE_URL = "https://api-time7.azurewebsites.net/api";
+
         /* ========================================================
-           INTERAÇÃO DO SELECTOR DE TIPO (ENTRADA/SAÍDA)
+            INTERAÇÃO DO SELECTOR DE TIPO (ENTRADA/SAÍDA)
         ======================================================== */
         function setTransactionType(type) {
             const btnRec = document.getElementById('btn-rec');
             const btnPag = document.getElementById('btn-pag');
-            const hiddenInput = document.getElementById('tipo-transacao');
+            const hiddenInput = document.getElementById('tipo-transacao-hidden');
 
             if (type === 'recebimento') {
                 btnRec.className = 'toggle-btn active-rec';
@@ -473,7 +477,7 @@
         }
 
         /* ========================================================
-           DECODIFICAÇÃO JWT E VALIDAÇÃO DE USUÁRIO
+            DECODIFICAÇÃO JWT E VALIDAÇÃO DE USUÁRIO
         ======================================================== */
         function parseJwt(token) {
             try {
@@ -493,14 +497,17 @@
             return localStorage.getItem("token") || sessionStorage.getItem("token");
         }
 
+        // Executa ao carregar a página
         document.addEventListener("DOMContentLoaded", () => {
             const tokenAtivo = obterToken();
             
+            // Redireciona se não houver token
             if (!tokenAtivo) {
                 window.location.replace("./login.html");
                 return;
             }
 
+            // Carrega nome do usuário na sidebar (requisito mantido)
             const payloadJson = parseJwt(tokenAtivo);
             if (payloadJson) {
                 const nomeUsuario = payloadJson["unique_name"] || 
@@ -519,10 +526,95 @@
             window.location.replace("./index.html");
         }
 
-        /* Envio preventivo do formulário para tratamento futuro */
-        function salvarDadosFormulario(event) {
-            // Caso utilize integração via fetch API futuramente, trate aqui.
-            // event.preventDefault(); 
+        /* ========================================================
+            ENVIO DOS DADOS PARA A API (A CORREÇÃO ESTÁ AQUI)
+        ======================================================== */
+        async function salvarDadosFormulario(event) {
+            // 1. IMPORTANTE: Impede o recarregamento padrão da página
+            event.preventDefault(); 
+            
+            const btnSalvar = document.getElementById('btnSalvar');
+            const token = obterToken();
+
+            if (!token) {
+                alert("Sessão expirada. Por favor, faça login novamente.");
+                window.location.replace("./login.html");
+                return;
+            }
+
+            // Desabilita o botão para evitar cliques duplos
+            btnSalvar.disabled = true;
+            btnSalvar.innerText = "Salvando...";
+
+            // 2. Captura os valores dos campos
+            const tipoRaw = document.getElementById('tipo-transacao-hidden').value;
+            const dataVencimento = document.getElementById('data_vencimento').value;
+            const valorRaw = document.getElementById('valor').value;
+            const descricao = document.getElementById('descricao').value;
+            const dataPagamento = document.getElementById('data_pagamento').value;
+            const ehPago = document.getElementById('chkbx_pago').checked;
+
+            // 3. Formata os dados conforme o DTO esperado pelo C# Backend
+            // Mapeia 'recebimento' -> 'Receber' e 'pagamento' -> 'Pagar'
+            const tipoDto = (tipoRaw === 'recebimento') ? "Receber" : "Pagar";
+            
+            // Converte valor para número flutuante
+            const valorDto = parseFloat(valorRaw);
+
+            // Define o status baseado no checkbox ou se a data de pagamento foi preenchida
+            let statusDto = "Pendente";
+            if (ehPago || dataPagamento) {
+                statusDto = "Pago";
+            }
+
+            // Monta o objeto JSON
+            const dadosTransacao = {
+                // pedidoId é 0 para lançamentos manuais diretos no financeiro
+                pedidoId: 0, 
+                tipo: tipoDto,
+                valor: valorDto,
+                dataVencimento: dataVencimento,
+                // Envia null se a data de pagamento não for preenchida
+                dataPagamento: dataPagamento || null, 
+                status: statusDto,
+                descricao: descricao
+            };
+
+            console.log("Enviando dados:", dadosTransacao);
+
+            try {
+                // 4. Faz a requisição POST para a API
+                const response = await fetch(`${API_BASE_URL}/Financeiro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Envia o token JWT no cabeçalho de autorização
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(dadosTransacao)
+                });
+
+                if (response.ok) {
+                    // Sucesso
+                    const resultado = await response.json();
+                    alert("Transação registrada com sucesso!");
+                    // Redireciona de volta para a tela principal do financeiro
+                    window.location.href = "./financeiro.html";
+                } else {
+                    // Erro retornado pela API (400, 401, 500 etc)
+                    const erroTexto = await response.text();
+                    console.error("Erro da API:", erroTexto);
+                    alert(`Falha ao salvar: ${erroTexto || response.statusText}`);
+                }
+            } catch (error) {
+                // Erro de rede ou conexão
+                console.error("Erro na requisição fetch:", error);
+                alert("Erro ao conectar com o servidor. Verifique sua internet ou tente mais tarde.");
+            } finally {
+                // Reabilita o botão independente de sucesso ou erro
+                btnSalvar.disabled = false;
+                btnSalvar.innerText = "Salvar Lançamento";
+            }
         }
     </script>
 </body>
