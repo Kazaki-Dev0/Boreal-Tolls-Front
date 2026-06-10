@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +42,7 @@
             flex-direction: column;
             justify-content: space-between;
             height: 100vh;
-            padding-bottom: 20px; 
+            padding-bottom: 20px;
             width: 260px;
             flex-shrink: 0;
         }
@@ -56,7 +57,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 6px; 
+            gap: 6px;
             width: 100%;
         }
 
@@ -235,7 +236,7 @@
             border-radius: 18px;
             padding: 22px 28px;
             display: grid;
-            grid-template-columns: 1fr 4fr auto; 
+            grid-template-columns: 1fr 4fr auto;
             align-items: center;
             transition: 0.3s;
             gap: 20px;
@@ -310,7 +311,7 @@
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
-            
+
             .btn-delete {
                 border-radius: 8px;
                 width: 100%;
@@ -330,200 +331,213 @@
             .main-wrapper {
                 flex-direction: column;
             }
+
             .side-bar {
                 display: none;
             }
+
             main {
                 max-width: 100vw;
             }
         }
     </style>
 </head>
+
 <body>
 
-<div class="main-wrapper">
-    <section class="side-bar">
-        <div>
-            <div class="sidebar-header">
-                <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
-            </div>
+    <div class="main-wrapper">
+        <section class="side-bar">
+            <div>
+                <div class="sidebar-header">
+                    <img src="./img/LogoBorealTools.png" alt="Boreal Tools" class="logo">
+                </div>
 
-            <div class="perfil">
-                <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
-                <p id="user-name">Carregando...</p>
-            </div>
+                <div class="perfil">
+                    <img id="user-avatar" src="./img/perfil-icon.png" alt="Perfil">
+                    <p id="user-name">Carregando...</p>
+                </div>
 
-            <nav class="nav-side-bar">
-                <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a href="dashboard.html">Início</a></div>
-                <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a href="produtos.html">Produtos</a></div>
-                <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a href="./estoque.html">Estoques</a></div>
-                <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a href="./financeiro.html">Financeiro</a></div>
-                <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a></div>
-                <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a href="./funcionarios.html">Funcionários</a></div>
-                <div class="secoes"><img src="./img/clientes.png" class="secao-icon"><a href="./ClienteFornecedor.html">Clientes</a></div>
-                <div class="secoes active"><img src="./img/relatorios.png" class="secao-icon"><a href="./categorias.html">Categorias</a></div>
-            </nav>
-        </div>
-
-        <div class="logout-link">
-            <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
-        </div>
-    </section>
-
-    <main>
-        <div class="category-panel">
-            <div class="panel-header">
-                <div class="panel-title">
-                    <h2 id="panel-main-title">Categorias de Produtos</h2>
-                    <div id="panel-main-subtitle" class="panel-subtitle">
-                        Gerencie, cadastre e organize as categorias do estoque.
+                <nav class="nav-side-bar">
+                    <div class="secoes"><img src="./img/inicio.sidebar.png" class="secao-icon"><a
+                            href="dashboard.html">Início</a></div>
+                    <div class="secoes"><img src="./img/produtos.png" class="secao-icon"><a
+                            href="produtos.html">Produtos</a></div>
+                    <div class="secoes"><img src="./img/estoque.png" class="secao-icon"><a
+                            href="./estoque.html">Estoques</a></div>
+                    <div class="secoes"><img src="./img/financeiro.png" class="secao-icon"><a
+                            href="./financeiro.html">Financeiro</a></div>
+                    <div class="secoes"><img src="./img/vendas.png" class="secao-icon"><a href="vendas.html">Vendas</a>
                     </div>
-                </div>
-                
-                <div class="panel-icon">
-                    <i class="ph ph-squares-four"></i>
-                </div>
+                    <div class="secoes"><img src="./img/funcionarios.png" class="secao-icon"><a
+                            href="./funcionarios.html">Funcionários</a></div>
+                    <div class="secoes"><img src="./img/clientes.png" class="secao-icon"><a
+                            href="./ClienteFornecedor.html">Clientes e Fornecedores</a></div>
+                    <div class="secoes active"><img src="./img/relatorios.png" class="secao-icon"><a
+                            href="./categorias.html">Categorias</a></div>
+                </nav>
             </div>
 
-            <div id="view-listing">
-                <div class="table-toolbar">
-                    <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Pesquisar por categoria...">
-                        <i class="ph ph-magnifying-glass"></i>
+            <div class="logout-link">
+                <a href="javascript:void(0)" onclick="efetuarLogout()">← Deslogar</a>
+            </div>
+        </section>
+
+        <main>
+            <div class="category-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <h2 id="panel-main-title">Categorias de Produtos</h2>
+                        <div id="panel-main-subtitle" class="panel-subtitle">
+                            Gerencie, cadastre e organize as categorias do estoque.
+                        </div>
                     </div>
 
-                    <button id="btn-open-form" class="btn-add">
-                        + Nova Categoria
-                    </button>
-                </div>
-
-                <div class="category-list" id="category-container">
-                    <p style="color: #7bcf9c; text-align: center;">Carregando categorias...</p>
-                </div>
-            </div>
-
-            <div id="view-form" style="display: none;">
-                <form id="form-nova-categoria">
-                    <div class="form-group">
-                        <label for="nome-categoria" class="info-label" style="font-size: 0.95rem; font-weight: 600;">
-                            Nome da Categoria
-                        </label>
-                        <input type="text" id="nome-categoria" class="form-input" placeholder="Ex: Ferramentas Manuais" required>
+                    <div class="panel-icon">
+                        <i class="ph ph-squares-four"></i>
                     </div>
+                </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn-add">
-                            Salvar Categoria
-                        </button>
-                        <button type="button" id="btn-back-list" class="btn-back">
-                            ← Voltar para a Listagem
+                <div id="view-listing">
+                    <div class="table-toolbar">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Pesquisar por categoria...">
+                            <i class="ph ph-magnifying-glass"></i>
+                        </div>
+
+                        <button id="btn-open-form" class="btn-add">
+                            + Nova Categoria
                         </button>
                     </div>
-                </form>
+
+                    <div class="category-list" id="category-container">
+                        <p style="color: #7bcf9c; text-align: center;">Carregando categorias...</p>
+                    </div>
+                </div>
+
+                <div id="view-form" style="display: none;">
+                    <form id="form-nova-categoria">
+                        <div class="form-group">
+                            <label for="nome-categoria" class="info-label"
+                                style="font-size: 0.95rem; font-weight: 600;">
+                                Nome da Categoria
+                            </label>
+                            <input type="text" id="nome-categoria" class="form-input"
+                                placeholder="Ex: Ferramentas Manuais" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-add">
+                                Salvar Categoria
+                            </button>
+                            <button type="button" id="btn-back-list" class="btn-back">
+                                ← Voltar para a Listagem
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </main>
-</div>
+        </main>
+    </div>
 
-<script>
-    // URL ATUALIZADA PARA O SERVIDOR EM PRODUÇÃO NO AZURE
-    const API_URL = "https://api-time7.azurewebsites.net/api/Categorias"; 
+    <script>
+        // URL ATUALIZADA PARA O SERVIDOR EM PRODUÇÃO NO AZURE
+        const API_URL = "https://api-time7.azurewebsites.net/api/Categorias";
 
-    let listaCategoriasGlobal = [];
+        let listaCategoriasGlobal = [];
 
-    const viewListing = document.getElementById('view-listing');
-    const viewForm = document.getElementById('view-form');
-    const containerCategorias = document.getElementById('category-container');
-    const inputPesquisa = document.getElementById('search-input');
-    
-    const btnOpenForm = document.getElementById('btn-open-form');
-    const btnBackList = document.getElementById('btn-back-list');
-    
-    const panelTitle = document.getElementById('panel-main-title');
-    const panelSubtitle = document.getElementById('panel-main-subtitle');
+        const viewListing = document.getElementById('view-listing');
+        const viewForm = document.getElementById('view-form');
+        const containerCategorias = document.getElementById('category-container');
+        const inputPesquisa = document.getElementById('search-input');
 
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const btnOpenForm = document.getElementById('btn-open-form');
+        const btnBackList = document.getElementById('btn-back-list');
 
-    function parseJwt(token) {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        } catch (e) {
-            return null;
-        }
-    }
+        const panelTitle = document.getElementById('panel-main-title');
+        const panelSubtitle = document.getElementById('panel-main-subtitle');
 
-    document.addEventListener("DOMContentLoaded", () => {
-        if (!token) {
-            window.location.replace("./login.html");
-            return;
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                return null;
+            }
         }
 
-        const payloadJson = parseJwt(token);
-        const imgElement = document.getElementById('user-avatar');
-        const fotoDireta = localStorage.getItem('urlFoto');
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!token) {
+                window.location.replace("./login.html");
+                return;
+            }
 
-        // IDENTIFICAÇÃO DO USUÁRIO CORRIGIDA PARA MÚLTIPLOS PADRÕES DE CLAIMS JWT
-        if (payloadJson) {
-            document.getElementById('user-name').textContent = 
-                payloadJson["unique_name"] || 
-                payloadJson["name"] || 
-                payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
-                "Usuário Boreal";
+            const payloadJson = parseJwt(token);
+            const imgElement = document.getElementById('user-avatar');
+            const fotoDireta = localStorage.getItem('urlFoto');
+
+            // IDENTIFICAÇÃO DO USUÁRIO CORRIGIDA PARA MÚLTIPLOS PADRÕES DE CLAIMS JWT
+            if (payloadJson) {
+                document.getElementById('user-name').textContent =
+                    payloadJson["unique_name"] ||
+                    payloadJson["name"] ||
+                    payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ||
+                    "Usuário Boreal";
+            }
+
+            let fotoFinal = "./img/perfil-icon.png";
+            if (fotoDireta && fotoDireta !== "null") fotoFinal = fotoDireta;
+            else if (payloadJson) fotoFinal = payloadJson["urlFoto"] || payloadJson["foto"] || fotoFinal;
+
+            if (fotoFinal.startsWith('iVBORw0KGgo') || (fotoFinal.length > 200 && !fotoFinal.startsWith('data:'))) {
+                imgElement.src = `data:image/jpeg;base64,${fotoFinal}`;
+            } else {
+                imgElement.src = fotoFinal;
+            }
+
+            carregarCategorias();
+        });
+
+        async function carregarCategorias() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) throw new Error("Erro ao buscar dados do servidor.");
+
+                const dados = await response.json();
+                listaCategoriasGlobal = dados;
+                renderizarLista(listaCategoriasGlobal);
+
+            } catch (erro) {
+                console.error("Erro na requisição GET:", erro);
+                containerCategorias.innerHTML = `<p style="color: #e57373; text-align: center;">Não foi possível carregar as categorias do banco.</p>`;
+            }
         }
-        
-        let fotoFinal = "./img/perfil-icon.png";
-        if (fotoDireta && fotoDireta !== "null") fotoFinal = fotoDireta;
-        else if (payloadJson) fotoFinal = payloadJson["urlFoto"] || payloadJson["foto"] || fotoFinal;
 
-        if (fotoFinal.startsWith('iVBORw0KGgo') || (fotoFinal.length > 200 && !fotoFinal.startsWith('data:'))) {
-            imgElement.src = `data:image/jpeg;base64,${fotoFinal}`;
-        } else {
-            imgElement.src = fotoFinal;
-        }
+        function renderizarLista(lista) {
+            if (lista.length === 0) {
+                containerCategorias.innerHTML = `<p style="color: #aaa; text-align: center;">Nenhuma categoria encontrada.</p>`;
+                return;
+            }
 
-        carregarCategorias();
-    });
+            containerCategorias.innerHTML = "";
 
-    async function carregarCategorias() {
-        try {
-            const response = await fetch(API_URL, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+            lista.forEach(categoria => {
+                const id = categoria.id ?? categoria.Id;
+                const nome = categoria.nome ?? categoria.Nome;
 
-            if (!response.ok) throw new Error("Erro ao buscar dados do servidor.");
-
-            const dados = await response.json();
-            listaCategoriasGlobal = dados; 
-            renderizarLista(listaCategoriasGlobal);
-
-        } catch (erro) {
-            console.error("Erro na requisição GET:", erro);
-            containerCategorias.innerHTML = `<p style="color: #e57373; text-align: center;">Não foi possível carregar as categorias do banco.</p>`;
-        }
-    }
-
-    function renderizarLista(lista) {
-        if (lista.length === 0) {
-            containerCategorias.innerHTML = `<p style="color: #aaa; text-align: center;">Nenhuma categoria encontrada.</p>`;
-            return;
-        }
-
-        containerCategorias.innerHTML = ""; 
-
-        lista.forEach(categoria => {
-            const id = categoria.id ?? categoria.Id;
-            const nome = categoria.nome ?? categoria.Nome;
-
-            const cardHtml = `
+                const cardHtml = `
                 <article class="category-card">
                     <div class="info-group">
                         <span class="info-label">ID</span>
@@ -538,96 +552,97 @@
                     </button>
                 </article>
             `;
-            containerCategorias.insertAdjacentHTML('beforeend', cardHtml);
-        });
-    }
-
-    document.getElementById('form-nova-categoria').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const nomeInput = document.getElementById('nome-categoria').value;
-
-        try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ Nome: nomeInput }) 
+                containerCategorias.insertAdjacentHTML('beforeend', cardHtml);
             });
-
-            if (response.ok) {
-                alert("Categoria cadastrada com sucesso!");
-                document.getElementById('nome-categoria').value = '';
-                btnBackList.click(); 
-                carregarCategorias(); 
-            } else {
-                const erroTexto = await response.text();
-                alert("Falha ao registrar categoria: " + erroTexto);
-            }
-        } catch (erro) {
-            console.error("Erro na requisição POST:", erro);
-            alert("Erro de conexão com o servidor.");
         }
-    });
 
-    async function deletarCategoria(id) {
-        if (!confirm("Tem certeza que deseja excluir esta categoria permanentemente?")) return;
+        document.getElementById('form-nova-categoria').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nomeInput = document.getElementById('nome-categoria').value;
 
-        try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ Nome: nomeInput })
+                });
 
-            if (response.ok) {
-                alert("Categoria removida com sucesso!");
-                carregarCategorias(); 
-            } else {
-                if (response.status === 400) {
-                    alert("Não é possível excluir uma categoria que possui produtos vinculados.");
+                if (response.ok) {
+                    alert("Categoria cadastrada com sucesso!");
+                    document.getElementById('nome-categoria').value = '';
+                    btnBackList.click();
+                    carregarCategorias();
                 } else {
-                    alert("Não foi possível excluir a categoria.");
+                    const erroTexto = await response.text();
+                    alert("Falha ao registrar categoria: " + erroTexto);
                 }
+            } catch (erro) {
+                console.error("Erro na requisição POST:", erro);
+                alert("Erro de conexão com o servidor.");
             }
-        } catch (erro) {
-            console.error("Erro na requisição DELETE:", erro);
-            alert("Erro de rede ao tentar deletar.");
-        }
-    }
-
-    inputPesquisa.addEventListener('input', (e) => {
-        const termoBusca = e.target.value.toLowerCase().trim();
-        const filtradas = listaCategoriasGlobal.filter(cat => {
-            const nome = (cat.nome ?? cat.Nome).toLowerCase();
-            return nome.includes(termoBusca);
         });
-        renderizarLista(filtradas);
-    });
 
-    btnOpenForm.addEventListener('click', () => {
-        viewListing.style.display = 'none';
-        viewForm.style.display = 'block';
-        panelTitle.innerText = 'Cadastrar Nova Categoria';
-        panelSubtitle.innerText = 'Preencha o campo abaixo para inserir uma nova classificação ao banco.';
-    });
+        async function deletarCategoria(id) {
+            if (!confirm("Tem certeza que deseja excluir esta categoria permanentemente?")) return;
 
-    btnBackList.addEventListener('click', () => {
-        viewForm.style.display = 'none';
-        viewListing.style.display = 'block';
-        panelTitle.innerText = 'Categorias de Produtos';
-        panelSubtitle.innerText = 'Gerencie, cadastre e organize as categorias do estoque.';
-        document.getElementById('nome-categoria').value = '';
-    });
+            try {
+                const response = await fetch(`${API_URL}/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
 
-    function efetuarLogout() {
-        localStorage.clear();
-        sessionStorage.clear();
-        window.location.replace("./login.html");
-    }
-</script> 
+                if (response.ok) {
+                    alert("Categoria removida com sucesso!");
+                    carregarCategorias();
+                } else {
+                    if (response.status === 400) {
+                        alert("Não é possível excluir uma categoria que possui produtos vinculados.");
+                    } else {
+                        alert("Não foi possível excluir a categoria.");
+                    }
+                }
+            } catch (erro) {
+                console.error("Erro na requisição DELETE:", erro);
+                alert("Erro de rede ao tentar deletar.");
+            }
+        }
+
+        inputPesquisa.addEventListener('input', (e) => {
+            const termoBusca = e.target.value.toLowerCase().trim();
+            const filtradas = listaCategoriasGlobal.filter(cat => {
+                const nome = (cat.nome ?? cat.Nome).toLowerCase();
+                return nome.includes(termoBusca);
+            });
+            renderizarLista(filtradas);
+        });
+
+        btnOpenForm.addEventListener('click', () => {
+            viewListing.style.display = 'none';
+            viewForm.style.display = 'block';
+            panelTitle.innerText = 'Cadastrar Nova Categoria';
+            panelSubtitle.innerText = 'Preencha o campo abaixo para inserir uma nova classificação ao banco.';
+        });
+
+        btnBackList.addEventListener('click', () => {
+            viewForm.style.display = 'none';
+            viewListing.style.display = 'block';
+            panelTitle.innerText = 'Categorias de Produtos';
+            panelSubtitle.innerText = 'Gerencie, cadastre e organize as categorias do estoque.';
+            document.getElementById('nome-categoria').value = '';
+        });
+
+        function efetuarLogout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("./index.html");
+        }
+    </script>
 </body>
+
 </html>
