@@ -455,7 +455,7 @@
 
     <script>
         // Definição da URL base da API
-        const API_BASE_URL = "https://api-time7.azurewebsites.net/api";
+        const API_BASE_URL = "http://localhost:5187/api/Financeiro";
 
         /* ========================================================
             INTERAÇÃO DO SELECTOR DE TIPO (ENTRADA/SAÍDA)
@@ -583,7 +583,7 @@
             console.log("Enviando dados:", dadosTransacao);
 
             try {
-                // 4. Faz a requisição POST para a API
+                // 4. Faz a requisição POST para a API 
                 const response = await fetch(`${API_BASE_URL}/Financeiro`, {
                     method: 'POST',
                     headers: {
