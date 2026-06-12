@@ -203,12 +203,10 @@
             background: rgba(40, 40, 40, 0.85);
         }
 
-        /* Colunas para Clientes: Nome | Id | Email | CPF | DataNasc | Botão */
         .list-row.cliente {
             grid-template-columns: 2fr 0.5fr 2fr 1.4fr 1.2fr auto;
         }
 
-        /* Colunas para Fornecedores: Nome | Id | Email | CNPJ | Telefone | Botão */
         .list-row.fornecedor {
             grid-template-columns: 2fr 0.5fr 2fr 1.4fr 1.2fr auto;
         }
@@ -376,7 +374,6 @@
 
         .modal-field.full { grid-column: span 2; }
 
-        /* ========================= RESPONSIVO ========================= */
         @media(max-width: 900px) {
             .side-bar { display: none; }
             main { max-width: 100vw; }
@@ -511,36 +508,49 @@
         }
 
         carregarDados();
-
         document.getElementById("inputBusca").addEventListener("input", filtrar);
     });
 
-    /* ========================= CARREGAR ========================= */
+    /* ========================= CARREGAR (COM TRATAMENTO DE ERROS VISÍVEL) ========================= */
     async function carregarDados() {
         try {
+            console.log("Buscando dados na API local...");
             const [resClientes, resFornecedores] = await Promise.all([
                 fetch(`${API_BASE}/Clientes`, { headers: { "Authorization": `Bearer ${token}` } }),
                 fetch(`${API_BASE}/Fornecedores`, { headers: { "Authorization": `Bearer ${token}` } })
             ]);
 
-            if (resClientes.ok) todosClientes = await resClientes.json();
-            if (resFornecedores.ok) todosFornecedores = await resFornecedores.json();
+            // Se a API responder com erro de rota ou permissão, avisa no console explicitamente
+            if (!resClientes.ok) {
+                console.error(`Erro na API de Clientes. Status HTTP: ${resClientes.status}`);
+            } else {
+                todosClientes = await resClientes.json();
+            }
+
+            if (!resFornecedores.ok) {
+                console.error(`Erro na API de Fornecedores. Status HTTP: ${resFornecedores.status}`);
+            } else {
+                todosFornecedores = await resFornecedores.json();
+            }
 
         } catch (e) {
-            console.warn("Tentando endpoint único /Clientes:", e);
+            console.warn("Falha no Promise.all, tentando endpoint unificado /Clientes...", e);
             try {
                 const res = await fetch(`${API_BASE}/Clientes`, {
                     headers: { "Authorization": `Bearer ${token}` }
                 });
                 if (res.ok) {
                     const todos = await res.json();
-                    todosClientes = todos.filter(r =>
-                        (r.tipoVinculo || "").toLowerCase() !== "fornecedor");
-                    todosFornecedores = todos.filter(r =>
-                        (r.tipoVinculo || "").toLowerCase() === "fornecedor");
+                    todosClientes = todos.filter(r => (r.tipoVinculo || "").toLowerCase() !== "fornecedor");
+                    todosFornecedores = todos.filter(r => (r.tipoVinculo || "").toLowerCase() === "fornecedor");
+                } else {
+                    console.error(`Erro no endpoint alternativo. Status HTTP: ${res.status}`);
                 }
             } catch (err) {
-                console.error("Erro ao carregar dados:", err);
+                console.error("Erro crítico de conexão com a API:", err);
+                document.getElementById("lista-clientes").innerHTML = '<p class="empty-msg" style="color: #ff8a80;">Erro de conexão com o servidor local.</p>';
+                document.getElementById("lista-fornecedores").innerHTML = '<p class="empty-msg" style="color: #ff8a80;">Erro de conexão com o servidor local.</p>';
+                return;
             }
         }
 
@@ -643,7 +653,6 @@
         document.getElementById("modalTitulo").innerText = titulo;
 
         const campos = [];
-
         campos.push({ label: "Nome", value: reg.nome || reg.razaoSocial || "—" });
         campos.push({ label: "Id", value: String(reg.id || "—") });
 
@@ -659,7 +668,7 @@
         campos.push({ label: "CEP", value: reg.cep || "—" });
         campos.push({ label: "Rua", value: reg.rua || "—" });
         campos.push({ label: "Bairro", value: reg.bairro || "—" });
-        campos.push({ label: "Número da Residência", value: reg.numero || reg.numero || "—" });
+        campos.push({ label: "Número da Residência", value: reg.numero || "—" });
         campos.push({ label: "Cidade", value: reg.cidade || "—" });
         campos.push({ label: "Estado", value: reg.estado || "—" });
         campos.push({ label: "Complemento", value: reg.complemento || "—", full: true });
