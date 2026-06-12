@@ -107,10 +107,11 @@ main {
     color: #ffffff;
     margin-bottom: 5px;
 }
+.panel-subtitle {
+        color: #6da381;
+        font-size: 0.8rem; 
+     }
 
-.panel-subtitle span {
-    color: #7bcf9c;
-}
 
 .panel-icon {
     background: rgba(135, 255, 185, 0.1);

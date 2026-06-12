@@ -101,13 +101,16 @@
             border: 1px solid #2e4a3e;
             box-shadow: 0 0 25px rgba(0, 255, 120, 0.08);
         }
+        .product-table tbody {
+    min-height: 180px;
+      }
 
         .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
+          margin-bottom: 30px;
+}
 
         .panel-title h2 {
             font-size: 1.5rem;
@@ -117,13 +120,13 @@
         }
 
         .breadcrumb {
-            font-size: 0.8rem;
-            color: #6da381;
-        }
+    color: #6da381;
+    font-size: 0.8rem;
+}
 
-        .breadcrumb span {
-            color: #aaa;
-        }
+      .breadcrumb span {
+    color: #6da381;
+   }
 
         .panel-header-icon {
             background: rgba(135, 255, 185, 0.1);
@@ -441,9 +444,9 @@
             <div class="product-panel">
                 <div class="panel-header">
                     <div class="panel-title">
-                        <h2>Painel da Lista de Produtos</h2>
+                        <h2>Controle de Produto</h2>
                         <div class="breadcrumb">
-                            <span>Gerencie itens, preços e níveis de estoque.</span>
+                            Produtos > <span>Gerencie itens, preços e níveis de estoque</span>
                         </div>
                     </div>
                     <div class="panel-header-icon">
