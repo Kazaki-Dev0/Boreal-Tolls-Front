@@ -1,6 +1,6 @@
 // Configurações das URLs da API do servidor Backend C#
-const API_URL = "http://localhost:5187/api";
-const API_PERFIL_URL = "https://api-time7.azurewebsites.net/api/Usuarios/Perfil"; // Altere se o endpoint de perfil for diferente
+const API_URL = "https://time7-api.azurewebsites.net/api";
+const API_PERFIL_URL = "https://time7-api.azurewebsites.net/api/Usuarios/Perfil"; 
 
 // Lista global usada para o mecanismo de busca instantânea
 let funcionariosControle = [];
@@ -14,19 +14,21 @@ const modalOverlay = document.getElementById('modalOverlay');
 document.addEventListener('DOMContentLoaded', () => {
     carregarFuncionarios();
     configurarMecanismoBusca();
-    atualizarDadosUsuario();
+    atualizarDadosUsuario(); // Invoca a validação e exibição do usuário logado
 });
 
 // Configuração do evento 'input' para filtragem ágil em memória
 function configurarMecanismoBusca() {
-    inputSearch.addEventListener('input', (e) => {
-        const termo = e.target.value.toLowerCase();
-        const filtrados = funcionariosControle.filter(f => 
-            f.nome.toLowerCase().includes(termo) || 
-            f.cargo.toLowerCase().includes(termo)
-        );
-        renderizarCards(filtrados);
-    });
+    if (inputSearch) {
+        inputSearch.addEventListener('input', (e) => {
+            const termo = e.target.value.toLowerCase();
+            const filtrados = funcionariosControle.filter(f => 
+                f.nome.toLowerCase().includes(termo) || 
+                f.cargo.toLowerCase().includes(termo)
+            );
+            renderizarCards(filtrados);
+        });
+    }
 }
 
 // Requisição HTTP GET: Busca a lista geral de funcionários cadastrados
@@ -34,7 +36,7 @@ async function carregarFuncionarios() {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
     
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(`${API_URL}/Funcionarios`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -43,7 +45,7 @@ async function carregarFuncionarios() {
         });
 
         if (response.status === 401) {
-            employeeGrid.innerHTML = `<p style="color: #e57373;">Acesso não autorizado. Por favor, refaça o login.</p>`;
+            if (employeeGrid) employeeGrid.innerHTML = `<p style="color: #e57373;">Acesso não autorizado. Por favor, refaça o login.</p>`;
             return;
         }
 
@@ -54,12 +56,14 @@ async function carregarFuncionarios() {
 
     } catch (erro) {
         console.error(erro);
-        employeeGrid.innerHTML = `<p style="color: #e57373;">Falha de comunicação com a API. Verifique se o serviço C# está rodando.</p>`;
+        if (employeeGrid) employeeGrid.innerHTML = `<p style="color: #e57373;">Falha de comunicação com a API. Verifique se o serviço C# está rodando.</p>`;
     }
 }
 
 // Reconstrói e exibe a listagem visual dos cards de funcionários
 function renderizarCards(lista) {
+    if (!employeeGrid) return;
+
     if (lista.length === 0) {
         employeeGrid.innerHTML = `<p style="color: #aaa;">Nenhum funcionário encontrado.</p>`;
         return;
@@ -119,7 +123,7 @@ async function abrirDetalhes(id) {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
     try {
-        const response = await fetch(`${API_URL}/${id}`, {
+        const response = await fetch(`${API_URL}/Funcionarios/${id}`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
@@ -144,7 +148,7 @@ async function abrirDetalhes(id) {
             <div class="info-box" style="grid-column: span 2;"><strong>Endereço Cadastrado</strong>${funcionario.rua || '---'}, ${funcionario.bairro || '---'}</div>
         `;
 
-        modalOverlay.style.display = "flex";
+        if (modalOverlay) modalOverlay.style.display = "flex";
 
     } catch (erro) {
         console.error(erro);
@@ -153,7 +157,7 @@ async function abrirDetalhes(id) {
 }
 
 function fecharModal() {
-    modalOverlay.style.display = "none";
+    if (modalOverlay) modalOverlay.style.display = "none";
 }
 
 // Fecha o modal caso o usuário dê um clique fora do quadro de conteúdo
@@ -190,52 +194,37 @@ async function deletarFuncionario(id) {
 }
 
 /* ========================================================================
-   MÓDULO DE IDENTIFICAÇÃO DE USUÁRIO LOGADO (API / LOCAL STORAGE / JWT)
+   MÓDULO DE IDENTIFICAÇÃO DE USUÁRIO LOGADO (LÓGICA IGUAL AO DASHBOARD)
 ======================================================================== */
-async function atualizarDadosUsuario() {
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (!token) {
-        efetuarLogout();
-        return;
-    }
-
-    // Estratégia 1: Verifica se o nome já reside de prontidão no Storage do navegador
-    const nomeArmazenado = localStorage.getItem("usuarioNome") || localStorage.getItem("username");
-    if (nomeArmazenado) {
-        document.getElementById("nomeUsuarioSidebar").innerText = nomeArmazenado;
-        return;
-    }
-
-    // Estratégia 2: Caso não encontre no storage, solicita os dados reais ao Endpoint do Perfil na API
+function atualizarDadosUsuario() {
+    let token = null;
+    
     try {
-        const response = await fetch(API_PERFIL_URL, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Accept": "application/json"
-            }
-        });
+        token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    } catch (e) {
+        console.warn("Acesso ao storage bloqueado.");
+    }
+    
+    const nomeElement = document.getElementById('user-name');
+    if (!nomeElement) return; // Proteção caso o elemento mude de ID no HTML
 
-        if (response.ok) {
-            const dadosUsuario = await response.json();
-            const nomeFinal = dadosUsuario.nome || dadosUsuario.username;
-            document.getElementById("nomeUsuarioSidebar").innerText = nomeFinal;
-            
-            // Grava no storage para poupar o servidor de requisições redundantes nas próximas páginas
-            localStorage.setItem("usuarioNome", nomeFinal);
-            return;
-        }
-    } catch (erro) {
-        console.warn("Rota de perfil inacessível. Recorrendo ao plano alternativo (Decodificação JWT)...", erro);
+    if (!token) {
+        nomeElement.textContent = "Usuário não logado";
+        window.location.replace("./login.html");
+        return;
     }
 
-    // Estratégia 3: Fallback por decodificação local dos Claims do Token JWT
-    const payload = parseJwt(token);
-    if (payload) {
-        document.getElementById("nomeUsuarioSidebar").innerText = 
-            payload["unique_name"] || payload["name"] || "Usuário Boreal";
+    const payloadJson = parseJwt(token);
+
+    if (payloadJson) {
+        const nomeUsuario = payloadJson["unique_name"] || 
+                            payloadJson["name"] || 
+                            payloadJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+                            "Usuário Boreal";
+        
+        nomeElement.textContent = nomeUsuario;
     } else {
-        document.getElementById("nomeUsuarioSidebar").innerText = "Usuário Atenticado";
+        nomeElement.textContent = "Erro de Sessão";
     }
 }
 
@@ -244,17 +233,24 @@ function parseJwt(token) {
     try {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        return JSON.parse(decodeURIComponent(window.atob(base64).split('').map(c => 
-            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-        ).join('')));
+        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
     } catch (e) {
+        console.error("Falha ao decodificar token:", e);
         return null;
     }
 }
 
 // Limpa as credenciais de sessão e redireciona para a tela de autenticação
-function efetuarLogout() {
-    localStorage.clear();
-    sessionStorage.clear();
+function efectuarLogout() {
+    try {
+        localStorage.clear();
+        sessionStorage.clear();
+    } catch (e) {
+        console.error("Erro ao efetuar limpeza:", e);
+    }
     window.location.replace("./index.html");
 }

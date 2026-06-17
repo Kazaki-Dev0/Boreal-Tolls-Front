@@ -1,5 +1,5 @@
-const apiUrlClientes = 'http://localhost:5187/api/Clientes';
-const apiUrlFornecedores = 'http://localhost:5187/api/Fornecedores';
+const apiUrlClientes = 'https://time7-api.azurewebsites.net/api/Clientes';
+const apiUrlFornecedores = 'https://time7-api.azurewebsites.net/api/Fornecedores';
 const tabelaBody = document.getElementById('tabelaClientesBody');
 const inputBusca = document.getElementById('inputBusca');
 
@@ -94,8 +94,8 @@ async function excluirRegistro(id, tipo) {
 
     const token = localStorage.getItem('token');
     const url = tipo === 'Cliente' 
-        ? `http://localhost:5187/api/Clientes/${id}`
-        : `http://localhost:5187/api/Fornecedores/${id}`;
+        ? `https://time7-api.azurewebsites.net/api/Clientes/${id}`
+        : `https://time7-api.azurewebsites.net/api/Fornecedores/${id}`;
 
     try {
         const response = await fetch(url, {

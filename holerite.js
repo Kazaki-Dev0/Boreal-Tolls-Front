@@ -1,8 +1,8 @@
 // Configuração das rotas da API do Servidor C#
-const API_FUNCIONARIOS = "https://api-time7.azurewebsites.net/api/Funcionarios";
-const API_PERFIL_URL = "https://api-time7.azurewebsites.net/api/Usuarios/Perfil";
+const API_FUNCIONARIOS = "https://time7-api.azurewebsites.net/api/Funcionarios";
+const API_PERFIL_URL = "https://time7-api.azurewebsites.net/api/Usuarios/Perfil";
 // Endpoint fictício para salvar o holerite gerado (ajuste caso mude no backend)
-const API_FINANCEIRO_FOLHA = "https://api-time7.azurewebsites.net/api/Financeiro/Lancamentos"; 
+const API_FINANCEIRO_FOLHA = "https://time7-api.azurewebsites.net/api/Financeiro/Lancamentos"; 
 
 // Armazenamento em memória dos dados dos funcionários para troca rápida no select
 let listaFuncionariosCache = [];
