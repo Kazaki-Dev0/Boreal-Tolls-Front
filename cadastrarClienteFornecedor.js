@@ -6,9 +6,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     
 
     if (idEdicao && tipoEdicao) {
-        // Padroniza para minúsculo para evitar falhas de validação
-        const tipoEdicaoLower = tipoEdicao.toLowerCase();
-
         // Altera o visual da página para indicar Edição
         const tituloH2 = document.querySelector('.titulo h2');
         const btnSubmit = document.getElementById('cadastrarFuncionario');
@@ -18,9 +15,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Busca os dados atuais na API para preencher o formulário
         const token = localStorage.getItem('token');
-        const endpoint = tipoEdicaoLower === 'cliente' 
-            ? `http://localhost:5187/api/Clientes/${idEdicao}` 
-            : `http://localhost:5187/api/Fornecedores/${idEdicao}`;
+        const endpoint = tipoEdicao === 'cliente' 
+            ? `https://api-time7.azurewebsites.net/api/Clientes/${idEdicao}` 
+            : `https://api-time7.azurewebsites.net/api/Fornecedores/${idEdicao}`;
 
         try {
             const response = await fetch(endpoint, {
@@ -47,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById('Complemento').value = dados.complemento || '';
 
                 // Separação de campos exclusivos por tipo
-                if (tipoEdicaoLower === 'cliente') {
+                if (tipoEdicao === 'cliente') {
                     document.getElementById('CPF').value = dados.cpf || '';
                     if (dados.dataNascimento) {
                         document.getElementById('DataNascimento').value = dados.dataNascimento.split('T')[0];
@@ -75,10 +72,6 @@ document.getElementById('clienteForm').addEventListener('submit', async function
     const tipoEdicao = localStorage.getItem('tipoEdicao');
     const tipoSelecionado = document.getElementById('tipo').value;
 
-    // Padroniza as variáveis de escolha para letras minúsculas
-    const tipoSelecionadoLower = tipoSelecionado ? tipoSelecionado.toLowerCase() : '';
-    const tipoEdicaoLower = tipoEdicao ? tipoEdicao.toLowerCase() : '';
-
     // Coleta as informações digitadas nos inputs
     const dados = {
         nome: document.getElementById('Nome').value,
@@ -93,7 +86,7 @@ document.getElementById('clienteForm').addEventListener('submit', async function
         complemento: document.getElementById('Complemento').value
     };
 
-    if (tipoSelecionadoLower === 'cliente') {
+    if (tipoSelecionado === 'cliente') {
         dados.cpf = document.getElementById('CPF').value;
         dados.dataNascimento = document.getElementById('DataNascimento').value || null;
     } else {
@@ -107,8 +100,8 @@ document.getElementById('clienteForm').addEventListener('submit', async function
     // BLOCO DE DECISÃO: SE TIVER ID NA MEMÓRIA, FAZ PUT (NÃO FAZ POST!)
     if (idEdicao) {
         method = 'PUT';
-        const tipoFinalLower = tipoEdicaoLower || tipoSelecionadoLower;
-        url = tipoFinalLower === 'cliente' 
+        const tipoFinal = tipoEdicao || tipoSelecionado;
+        url = tipoFinal === 'cliente' 
             ? `http://localhost:5187/api/Clientes/${idEdicao}`
             : `http://localhost:5187/api/Fornecedores/${idEdicao}`;
         
@@ -117,9 +110,9 @@ document.getElementById('clienteForm').addEventListener('submit', async function
     } else {
         // Se não tiver ID, aí sim comporta-se como um novo cadastro (POST)
         method = 'POST';
-        url = tipoSelecionadoLower === 'cliente' 
-            ? `http://localhost:5187/api/Clientes`
-            : `http://localhost:5187/api/Fornecedores`;
+        url = tipoSelecionado === 'cliente' 
+            ? `https://api-time7.azurewebsites.net/api/Clientes`
+            : `https://api-time7.azurewebsites.net/api/Fornecedores`;
     }
 
     try {
