@@ -7,6 +7,7 @@ async function abrirModalDetalhes(id, tipo) {
     const token = localStorage.getItem('token');
     
     // Define a URL da API baseada no tipo correto
+    
     const endpoint = tipo === 'cliente' 
         ? `http://localhost:5187/api/Clientes/${id}` 
         : `http://localhost:5187/api/Fornecedores/${id}`;

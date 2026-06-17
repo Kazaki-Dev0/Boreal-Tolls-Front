@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const idEdicao = localStorage.getItem('idEdicao');
     const tipoEdicao = localStorage.getItem('tipoEdicao');
 
+    
+
     if (idEdicao && tipoEdicao) {
         // Padroniza para minúsculo para evitar falhas de validação
         const tipoEdicaoLower = tipoEdicao.toLowerCase();
