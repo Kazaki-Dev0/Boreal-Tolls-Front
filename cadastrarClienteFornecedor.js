@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const idEdicao = localStorage.getItem('idEdicao');
     const tipoEdicao = localStorage.getItem('tipoEdicao');
 
+    
+
     if (idEdicao && tipoEdicao) {
         // Altera o visual da página para indicar Edição
         const tituloH2 = document.querySelector('.titulo h2');
