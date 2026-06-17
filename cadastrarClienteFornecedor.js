@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Busca os dados atuais na API para preencher o formulário
         const token = localStorage.getItem('token');
         const endpoint = tipoEdicao === 'cliente' 
-            ? `http://localhost:5187/api/Clientes/${idEdicao}` 
-            : `http://localhost:5187/api/Fornecedores/${idEdicao}`;
+            ? `https://api-time7.azurewebsites.net/api/Clientes/${idEdicao}` 
+            : `https://api-time7.azurewebsites.net/api/Fornecedores/${idEdicao}`;
 
         try {
             const response = await fetch(endpoint, {
@@ -109,8 +109,8 @@ document.getElementById('clienteForm').addEventListener('submit', async function
         // Se não tiver ID, aí sim comporta-se como um novo cadastro (POST)
         method = 'POST';
         url = tipoSelecionado === 'cliente' 
-            ? `http://localhost:5187/api/Clientes`
-            : `http://localhost:5187/api/Fornecedores`;
+            ? `https://api-time7.azurewebsites.net/api/Clientes`
+            : `https://api-time7.azurewebsites.net/api/Fornecedores`;
     }
 
     try {
