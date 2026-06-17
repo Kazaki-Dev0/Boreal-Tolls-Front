@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Busca os dados atuais na API para preencher o formulário
         const token = localStorage.getItem('token');
         const endpoint = tipoEdicao === 'cliente' 
-            ? `https://api-time7.azurewebsites.net/api/Clientes/${idEdicao}` 
-            : `https://api-time7.azurewebsites.net/api/Fornecedores/${idEdicao}`;
+            ? `https://time7-api.azurewebsites.net/api/Clientes/${idEdicao}` 
+            : `https://time7-api.azurewebsites.net/api/Fornecedores/${idEdicao}`;
 
         try {
             const response = await fetch(endpoint, {
@@ -100,8 +100,8 @@ document.getElementById('clienteForm').addEventListener('submit', async function
         method = 'PUT';
         const tipoFinal = tipoEdicao || tipoSelecionado;
         url = tipoFinal === 'cliente' 
-            ? `http://localhost:5187/api/Clientes/${idEdicao}`
-            : `http://localhost:5187/api/Fornecedores/${idEdicao}`;
+            ? `https://time7-api.azurewebsites.net/api/Clientes/${idEdicao}`
+            : `https://time7-api.azurewebsites.net/api/Fornecedores/${idEdicao}`;
         
         // Algumas APIs em C# exigem o ID também dentro do objeto enviado
         dados.id = parseInt(idEdicao); 
@@ -109,8 +109,8 @@ document.getElementById('clienteForm').addEventListener('submit', async function
         // Se não tiver ID, aí sim comporta-se como um novo cadastro (POST)
         method = 'POST';
         url = tipoSelecionado === 'cliente' 
-            ? `https://api-time7.azurewebsites.net/api/Clientes`
-            : `https://api-time7.azurewebsites.net/api/Fornecedores`;
+            ? `https://time7-api.azurewebsites.net/api/Clientes`
+            : `https://time7-api.azurewebsites.net/api/Fornecedores`;
     }
 
     try {

@@ -8,8 +8,8 @@ async function abrirModalDetalhes(id, tipo) {
     
     // Define a URL da API baseada no tipo correto
     const endpoint = tipo === 'cliente' 
-        ? `https://api-time7.azurewebsites.net/api/Clientes/${id}` 
-        : `https://api-time7.azurewebsites.net/api/Fornecedores/${id}`;
+        ? `https://time7-api.azurewebsites.net/api/Clientes/${id}` 
+        : `https://time7-api.azurewebsites.net/api/Fornecedores/${id}`;
 
     try {
         const response = await fetch(endpoint, {

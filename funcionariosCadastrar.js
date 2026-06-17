@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5187/api/Funcionarios";
+const API_URL = "https://time7-api.azurewebsites.net/api/Funcionarios";
 
 const form = document.getElementById("formFuncionario");
 
