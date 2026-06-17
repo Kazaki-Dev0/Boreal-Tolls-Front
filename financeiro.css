@@ -99,9 +99,12 @@ main {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 30px;
-}
+}  
+  
 
-.panel-title h2 {
+
+
+.panel-title h2 { 
     font-size: 1.5rem;
     font-weight: 400;
     color: #ffffff;
