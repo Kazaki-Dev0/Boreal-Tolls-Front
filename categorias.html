@@ -112,26 +112,27 @@
         }
 
         .panel-title h2 {
-            font-size: 2rem;
-            font-weight: 500;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 5px;
         }
 
         .panel-subtitle {
-            color: #aaa;
-            font-size: 0.95rem;
+            color: #7bcf9c;
+            font-size: 0.9rem;
         }
 
         .panel-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            background: #163125;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #7bcf9c;
-            font-size: 28px;
+            background: rgba(135, 255, 185, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    color: #7bcf9c;
+    font-size: 1.8rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
         }
 
         /* TOOLBAR */
@@ -144,7 +145,7 @@
         }
 
         .search-box {
-            width: 350px;
+            width: 320px;
             display: flex;
             align-items: center;
             border: 1px solid #3a4a43;
@@ -172,10 +173,12 @@
 
         /* BOTÕES */
         .btn-add {
-            background: #9cc8aa;
             color: black;
-            padding: 12px 24px;
-            border-radius: 10px;
+            background-color: #80B297;
+    color: #000;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.8rem;
             font-weight: 600;
             border: none;
             cursor: pointer;
@@ -386,9 +389,12 @@
             <div class="category-panel">
                 <div class="panel-header">
                     <div class="panel-title">
-                        <h2 id="panel-main-title">Categorias de Produtos</h2>
+                        <h2 id="panel-main-title">Controle de Categoria</h2>
                         <div id="panel-main-subtitle" class="panel-subtitle">
-                            Gerencie, cadastre e organize as categorias do estoque.
+                            <p class="panel-subtitle">
+                                Categorias >
+                                <span>Gerencie, cadastre e organize as categorias do estoque</span>
+                            </p>
                         </div>
                     </div>
 
@@ -441,7 +447,7 @@
 
     <script>
         // URL ATUALIZADA PARA O SERVIDOR EM PRODUÇÃO NO AZURE
-        const API_URL = "https://api-time7.azurewebsites.net/api/Categorias";
+        const API_URL = "http://localhost:5187/api/Categorias";
 
         let listaCategoriasGlobal = [];
 

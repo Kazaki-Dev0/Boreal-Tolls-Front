@@ -1,5 +1,5 @@
 // Configurações das URLs da API do servidor Backend C#
-const API_URL = "https://api-time7.azurewebsites.net/api/Funcionarios";
+const API_URL = "http://localhost:5187/api";
 const API_PERFIL_URL = "https://api-time7.azurewebsites.net/api/Usuarios/Perfil"; // Altere se o endpoint de perfil for diferente
 
 // Lista global usada para o mecanismo de busca instantânea
